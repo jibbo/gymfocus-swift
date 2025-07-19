@@ -12,9 +12,9 @@ import SwiftData
 final class Item {
     var steps: Int
     
-    var timers: [Int]
+    var timers: [Double]
     
-    init(steps: Int, timers: [Int]) {
+    init(steps: Int, timers: [Double]) {
         self.steps = steps
         self.timers = timers
     }

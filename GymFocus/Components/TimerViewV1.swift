@@ -37,8 +37,8 @@ struct TimerViewV1: View {
             ScrollView{
                 FlowLayout(alignment: .center, spacing: 10){
                     ForEach(viewModel.item.timers, id: \.self){timer in
-                        RoundButton(formatTime(timer)){
-                            startTimer(time: timer)
+                        RoundButton(formatTime(Int(timer))){
+                            startTimer(time: Int(timer))
                             stopBlinking()
                         }
                     }

@@ -17,13 +17,6 @@ enum Theme{
     static let primaryColor: Color = Color(red: 0.81, green: 1, blue: 0.01)
 }
 
-//let linearGradient: LinearGradient = LinearGradient(
-//    gradient: Gradient(colors: [Color(red: 0.6, green: 1.2, blue: 0.0),
-//                                Color(red: 0.2, green: 0.2, blue: 1.3)]),
-//    startPoint: .topLeading,
-//    endPoint: .bottomTrailing
-//)
-
 struct PrimaryButton : View{
     var title: String
     var action: ()->Void

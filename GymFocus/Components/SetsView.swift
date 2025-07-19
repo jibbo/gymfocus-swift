@@ -15,9 +15,9 @@ struct SetsView: View {
     
     var body: some View {
         VStack {
-            HStack{
-                Text("Sets done: ").font(.primaryTitle)
+            VStack{
                 Text(String(viewModel.item.steps)).font(.primaryTitle)
+                Text("Sets completed").font(.body)
             }
             HStack{
                 PrimaryButton("RESET"){

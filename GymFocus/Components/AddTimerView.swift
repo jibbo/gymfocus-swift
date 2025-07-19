@@ -10,6 +10,7 @@ import SwiftUI
 struct AddTimerView : View {
     @Environment(\.dismiss) var dismiss
     @State private var text: String = "45"
+    @FocusState private var isFocused: Bool
     
     private let viewModel: ItemsViewModel
     
@@ -20,7 +21,17 @@ struct AddTimerView : View {
     var body: some View {
         VStack{
             Text("Time in seconds:").font(.body).padding()
-            TextField("seconds", text: $text).font(.body)
+            TextField("seconds", text: $text)
+                .font(.body)
+                .focused($isFocused)
+                .onAppear {
+                    // Delay required for best UX, otherwise sometimes doesn't focus immediately
+                    DispatchQueue.main.asyncAfter(deadline: .now()) {
+                        isFocused = true
+                    }
+                }
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
             Spacer()
             HStack{
                 Spacer()
@@ -28,7 +39,7 @@ struct AddTimerView : View {
                     dismiss()
                 }
                 PrimaryButton("Add"){
-                    viewModel.item.timers.append(Int(text) ?? 0)
+                    viewModel.item.timers.append(Double(text) ?? 0)
                     viewModel.item.timers.sort()
                     dismiss()
                 }

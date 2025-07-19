@@ -18,13 +18,15 @@ import AudioToolbox
 struct TimerView: View {
     @State private var timer: Timer? = nil
     @State private var timerRunning: Bool = false
-    @State private var timeRemaining: Int = 0
+    @State private var timeRemaining: Double = 0
     @State private var showNewTimer: Bool = false
-    @State private var isBlinking = false
     @State private var visible = true
     @State private var timerDate = Date()
+    @State private var timerProgress: Double = 0
+    @State private var isBlinking = false
     
     private let blinkDuration = 0.2
+    
     private let viewModel: ItemsViewModel
     private let alarmPlayer = AlarmPlayer()
     
@@ -33,61 +35,122 @@ struct TimerView: View {
     }
     
     var body: some View {
-        VStack{
-            HStack{
-                CircularProgressView(progress: 0.5)
-                Text("Timer: ").font(.primaryTitle)
-                Text(formatTime(timeRemaining))
-                    .font(.primaryTitle)
-                    .opacity(visible ? 1 : 0)
-                    .animation(.easeInOut(duration: blinkDuration), value: visible)
-            }
-            ScrollView{
-                FlowLayout(alignment: .center, spacing: 10){
-                    ForEach(viewModel.item.timers, id: \.self){timer in
-                        RoundButton(formatTime(timer)){
-                            startTimer(time: timer)
+        GeometryReader { proxy in
+            if(proxy.size.height > 400){
+                VStack{
+                    CircularProgressView(progress: timerProgress){
+                        Text(formatTime(Int(timeRemaining)))
+                            .font(.primaryTitle)
+                            .opacity(visible ? 1 : 0)
+                            .animation(.easeInOut(duration: blinkDuration), value: visible)
+                    }
+                    .frame(minHeight: 200)
+                    //            ScrollView{
+                    //                FlowLayout(alignment: .center, spacing: 10){
+                    //                    ForEach(viewModel.item.timers, id: \.self){timer in
+                    //                        RoundButton(formatTime(Int(timer))){
+                    //                            startTimer(time: timer)
+                    //                            stopBlinking()
+                    //                        }
+                    //                    }
+                    //                    RoundButton("+", dashed: true){
+                    //                        showNewTimer = true
+                    //                    }
+                    //                }
+                    //            }
+                    ScrollView(.horizontal, showsIndicators: true){
+                        HStack(alignment: .center, spacing: 2){
+                            ForEach(viewModel.item.timers, id: \.self){timer in
+                                RoundButton(formatTime(Int(timer))){
+                                    startTimer(time: timer)
+                                    stopBlinking()
+                                }
+                            }
+                            RoundButton("+", dashed: true){
+                                showNewTimer = true
+                            }
+                        }
+                    }
+                    //            TabView{
+                    //                ForEach(viewModel.item.timers, id: \.self) { timer in
+                    //                    CircularProgressView(progress: 0){
+                    //                        Text(formatTime(Int(timer)))
+                    //                    } action: {
+                    //                        startTimer(time: timer)
+                    //                    }
+                    //                }
+                    //                RoundButton("+", dashed: true){
+                    //                    showNewTimer = true
+                    //                }
+                    //            }
+                    //            .tabViewStyle(.page)
+                    //            .indexViewStyle(.page(backgroundDisplayMode: .always))
+                    .onAppear{
+                        viewModel.item.timers.sort()
+                    }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)){ _ in
+                        if(timerRunning){
+                            let interval = timerDate.timeIntervalSinceNow
+                            if(interval <= 0){
+                                startBlinking()
+                            }else{
+                                stopBlinking()
+                            }
+                            timeRemaining = interval >= 0 ? interval : 0
+                        }
+                    }
+                    .padding()
+                    PrimaryButton("STOP"){
+                        alarmPlayer.stop()
+                        resetTimer();
+                        stopBlinking()
+                    }
+                    .padding()
+                }
+                .sheet(isPresented: $showNewTimer){
+                    AddTimerView(viewModel)
+                }
+            } else {
+                VStack{
+                    HStack(alignment:.center){
+                        CircularProgressView(progress: timerProgress){
+                            Text(formatTime(Int(timeRemaining)))
+                                .font(.primaryTitle)
+                                .opacity(visible ? 1 : 0)
+                                .animation(.easeInOut(duration: blinkDuration), value: visible)
+                        }
+                        PrimaryButton("STOP"){
+                            alarmPlayer.stop()
+                            resetTimer();
                             stopBlinking()
                         }
                     }
-                    RoundButton("+", dashed: true){
-                        showNewTimer = true
+                    ScrollView(.horizontal, showsIndicators: true){
+                        HStack(alignment: .center, spacing: 10){
+                            ForEach(viewModel.item.timers, id: \.self){timer in
+                                RoundButton(formatTime(Int(timer))){
+                                    startTimer(time: timer)
+                                    stopBlinking()
+                                }
+                            }
+                            RoundButton("+", dashed: true){
+                                showNewTimer = true
+                            }
+                        }
                     }
                 }
-            }.onAppear{
-                viewModel.item.timers.sort()
-            }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)){ _ in
-                if(timerRunning){
-                    let interval = Int(timerDate.timeIntervalSinceNow)
-                    if(interval <= 0){
-                        startBlinking()
-                    }else{
-                        stopBlinking()
-                    }
-                    timeRemaining = interval >= 0 ? interval : 0
-                }
             }
-            HStack{
-                PrimaryButton("STOP"){
-                    alarmPlayer.stop()
-                    resetTimer();
-                    stopBlinking()
-                }
-            }
-            .padding()
-        }
-        .sheet(isPresented: $showNewTimer){
-            AddTimerView(viewModel)
         }
     }
     
-    private func startTimer(time: Int) {
+    private func startTimer(time: Double) {
         timerRunning = true
         timer?.invalidate() // Invalidate any existing timer
         timeRemaining = time
+        timerProgress = 0
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             if timeRemaining > 0 {
                 timeRemaining -= 1
+                timerProgress = (time-timeRemaining)/time
             } else {
                 timer?.invalidate()
                 timerRunning = false
@@ -97,7 +160,7 @@ struct TimerView: View {
             }
         }
         
-        timerDate = Date().addingTimeInterval(Double(time))
+        timerDate = Date().addingTimeInterval(time)
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             if(settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional) {
                 scheduleTimerNotification(at: timerDate)
@@ -129,6 +192,7 @@ struct TimerView: View {
         timer?.invalidate()
         timeRemaining = 0
         timerRunning = false
+        timerProgress = 0
     }
     
     private func formatTime(_ seconds: Int) -> String {

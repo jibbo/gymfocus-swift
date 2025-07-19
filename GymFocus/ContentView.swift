@@ -24,14 +24,14 @@ struct ContentView: View {
                     HStack{
                         SetsView(viewModel)
                             .frame(width: proxy.size.width * 0.3)
-                        TimerViewV1(viewModel)
+                        TimerView(viewModel)
                             .frame(width: proxy.size.width * 0.7)
                     }
                     .preferredColorScheme(.dark)
                 }.frame(minWidth: 400)
                 VStack {
                     SetsView(viewModel)
-                    TimerViewV1(viewModel)
+                    TimerView(viewModel)
                 }
                 .preferredColorScheme(.dark)
             }.onAppear(){
