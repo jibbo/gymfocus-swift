@@ -1,0 +1,44 @@
+//
+//  AddTimerView.swift
+//  GymFocus
+//
+//  Created by Giovanni De Francesco on 16/07/25.
+//
+
+import SwiftUI
+
+struct AddTimerView : View {
+    @Environment(\.dismiss) var dismiss
+    @State private var text: String = "45"
+    
+    private let viewModel: ItemsViewModel
+    
+    init(_ viewModel: ItemsViewModel){
+        self.viewModel = viewModel
+    }
+    
+    var body: some View {
+        VStack{
+            Text("Time in seconds:").font(.body).padding()
+            TextField("seconds", text: $text).font(.body)
+            Spacer()
+            HStack{
+                Spacer()
+                PrimaryButton("Cancel"){
+                    dismiss()
+                }
+                PrimaryButton("Add"){
+                    viewModel.item.timers.append(Int(text) ?? 0)
+                    viewModel.item.timers.sort()
+                    dismiss()
+                }
+            }
+        }
+        .padding()
+        .presentationDetents([.fraction(0.3)])
+    }
+}
+
+#Preview {
+    AddTimerView(ItemsViewModel())
+}
