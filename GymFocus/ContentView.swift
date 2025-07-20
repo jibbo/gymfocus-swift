@@ -27,13 +27,19 @@ struct ContentView: View {
                         TimerView(viewModel)
                             .frame(width: proxy.size.width * 0.7)
                     }
-                    .preferredColorScheme(.dark)
                 }.frame(minWidth: 400)
-                VStack {
-                    SetsView(viewModel)
-                    TimerView(viewModel)
+                TabView {
+                    SetsView(viewModel).tabItem{
+                        Image(systemName: "figure.gymnastics")
+                        Text("Sets")
+                    }
+                    .padding()
+                    TimerView(viewModel).tabItem{
+                        Image(systemName: "clock")
+                        Text("Timer")
+                    }
                 }
-                .preferredColorScheme(.dark)
+                .tint(Theme.primaryColor)
             }.onAppear(){
                 if items.isEmpty {
                     let newItem = Item(steps: 0, timers: [30, 60, 120, 180])
@@ -44,6 +50,7 @@ struct ContentView: View {
                 }
             }
         }
+        .preferredColorScheme(.dark)
     }
 }
 

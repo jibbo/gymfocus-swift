@@ -15,18 +15,22 @@ struct SetsView: View {
     
     var body: some View {
         VStack {
+            Spacer()
             VStack{
                 Text(String(viewModel.item.steps)).font(.primaryTitle)
                 Text("Sets completed").font(.body)
             }
-            HStack{
+            Spacer()
+            HStack(spacing:5){
                 PrimaryButton("RESET"){
                     viewModel.item.steps = 0
                 }
+                .frame(maxWidth: .infinity)
                 PrimaryButton("+1"){
                     viewModel.item.steps += 1
-                }
+                }.frame(maxWidth: .infinity)
             }
+            .padding()
         }
     }
 }
