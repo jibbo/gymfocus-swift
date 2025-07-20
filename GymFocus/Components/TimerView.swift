@@ -84,6 +84,7 @@ struct TimerView: View {
                             resetTimer();
                             stopBlinking()
                         }
+                        .frame(maxWidth: 150)
                     }
                     ScrollView(.horizontal, showsIndicators: true){
                         displaySavedTimers()
@@ -130,7 +131,7 @@ struct TimerView: View {
     }
     
     private func displaySavedTimers() -> some View {
-        HStack(alignment: .center, spacing: 2){
+        HStack(spacing: 10){
             ForEach(viewModel.item.timers, id: \.self){timer in
                 RoundButton(formatTime(Int(timer))){
                     startTimer(time: timer)
@@ -186,5 +187,8 @@ struct TimerView: View {
 }
 
 #Preview {
-    TimerView(ItemsViewModel())
+    let viewModel = ItemsViewModel();
+    TimerView(viewModel).onAppear{
+        viewModel.item.timers=[30,60,90,120,180]
+    }
 }

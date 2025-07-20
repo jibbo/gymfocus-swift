@@ -55,14 +55,15 @@ struct RoundButton : View{
     }
     
     var body: some View {
-        Button(title){
-            action()
+        Button(action: action) {
+            Text(title)
+                .font(.custom("BebasNeue-Regular", size: 20))
+                .bold()
+                .foregroundColor(.white)
+                .padding(50)
+                .frame(maxWidth: .infinity)
         }
-        .frame(minWidth:80)
-        .padding(42)
-        .font(.custom("BebasNeue-Regular", size: 20))
-        .bold()
-        .foregroundColor(.white)
+        .frame(minWidth: 100, minHeight: 100)
         .clipShape(Circle())
         .overlay{
             if(dashed){

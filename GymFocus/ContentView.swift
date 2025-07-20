@@ -27,7 +27,7 @@ struct ContentView: View {
                         TimerView(viewModel)
                             .frame(width: proxy.size.width * 0.7)
                     }
-                }.frame(minWidth: 400)
+                }.frame(minWidth: 500)
                 TabView {
                     SetsView(viewModel).tabItem{
                         Image(systemName: "figure.gymnastics")
