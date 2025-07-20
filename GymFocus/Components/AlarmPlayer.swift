@@ -7,23 +7,34 @@
 
 import AVFoundation
 
-class AlarmPlayer {
+class AlarmPlayer: NSObject, AVAudioPlayerDelegate {
     private var player: AVAudioPlayer?
 
     func playSound(named name: String) {
-        if let url = Bundle.main.url(forResource: name, withExtension: "mp3") {
-            do {
-                player = try AVAudioPlayer(contentsOf: url)
-                player?.play()
-            } catch {
-                print("Error playing sound: \(error.localizedDescription)")
-            }
-        } else {
+        guard let url = Bundle.main.url(forResource: name, withExtension: "mp3") else {
             print("Sound file not found: \(name)")
+            return
+        }
+        do {
+            let session = AVAudioSession.sharedInstance()
+//            try session.setCategory(.playback, options: [.duckOthers]) // lowers volume of other audio sources
+            try session.setCategory(.playback) // stops and resumes other features
+            try session.setActive(true)
+            
+            player = try AVAudioPlayer(contentsOf: url)
+            player?.delegate = self
+            player?.play()
+        } catch {
+            print("Error playing sound: \(error.localizedDescription)")
         }
     }
     
-    func stop(){
+    func stop() {
         player?.stop()
+        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
     }
 }
