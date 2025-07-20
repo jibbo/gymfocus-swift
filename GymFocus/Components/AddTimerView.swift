@@ -12,6 +12,7 @@ struct AddTimerView : View {
     @State private var text: String = "45"
     @FocusState private var isFocused: Bool
     
+    
     private let viewModel: ItemsViewModel
     
     init(_ viewModel: ItemsViewModel){
@@ -21,15 +22,17 @@ struct AddTimerView : View {
     var body: some View {
         VStack{
             Text("Time in seconds:").font(.body).padding()
+            Spacer()
             TextField("seconds", text: $text)
-                .font(.body)
+                .font(.primaryTitle)
                 .focused($isFocused)
                 .onAppear {
                     // Delay required for best UX, otherwise sometimes doesn't focus immediately
-                    DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         isFocused = true
                     }
                 }
+                .keyboardType(.numberPad)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             Spacer()
@@ -46,7 +49,6 @@ struct AddTimerView : View {
             }
         }
         .padding()
-        .presentationDetents([.fraction(0.3)])
     }
 }
 
