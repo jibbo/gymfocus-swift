@@ -16,6 +16,7 @@ import SwiftUI
 import AudioToolbox
 
 struct TimerView: View {
+    @ObservedObject private var viewModel: ItemsViewModel
     @State private var timer: Timer? = nil
     @State private var timerRunning: Bool = false
     @State private var timeRemaining: Double = 0
@@ -24,10 +25,10 @@ struct TimerView: View {
     @State private var timerProgress: Double = 0
     @State private var isBlinking = false
     @State private var showNewTimer: Bool = false
+    @State private var showDeleteAlert: Bool = false
+    @State private var selectedTimer: Double = 0.0
     
     private let blinkDuration = 0.2
-    
-    private let viewModel: ItemsViewModel
     private let alarmPlayer = AlarmPlayer()
     
     init(_ viewModel: ItemsViewModel){
@@ -38,6 +39,7 @@ struct TimerView: View {
         GeometryReader { proxy in
             if(proxy.size.height > 400){
                 VStack{
+                    EditView(viewModel)
                     CircularProgressView(progress: timerProgress){
                         Text(formatTime(Int(timeRemaining)))
                             .font(.primaryTitle)
@@ -72,6 +74,7 @@ struct TimerView: View {
                 }
             } else {
                 VStack{
+                    EditView(viewModel)
                     HStack(alignment:.center){
                         CircularProgressView(progress: timerProgress){
                             Text(formatTime(Int(timeRemaining)))
@@ -94,6 +97,11 @@ struct TimerView: View {
         }
         .fullScreenCover(isPresented: $showNewTimer){
             AddTimerView(viewModel)
+        }
+        .alert(isPresented: $showDeleteAlert) {
+            Alert(title: Text("Delete Timer"), message: Text("Are you sure you want to delete this timer?"), primaryButton: .destructive(Text("Delete")) {
+                viewModel.item.timers.remove(at: viewModel.item.timers.firstIndex(of: selectedTimer)!)
+            }, secondaryButton: .cancel())
         }
     }
     
@@ -132,14 +140,28 @@ struct TimerView: View {
     
     private func displaySavedTimers() -> some View {
         HStack(spacing: 10){
-            ForEach(viewModel.item.timers, id: \.self){timer in
-                RoundButton(formatTime(Int(timer))){
-                    startTimer(time: timer)
-                    stopBlinking()
+            ForEach(viewModel.item.timers.indices, id: \.self) { index in
+                let timer = viewModel.item.timers[index]
+                // Use a tuple as the id so SwiftUI knows to re-render on edit mode change
+                let buttonID = "\(timer)-\(viewModel.isEditing)"
+                RoundButton(
+                    formatTime(Int(timer)),
+                    isEditMode: viewModel.isEditing
+                ) {
+                    if viewModel.isEditing {
+                        showDeleteAlert = true
+                        selectedTimer = timer
+                    } else {
+                        startTimer(time: timer)
+                        stopBlinking()
+                    }
                 }
+                .id(buttonID) // 👈 This is the key!
             }
-            RoundButton("+", dashed: true){
-                showNewTimer = true
+            if(!viewModel.isEditing){
+                RoundButton("+", dashed: true){
+                    showNewTimer = true
+                }
             }
         }
     }
@@ -186,9 +208,29 @@ struct TimerView: View {
     }
 }
 
+struct EditView: View {
+    private var viewModel: ItemsViewModel
+    
+    init(_ viewModel: ItemsViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    var body: some View {
+        HStack{
+            Spacer()
+            SecondaryButton(viewModel.isEditing ? "Done": "Edit"){ it in
+                viewModel.isEditing.toggle()
+                it.title = viewModel.isEditing ? "Done": "Edit"
+            }.padding()
+        }
+    }
+}
+
+
 #Preview {
     let viewModel = ItemsViewModel();
     TimerView(viewModel).onAppear{
         viewModel.item.timers=[30,60,90,120,180]
     }
 }
+

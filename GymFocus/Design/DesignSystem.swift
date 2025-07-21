@@ -42,16 +42,38 @@ struct PrimaryButton: View {
     }
 }
 
+struct SecondaryButton: View {
+    @State var title: String
+    var action: (SecondaryButton) -> Void
+
+    init(_ title: String, action: @escaping (SecondaryButton) -> Void) {
+        self.title = title
+        self.action = action
+    }
+
+    var body: some View {
+        Button(action: {action(self)}) {
+            Text(title)
+                .font(.custom("BebasNeue-Regular", size: 16))
+                .bold()
+                .foregroundColor(Theme.primaryColor)
+                .padding(.vertical, 16)
+        }
+    }
+}
+
 struct RoundButton : View{
     var title: String
     var dashed: Bool
     var action: ()->Void
+    let isEditMode: Bool
     
     
-    init(_ title: String, dashed: Bool = false,  action: @escaping ()->Void){
+    init(_ title: String, dashed: Bool = false, isEditMode: Bool = false,  action: @escaping ()->Void){
         self.title = title
         self.action = action
         self.dashed = dashed
+        self.isEditMode = isEditMode
     }
     
     var body: some View {
@@ -66,10 +88,11 @@ struct RoundButton : View{
         .frame(minWidth: 100, minHeight: 100)
         .clipShape(Circle())
         .overlay{
+            let color: Color = isEditMode ? .red : Theme.primaryColor
             if(dashed){
-                Circle().stroke(Theme.primaryColor, style: StrokeStyle(lineWidth: 2, dash: [8, 4]))
+                Circle().stroke(color, style: StrokeStyle(lineWidth: 2, dash: [8, 4])) .animation(.easeInOut(duration: 0.3), value: color)
             }else{
-                Circle().stroke(Theme.primaryColor, lineWidth: 2)
+                Circle().stroke(color, lineWidth: 2) .animation(.easeInOut(duration: 0.3), value: color)
             }
         }
     }
@@ -99,7 +122,10 @@ extension Color {
 
 #Preview {
     Text("Primary title").font(.primaryTitle)
-    PrimaryButton("BUTTON"){
+    PrimaryButton("Primary"){
+        
+    }
+    SecondaryButton("Secondary"){_ in
         
     }
     RoundButton("line"){

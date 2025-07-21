@@ -8,4 +8,5 @@ import SwiftUI
 
 final class ItemsViewModel: ObservableObject {
     @Published var item: Item = Item(steps: 0, timers: [])
+    @Published var isEditing: Bool = false
 }

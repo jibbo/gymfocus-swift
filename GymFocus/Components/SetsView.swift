@@ -30,7 +30,6 @@ struct SetsView: View {
                     viewModel.item.steps += 1
                 }.frame(maxWidth: .infinity)
             }
-            .padding()
         }
     }
 }
