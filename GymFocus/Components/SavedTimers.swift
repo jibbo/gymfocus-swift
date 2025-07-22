@@ -27,8 +27,10 @@ struct SavedTimers: View {
                     it.title = viewModel.isEditing ? "Done": "Edit"
                 }.padding(.vertical, 20)
             }
-            FlowLayout{
-                generateSavedTimers()
+            ScrollView{
+                FlowLayout{
+                    generateSavedTimers()
+                }
             }
         }
     }
