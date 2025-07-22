@@ -8,12 +8,19 @@
 import SwiftUI
 
 
-extension Font {
-    static let primaryTitle: Font = .custom("BebasNeue-Regular", size: 42).bold()
-    static let body: Font = .custom("BebasNeue-Regular", size: 22).bold()
+enum Theme{
+    static let fontName: String = "BebasNeue-Regular"
 }
 
-enum Theme{
+extension Font {
+    static let primaryTitle: Font = .custom(Theme.fontName, size: 42)
+    static let caption: Font = .custom(Theme.fontName, size: 32)
+    static let buttons: Font = .custom(Theme.fontName, size: 20)
+    static let body1: Font = .custom(Theme.fontName, size: 20)
+    static let body2: Font = .custom(Theme.fontName, size: 16)
+}
+
+extension Color {
     static let primaryColor: Color = Color(red: 0.81, green: 1, blue: 0.01)
 }
 
@@ -29,13 +36,12 @@ struct PrimaryButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.custom("BebasNeue-Regular", size: 20))
-                .bold()
+                .font(.buttons)
                 .foregroundColor(.black)
                 .padding(.vertical, 16)
                 .frame(maxWidth: .infinity)
         }
-        .background(Theme.primaryColor)
+        .background(Color.primaryColor)
         .cornerRadius(20)
         .frame(maxWidth: .infinity)
         .buttonStyle(DarkenOnTapButtonStyle())
@@ -54,9 +60,8 @@ struct SecondaryButton: View {
     var body: some View {
         Button(action: {action(self)}) {
             Text(title)
-                .font(.custom("BebasNeue-Regular", size: 16))
-                .bold()
-                .foregroundColor(Theme.primaryColor)
+                .font(.body2)
+                .foregroundColor(.primaryColor)
         }
     }
 }
@@ -78,7 +83,7 @@ struct RoundButton : View{
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.custom("BebasNeue-Regular", size: 20))
+                .font(.body1)
                 .bold()
                 .foregroundColor(.white)
                 .padding(50)
@@ -87,7 +92,7 @@ struct RoundButton : View{
         .frame(minWidth: 100, minHeight: 100)
         .clipShape(Circle())
         .overlay{
-            let color: Color = isEditMode ? .red : Theme.primaryColor
+            let color: Color = isEditMode ? .red : .primaryColor
             if(dashed){
                 Circle().stroke(color, style: StrokeStyle(lineWidth: 2, dash: [8, 4])) .animation(.easeInOut(duration: 0.3), value: color)
             }else{
@@ -102,8 +107,8 @@ struct DarkenOnTapButtonStyle: ButtonStyle {
         configuration.label
             .background(
                 configuration.isPressed
-                    ? Theme.primaryColor.darker(by: 0.2)
-                    : Theme.primaryColor
+                    ? Color.primaryColor.darker(by: 0.2)
+                    : Color.primaryColor
             )
             .cornerRadius(20)
             .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
@@ -121,6 +126,8 @@ extension Color {
 
 #Preview {
     Text("Primary title").font(.primaryTitle)
+    Text("Caption").font(.caption)
+    Text("body").font(.body)
     PrimaryButton("Primary"){
         
     }

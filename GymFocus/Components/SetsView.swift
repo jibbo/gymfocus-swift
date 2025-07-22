@@ -15,12 +15,16 @@ struct SetsView: View {
     
     var body: some View {
         VStack {
+            Text("Sets")
+                .font(.body1)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
             Spacer()
             HStack(alignment: .bottom){
                 Text(String(viewModel.item.steps))
-                    .font(.custom("BebasNeue-Regular", size: 92).bold())
-                Text("Sets completed")
-                    .font(.custom("BebasNeue-Regular", size: 16))
+                    .font(.custom(Theme.fontName, size: 92).bold())
+                Text("completed")
+                    .font(.body1)
                     .padding(.vertical)
             }
             Spacer()
@@ -32,8 +36,9 @@ struct SetsView: View {
                 PrimaryButton("+1"){
                     viewModel.item.steps += 1
                 }.frame(maxWidth: .infinity)
-            }
+            }.padding()
         }
+
     }
 }
 

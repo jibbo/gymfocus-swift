@@ -23,6 +23,10 @@ struct TimerView: View {
     
     var body: some View {
         VStack{
+            Text("Active Timer")
+                .font(.body1)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
             Spacer()
             CircularProgressView(progress: viewModel.timerProgress){
                 Text(formatTime(Int(viewModel.timeRemaining)))
@@ -33,7 +37,7 @@ struct TimerView: View {
             Spacer()
             PrimaryButton("STOP"){
                 viewModel.resetTimer();
-            }
+            }.padding()
         }
         .fullScreenCover(isPresented: $viewModel.showNewTimer){
             AddTimerView(viewModel)

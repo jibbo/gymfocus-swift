@@ -15,10 +15,9 @@ struct ContentView: View {
     @Query private var items: [Item]
     
     var body: some View {
-        ViewThatFits(in: .horizontal){
-            GeometryReader { proxy in
-                VStack{
-                    HeaderView(viewModel)
+        NavigationStack{
+            ViewThatFits(in: .horizontal){
+                GeometryReader { proxy in
                     HStack{
                         SetsView(viewModel)
                             .frame(width: proxy.size.width * 0.3)
@@ -29,25 +28,22 @@ struct ContentView: View {
                         }.frame(width: proxy.size.width * 0.2)
                     }
                 }
-            }
-            .frame(minWidth: 500)
-            VStack{
-                HeaderView(viewModel)
+                .frame(minWidth: 500)
                 ScrollView(showsIndicators:false){
-                    SetsView(viewModel).padding()
-                    TimerView(viewModel).padding()
-                    SavedTimers(viewModel).padding()
+                    SetsView(viewModel)
+                    TimerView(viewModel)
+                    SavedTimers(viewModel)
                 }
             }
-        }
-        .padding()
-        .onAppear(){
-            if items.isEmpty {
-                let newItem = Item(steps: 0, timers: [30, 60, 120, 180])
-                modelContext.insert(newItem)
-                viewModel.item = newItem
-            } else {
-                viewModel.item = items[0]
+            .navigationTitle("Gym Focus".uppercased())
+            .onAppear(){
+                if items.isEmpty {
+                    let newItem = Item(steps: 0, timers: [30, 60, 120, 180])
+                    modelContext.insert(newItem)
+                    viewModel.item = newItem
+                } else {
+                    viewModel.item = items[0]
+                }
             }
         }
         .preferredColorScheme(.dark)

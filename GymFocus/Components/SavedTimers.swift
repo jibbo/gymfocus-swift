@@ -15,8 +15,21 @@ struct SavedTimers: View {
     }
     
     var body: some View{
-        FlowLayout{
-            generateSavedTimers()
+        VStack{
+            HStack(alignment: .bottom){
+                Text("Pinned Timers")
+                    .font(.body1)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                Spacer()
+                SecondaryButton(viewModel.isEditing ? "Done": "Edit"){ it in
+                    viewModel.isEditing.toggle()
+                    it.title = viewModel.isEditing ? "Done": "Edit"
+                }.padding(.vertical, 20)
+            }
+            FlowLayout{
+                generateSavedTimers()
+            }
         }
     }
     
@@ -55,5 +68,8 @@ struct SavedTimers: View {
     let viewModel = ItemsViewModel();
     SavedTimers(viewModel).onAppear{
         viewModel.item.timers=[30,60,90,120,180]
+    }
+    Button("Toggle"){
+        viewModel.isEditing.toggle()
     }
 }

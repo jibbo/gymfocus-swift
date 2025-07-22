@@ -14,11 +14,11 @@ struct GymFocusApp: App {
     init() {
             // Large title
             UINavigationBar.appearance().largeTitleTextAttributes = [
-                .font: UIFont(name: "BebasNeue-Regular", size: 36)!
+                .font: UIFont(name: Theme.fontName, size: 36)!
             ]
             // Inline title
             UINavigationBar.appearance().titleTextAttributes = [
-                .font: UIFont(name: "BebasNeue-Regular", size: 20)!
+                .font: UIFont(name: Theme.fontName, size: 20)!
             ]
         }
     
