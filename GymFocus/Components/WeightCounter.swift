@@ -12,7 +12,7 @@ struct WeightCounter: View {
     
     @State private var sum: Double = 0
     
-    private let supportedWeights: [Double: Color] = [2.5:.darkGray, 5:.white, 10:.green, 15:.orange, 20:.blue, 25:.red]
+    private let supportedWeights: [Double: Color] = [1.25:.darkGray, 2.5:.gray, 5:.white, 10:.green, 15:.orange, 20:.blue, 25:.red]
     private let barWeight: Double = 20
     
     init(_ plates: [Double] = []) {
@@ -30,7 +30,7 @@ struct WeightCounter: View {
             HStack{
                 Spacer()
                 if(!plates.isEmpty){
-                    Rectangle().fill(.gray).frame(width:10, height: 30)
+                    Rectangle().fill(Color.lightGray).frame(width:10, height: 30)
                 }
                 ForEach(plates.indices, id: \.self) { index in
                     displayPlate(plates[index]).onTapGesture {
@@ -38,7 +38,7 @@ struct WeightCounter: View {
                         computeSum()
                     }
                 }
-                Rectangle().fill(.gray).frame(width:100, height: 30)
+                Rectangle().fill(Color.lightGray).frame(width:100, height: 30)
             }
             Spacer()
             HStack(alignment: .bottom){
@@ -85,5 +85,5 @@ struct WeightCounter: View {
 }
 
 #Preview{
-    WeightCounter([25,20,10,15,5,2.5])
+    WeightCounter([25,20,10,15,5,2.5,1.25])
 }

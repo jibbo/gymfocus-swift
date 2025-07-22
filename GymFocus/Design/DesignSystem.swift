@@ -22,6 +22,7 @@ extension Font {
 
 extension Color {
     static let primaryColor: Color = Color(red: 0.81, green: 1, blue: 0.01)
+    static let lightGray: Color = Color(red: 0.63, green: 0.63, blue: 0.63)
     static let darkGray: Color = Color(red: 0.21, green: 0.21, blue: 0.21)
 }
 
@@ -133,6 +134,13 @@ extension Color {
 }
 
 #Preview {
+    ScrollView(.horizontal){
+        HStack{
+            Text("primaryColor").background(Color.primaryColor).foregroundStyle(.black)
+            Text("darkGray").background(Color.darkGray)
+            Text("lightGray").background(Color.lightGray)
+        }
+    }
     Text("Primary title").font(.primaryTitle)
     Text("Caption").font(.caption)
     Text("body").font(.body)
