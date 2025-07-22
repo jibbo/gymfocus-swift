@@ -22,6 +22,7 @@ extension Font {
 
 extension Color {
     static let primaryColor: Color = Color(red: 0.81, green: 1, blue: 0.01)
+    static let darkGray: Color = Color(red: 0.21, green: 0.21, blue: 0.21)
 }
 
 struct PrimaryButton: View {
@@ -69,15 +70,19 @@ struct SecondaryButton: View {
 struct RoundButton : View{
     var title: String
     var dashed: Bool
+    var fillColor: Color?
+    var textColor: Color
     var action: ()->Void
     let isEditMode: Bool
     
     
-    init(_ title: String, dashed: Bool = false, isEditMode: Bool = false,  action: @escaping ()->Void){
+    init(_ title: String, dashed: Bool = false, fillColor: Color? = nil, textColor: Color = .white, isEditMode: Bool = false,  action: @escaping ()->Void){
         self.title = title
         self.action = action
         self.dashed = dashed
         self.isEditMode = isEditMode
+        self.fillColor = fillColor
+        self.textColor = textColor
     }
     
     var body: some View {
@@ -85,18 +90,21 @@ struct RoundButton : View{
             Text(title)
                 .font(.body1)
                 .bold()
-                .foregroundColor(.white)
+                .foregroundColor(textColor)
                 .padding(50)
                 .frame(maxWidth: .infinity)
+                .background(fillColor != nil ? fillColor : Color.clear)
         }
         .frame(minWidth: 100, minHeight: 100)
         .clipShape(Circle())
         .overlay{
             let color: Color = isEditMode ? .red : .primaryColor
-            if(dashed){
-                Circle().stroke(color, style: StrokeStyle(lineWidth: 2, dash: [8, 4])) .animation(.easeInOut(duration: 0.3), value: color)
-            }else{
-                Circle().stroke(color, lineWidth: 2) .animation(.easeInOut(duration: 0.3), value: color)
+            if(fillColor == nil){
+                if(dashed){
+                    Circle().stroke(color, style: StrokeStyle(lineWidth: 2, dash: [8, 4])) .animation(.easeInOut(duration: 0.3), value: color)
+                }else{
+                    Circle().stroke(color, lineWidth: 2) .animation(.easeInOut(duration: 0.3), value: color)
+                }
             }
         }
     }
@@ -132,6 +140,9 @@ extension Color {
         
     }
     SecondaryButton("Secondary"){_ in
+        
+    }
+    RoundButton("fill", fillColor: .red, textColor: .black){
         
     }
     RoundButton("line"){

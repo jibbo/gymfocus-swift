@@ -31,6 +31,7 @@ struct ContentView: View {
                     SetsView(viewModel)
                     TimerView(viewModel)
                     SavedTimers(viewModel)
+                    WeightCounter()
                 }
             }
             .navigationTitle("Gym Focus".uppercased())
