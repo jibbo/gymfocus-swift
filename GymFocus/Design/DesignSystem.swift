@@ -57,7 +57,6 @@ struct SecondaryButton: View {
                 .font(.custom("BebasNeue-Regular", size: 16))
                 .bold()
                 .foregroundColor(Theme.primaryColor)
-                .padding(.vertical, 16)
         }
     }
 }

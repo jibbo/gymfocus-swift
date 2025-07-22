@@ -16,9 +16,12 @@ struct SetsView: View {
     var body: some View {
         VStack {
             Spacer()
-            VStack{
-                Text(String(viewModel.item.steps)).font(.primaryTitle)
-                Text("Sets completed").font(.body)
+            HStack(alignment: .bottom){
+                Text(String(viewModel.item.steps))
+                    .font(.custom("BebasNeue-Regular", size: 92).bold())
+                Text("Sets completed")
+                    .font(.body)
+                    .padding(.vertical)
             }
             Spacer()
             HStack(spacing:5){

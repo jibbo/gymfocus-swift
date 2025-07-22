@@ -15,39 +15,36 @@ struct ContentView: View {
     @Query private var items: [Item]
     
     var body: some View {
-        
-        NavigationStack{
-            Text("")
-                .navigationTitle("GymFocus")
-            ViewThatFits(in: .horizontal){
-                GeometryReader { proxy in
+        ViewThatFits(in: .horizontal){
+            GeometryReader { proxy in
+                VStack{
+                    HeaderView(viewModel)
                     HStack{
                         SetsView(viewModel)
                             .frame(width: proxy.size.width * 0.3)
                         TimerView(viewModel)
-                            .frame(width: proxy.size.width * 0.7)
-                    }
-                }.frame(minWidth: 500)
-                TabView {
-                    SetsView(viewModel).tabItem{
-                        Image(systemName: "figure.gymnastics")
-                        Text("Sets")
-                    }
-                    .padding()
-                    TimerView(viewModel).tabItem{
-                        Image(systemName: "clock")
-                        Text("Timer")
+                            .frame(width: proxy.size.width * 0.5)
+                        ScrollView{
+                            SavedTimers(viewModel)
+                        }.frame(width: proxy.size.width * 0.2)
                     }
                 }
-                .tint(Theme.primaryColor)
-            }.onAppear(){
-                if items.isEmpty {
-                    let newItem = Item(steps: 0, timers: [30, 60, 120, 180])
-                    modelContext.insert(newItem)
-                    viewModel.item = newItem
-                } else {
-                    viewModel.item = items[0]
-                }
+            }
+            .frame(minWidth: 500)
+            ScrollView{
+                HeaderView(viewModel)
+                SetsView(viewModel)
+                TimerView(viewModel)
+                SavedTimers(viewModel)
+            }
+        }
+        .onAppear(){
+            if items.isEmpty {
+                let newItem = Item(steps: 0, timers: [30, 60, 120, 180])
+                modelContext.insert(newItem)
+                viewModel.item = newItem
+            } else {
+                viewModel.item = items[0]
             }
         }
         .preferredColorScheme(.dark)
@@ -58,5 +55,3 @@ struct ContentView: View {
     ContentView()
         .modelContainer(for: Item.self, inMemory: true)
 }
-
-

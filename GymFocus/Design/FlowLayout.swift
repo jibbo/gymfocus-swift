@@ -11,7 +11,7 @@ struct FlowLayout: Layout {
     var alignment: RowAlignment
     var spacing: CGFloat
 
-    init(alignment: RowAlignment = .leading, spacing: CGFloat = 8) {
+    init(alignment: RowAlignment = .center, spacing: CGFloat = 10) {
         self.alignment = alignment
         self.spacing = spacing
     }
