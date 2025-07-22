@@ -63,9 +63,6 @@ struct TimerView: View {
 }
 
 #Preview {
-    let viewModel = ItemsViewModel();
-    TimerView(viewModel).onAppear{
-        viewModel.item.timers=[30,60,90,120,180]
-    }
+    TimerView(ItemsViewModel())
 }
 

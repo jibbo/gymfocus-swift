@@ -24,20 +24,23 @@ struct ContentView: View {
                             .frame(width: proxy.size.width * 0.3)
                         TimerView(viewModel)
                             .frame(width: proxy.size.width * 0.5)
-                        ScrollView{
+                        ScrollView(showsIndicators:false){
                             SavedTimers(viewModel)
                         }.frame(width: proxy.size.width * 0.2)
                     }
                 }
             }
             .frame(minWidth: 500)
-            ScrollView{
+            VStack{
                 HeaderView(viewModel)
-                SetsView(viewModel)
-                TimerView(viewModel)
-                SavedTimers(viewModel)
+                ScrollView(showsIndicators:false){
+                    SetsView(viewModel)
+                    TimerView(viewModel)
+                    SavedTimers(viewModel)
+                }
             }
         }
+        .padding()
         .onAppear(){
             if items.isEmpty {
                 let newItem = Item(steps: 0, timers: [30, 60, 120, 180])

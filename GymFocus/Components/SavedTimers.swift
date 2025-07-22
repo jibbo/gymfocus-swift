@@ -15,16 +15,8 @@ struct SavedTimers: View {
     }
     
     var body: some View{
-        ViewThatFits(in: .horizontal){
-            GeometryReader { proxy in
-                FlowLayout(spacing: 10){
-                    generateSavedTimers()
-                }
-            }
-            .frame(minWidth: 200)
-            VStack{
-                generateSavedTimers()
-            }
+        FlowLayout{
+            generateSavedTimers()
         }
     }
     
@@ -48,15 +40,20 @@ struct SavedTimers: View {
                 }
                 .id(buttonID)
             }
-            if(!viewModel.isEditing){
-                RoundButton("+", dashed: true){
-                    viewModel.showNewTimer = true
-                }
-            }
+            RoundButton("+", dashed: true){
+                viewModel.showNewTimer = true
+            }.frame(minWidth: 135)
         }
     }
     
     private func formatTime(_ seconds: Int) -> String {
         String(format: "%02d:%02d", seconds / 60, seconds % 60)
+    }
+}
+
+#Preview {
+    let viewModel = ItemsViewModel();
+    SavedTimers(viewModel).onAppear{
+        viewModel.item.timers=[30,60,90,120,180]
     }
 }
