@@ -34,9 +34,9 @@ struct ContentView: View {
             VStack{
                 HeaderView(viewModel)
                 ScrollView(showsIndicators:false){
-                    SetsView(viewModel)
-                    TimerView(viewModel)
-                    SavedTimers(viewModel)
+                    SetsView(viewModel).padding()
+                    TimerView(viewModel).padding()
+                    SavedTimers(viewModel).padding()
                 }
             }
         }

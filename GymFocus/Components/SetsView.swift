@@ -20,7 +20,7 @@ struct SetsView: View {
                 Text(String(viewModel.item.steps))
                     .font(.custom("BebasNeue-Regular", size: 92).bold())
                 Text("Sets completed")
-                    .font(.body)
+                    .font(.custom("BebasNeue-Regular", size: 16))
                     .padding(.vertical)
             }
             Spacer()

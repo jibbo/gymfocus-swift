@@ -29,7 +29,7 @@ struct TimerView: View {
                     .font(.primaryTitle)
                     .opacity(viewModel.timerTextVisible ? 1 : 0)
                     .animation(.easeInOut(duration: viewModel.blinkDuration), value: viewModel.timerTextVisible)
-            }.frame(minWidth:200, maxWidth: 300, minHeight: 250)
+            }.frame(minWidth:200, maxWidth: 300)
             Spacer()
             PrimaryButton("STOP"){
                 viewModel.resetTimer();
