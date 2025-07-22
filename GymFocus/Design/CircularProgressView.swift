@@ -16,7 +16,7 @@ struct CircularProgressView<Content: View>: View {
     
     init(
         progress: Double,
-        lineWidth: CGFloat = 10,
+        lineWidth: CGFloat = 20,
         color: Color = .primaryColor,
         @ViewBuilder content: @escaping () -> Content,
         action: @escaping ()-> Void = {})
@@ -38,6 +38,7 @@ struct CircularProgressView<Content: View>: View {
                 .rotationEffect(.degrees(-90))
             content()
         }
+        .padding()
         .onTapGesture {
             action()
         }

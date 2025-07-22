@@ -49,13 +49,15 @@ struct TimerView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)){ _ in
             if(viewModel.timerRunning){
-                let interval = viewModel.timerDate.timeIntervalSinceNow
-                if(interval <= 0){
-                    viewModel.startBlinking()
-                }else{
-                    viewModel.stopBlinking()
+                Task { @MainActor in
+                    let interval = viewModel.timerDate.timeIntervalSinceNow
+                    if(interval <= 0){
+                        viewModel.startBlinking()
+                    }else{
+                        viewModel.stopBlinking()
+                    }
+                    viewModel.timeRemaining = interval >= 0 ? interval : 0
                 }
-                viewModel.timeRemaining = interval >= 0 ? interval : 0
             }
         }
     }

@@ -7,6 +7,7 @@
 import SwiftUI
 import AudioToolbox
 
+
 final class ItemsViewModel: ObservableObject {
     @Published var item: Item = Item(steps: 0, timers: [])
     @Published var isEditing: Bool = false
@@ -72,7 +73,7 @@ final class ItemsViewModel: ObservableObject {
         guard !isBlinking else { return }
         isBlinking = true
         timerTextVisible = false
-        Task {
+        Task { @MainActor in
             while isBlinking {
                 try? await Task.sleep(nanoseconds: UInt64(blinkDuration * 1_000_000_000))
                 if isBlinking { timerTextVisible.toggle() }
