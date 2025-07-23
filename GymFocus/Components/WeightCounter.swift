@@ -50,11 +50,11 @@ struct WeightCounter: View {
                 HStack{
                     ForEach(Array(supportedWeights.keys.sorted()), id: \.self){ key in
                         if(supportedWeights[key] == .white){
-                            RoundButton(String(key), fillColor: supportedWeights[key], textColor: .black){
+                            RoundButton(plateText(key), fillColor: supportedWeights[key], textColor: .black){
                                 addPlate(key)
                             }
                         }else{
-                            RoundButton(String(key), fillColor: supportedWeights[key]){
+                            RoundButton(plateText(key), fillColor: supportedWeights[key]){
                                 addPlate(key)
                             }
                         }
@@ -81,6 +81,14 @@ struct WeightCounter: View {
     
     private func computeSum(){
         sum =  (plates.reduce(0, +)) * 2 + barWeight
+    }
+    
+    private func plateText(_ weight: Double, measure: String = "Kg") -> String{
+        if(weight.truncatingRemainder(dividingBy: 1) == 0 ){
+            "\(String(Int(weight))) \(measure)"
+        } else {
+            "\(String(format: "%.2f", weight)) \(measure)"
+        }
     }
 }
 
