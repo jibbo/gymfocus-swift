@@ -11,6 +11,8 @@ import UserNotifications
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var settings: Settings
+    
     @StateObject private var viewModel: ItemsViewModel = ItemsViewModel()
     @Query private var items: [Item]
     
@@ -27,26 +29,11 @@ struct ContentView: View {
                     }
                 }
                 .frame(minWidth: 500)
-//                ScrollView(showsIndicators:false){
-//                    SetsView(viewModel)
-//                    TimerView(viewModel)
-//                    SavedTimers(viewModel)
-//                    WeightCounter()
-//                }
-                TabView{
-                    SetsView(viewModel).tabItem {
-                        Label("Sets", systemImage: "gauge.with.needle")
-                    }
-                    TimerView(viewModel).tabItem {
-                        Label("Timer", systemImage: "clock")
-                    }
-                    WeightCounter()
-                    .tabItem{
-                        Label("Plates Counter", systemImage: "figure.strengthtraining.traditional")
-                    }
-                    SettingsView().tabItem {
-                        Label("Settings", systemImage: "slider.horizontal.3")
-                    }
+                
+                if(settings.singlePage){
+                    SinglePageVertical(viewModel)
+                } else{
+                    MultiPageVertical(viewModel)
                 }
             }
             .navigationTitle("Gym Focus".uppercased())
