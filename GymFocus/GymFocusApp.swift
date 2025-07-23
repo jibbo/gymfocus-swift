@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct GymFocusApp: App {
+    @StateObject private var settings = Settings()
     
     init() {
             // Large title
@@ -40,5 +41,6 @@ struct GymFocusApp: App {
             ContentView()
         }
         .modelContainer(sharedModelContainer)
+        .environmentObject(settings)
     }
 }

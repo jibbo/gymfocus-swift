@@ -27,11 +27,18 @@ struct ContentView: View {
                     }
                 }
                 .frame(minWidth: 500)
-                ScrollView(showsIndicators:false){
-                    SetsView(viewModel)
-                    TimerView(viewModel)
-                    SavedTimers(viewModel)
-                    WeightCounter()
+                TabView{
+                    ScrollView(showsIndicators:false){
+                        SetsView(viewModel)
+                        TimerView(viewModel)
+                        SavedTimers(viewModel)
+                        WeightCounter()
+                    }.tabItem{
+                        Label("Everyone", systemImage: "person.3")
+                    }
+                    SettingsView().tabItem {
+                        Label("Everyone", systemImage: "person.3")
+                    }
                 }
             }
             .navigationTitle("Gym Focus".uppercased())
@@ -52,4 +59,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .modelContainer(for: Item.self, inMemory: true)
+        .environmentObject(Settings())
 }

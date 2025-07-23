@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AddTimerView : View {
+    @EnvironmentObject private var settings: Settings
     @Environment(\.dismiss) var dismiss
     @State private var text: String = "45"
     @FocusState private var isFocused: Bool
@@ -38,7 +39,7 @@ struct AddTimerView : View {
             Spacer()
             HStack{
                 Spacer()
-                PrimaryButton("Cancel"){
+                PrimaryButton("Cancel", color: .gray){
                     dismiss()
                 }
                 PrimaryButton("Add"){

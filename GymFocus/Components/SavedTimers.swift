@@ -43,7 +43,7 @@ struct SavedTimers: View {
                 let buttonID = "\(timer)-\(viewModel.isEditing)"
                 RoundButton(
                     formatTime(Int(timer)),
-                    isEditMode: viewModel.isEditing
+                    isEditMode: viewModel.isEditing,
                 ) {
                     if viewModel.isEditing {
                         viewModel.showDeleteAlert = true
@@ -70,8 +70,5 @@ struct SavedTimers: View {
     let viewModel = ItemsViewModel();
     SavedTimers(viewModel).onAppear{
         viewModel.item.timers=[30,60,90,120,180]
-    }
-    Button("Toggle"){
-        viewModel.isEditing.toggle()
     }
 }
