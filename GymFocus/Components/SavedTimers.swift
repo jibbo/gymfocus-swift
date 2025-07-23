@@ -70,5 +70,5 @@ struct SavedTimers: View {
     let viewModel = ItemsViewModel();
     SavedTimers(viewModel).onAppear{
         viewModel.item.timers=[30,60,90,120,180]
-    }
+    }.environmentObject(Settings())
 }

@@ -34,6 +34,7 @@ struct TimerView: View {
                     .opacity(viewModel.timerTextVisible ? 1 : 0)
                     .animation(.easeInOut(duration: viewModel.blinkDuration), value: viewModel.timerTextVisible)
             }.frame(minWidth:200, maxWidth: 300)
+            SavedTimers(viewModel)
             Spacer()
             PrimaryButton("STOP"){
                 viewModel.resetTimer();
@@ -69,6 +70,9 @@ struct TimerView: View {
 }
 
 #Preview {
-    TimerView(ItemsViewModel())
+    let viewModel = ItemsViewModel();
+    TimerView(viewModel).environmentObject(Settings()).onAppear {
+        viewModel.item.timers=[30,60,90,120,180]
+    }
 }
 

@@ -27,17 +27,25 @@ struct ContentView: View {
                     }
                 }
                 .frame(minWidth: 500)
+//                ScrollView(showsIndicators:false){
+//                    SetsView(viewModel)
+//                    TimerView(viewModel)
+//                    SavedTimers(viewModel)
+//                    WeightCounter()
+//                }
                 TabView{
-                    ScrollView(showsIndicators:false){
-                        SetsView(viewModel)
-                        TimerView(viewModel)
-                        SavedTimers(viewModel)
-                        WeightCounter()
-                    }.tabItem{
-                        Label("Everyone", systemImage: "person.3")
+                    SetsView(viewModel).tabItem {
+                        Label("Sets", systemImage: "gauge.with.needle")
+                    }
+                    TimerView(viewModel).tabItem {
+                        Label("Timer", systemImage: "clock")
+                    }
+                    WeightCounter()
+                    .tabItem{
+                        Label("Plates Counter", systemImage: "figure.strengthtraining.traditional")
                     }
                     SettingsView().tabItem {
-                        Label("Everyone", systemImage: "person.3")
+                        Label("Settings", systemImage: "slider.horizontal.3")
                     }
                 }
             }
