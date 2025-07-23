@@ -32,10 +32,13 @@ struct WeightCounter: View {
                 .padding()
             Spacer()
             barbellView(isKg: settings.metricSystem)
-            Spacer()
-            countView(unitMeasure)
+            GeometryReader{ proxy in
+                countView(unitMeasure, proxy: proxy)
+                    .frame(width: proxy.size.width, height: proxy.size.height)
+            }
             Spacer()
             platesPickerView(unitMeasure).padding()
+            
         }
         .onAppear {
             computeSum(isKg: settings.metricSystem)
@@ -84,9 +87,10 @@ struct WeightCounter: View {
         }
     }
     
-    private func countView(_ unitMeasure: String) -> some View{
+    private func countView(_ unitMeasure: String, proxy: GeometryProxy) -> some View{
         HStack(alignment: .bottom){
-            Text(String(sum)).font(.custom(Theme.fontName, size: 92).bold())
+            let fontSize:CGFloat = proxy.size.height>=500 ? 92 : 55
+            Text(String(sum)).font(.custom(Theme.fontName, size: fontSize).bold())
             Text(unitMeasure).font(.body1).padding(.vertical)
         }
     }
