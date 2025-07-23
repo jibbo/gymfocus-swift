@@ -14,9 +14,23 @@ final class Settings: ObservableObject {
             UserDefaults.standard.set(theme, forKey: "theme")
         }
     }
+    
+    @Published var metricSystem: Bool {
+        didSet {
+            UserDefaults.standard.set(metricSystem, forKey: "metricSystem")
+        }
+    }
+    
+    @Published var singlePage: Bool {
+        didSet {
+            UserDefaults.standard.set(singlePage, forKey: "singlePage")
+        }
+    }
 
     init() {
         self.theme = UserDefaults.standard.string(forKey: "theme") ?? Theme.themes.keys.first!
+        self.metricSystem = UserDefaults.standard.bool(forKey: "metricSystem")
+        self.singlePage = UserDefaults.standard.bool(forKey: "singlePage")
     }
     
     func getThemeColor() -> Color {

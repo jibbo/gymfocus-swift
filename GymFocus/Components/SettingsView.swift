@@ -9,16 +9,15 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject private var settings: Settings
     
-    @State var On: Bool = false
-    
     var body: some View {
         Form{
             Section("Settings"){
-                HStack{
+                Toggle(isOn: $settings.metricSystem){
                     Text("Use metric system")
-                    Toggle(isOn: $On){
-                        
-                    }
+                }
+                
+                Toggle(isOn: $settings.singlePage){
+                    Text("Single page mode")
                 }
             }
             Section("Theme"){

@@ -21,6 +21,27 @@ extension Color {
     static let primaryPurple: Color = Color(red: 0.533, green: 0, blue: 0.906)
     static let lightGray: Color = Color(red: 0.63, green: 0.63, blue: 0.63)
     static let darkGray: Color = Color(red: 0.21, green: 0.21, blue: 0.21)
+    
+    func luminance() -> Double {
+        // 1. Convert SwiftUI Color to UIColor
+        let uiColor = UIColor(self)
+        
+        // 2. Extract RGB values
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        uiColor.getRed(&red, green: &green, blue: &blue, alpha: nil)
+        
+        // 3. Compute luminance.
+        return 0.2126 * Double(red) + 0.7152 * Double(green) + 0.0722 * Double(blue)
+    }
+    func isLight() -> Bool {
+        return luminance() > 0.5
+    }
+    
+    func textColor() -> Color {
+        return isLight() ? .black : .white
+    }
 }
 
 enum Theme {
@@ -30,7 +51,7 @@ enum Theme {
 
 struct PrimaryButton: View {
     @EnvironmentObject private var settings: Settings
-
+    
     var title: String
     var action: () -> Void
     var color: Color?
@@ -46,7 +67,7 @@ struct PrimaryButton: View {
         Button(action: action) {
             Text(title)
                 .font(.buttons)
-                .foregroundColor(.black)
+                .foregroundColor(themeColor.textColor())
                 .padding(.vertical, 16)
                 .frame(maxWidth: .infinity)
         }
@@ -92,13 +113,13 @@ struct RoundButton : View{
     let isEditMode: Bool
     
     
-    init(_ title: String, dashed: Bool = false, color: Color? = nil, fillColor: Color? = nil, textColor: Color = .white, isEditMode: Bool = false,  action: @escaping ()->Void){
+    init(_ title: String, dashed: Bool = false, color: Color? = nil, fillColor: Color? = nil, textColor: Color? = nil, isEditMode: Bool = false,  action: @escaping ()->Void){
         self.title = title
         self.action = action
         self.dashed = dashed
         self.isEditMode = isEditMode
         self.fillColor = fillColor
-        self.textColor = textColor
+        self.textColor = textColor ?? fillColor?.textColor() ?? .white
         self.color = color
     }
     
@@ -174,7 +195,7 @@ extension Color {
         SecondaryButton("Secondary"){_ in
             settings.theme = "green"
         }
-        RoundButton("fill", fillColor: .red, textColor: .black){
+        RoundButton("fill", fillColor: .red){
             
         }
         RoundButton("line"){
