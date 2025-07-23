@@ -24,7 +24,6 @@ struct WeightCounter: View {
     }
     
     var body: some View {
-        let unitMeasure = settings.metricSystem ? "Kg" : "lbs"
         VStack {
             Text("Weights Counter")
                 .font(.body1)
@@ -32,13 +31,14 @@ struct WeightCounter: View {
                 .padding()
             Spacer()
             barbellView(isKg: settings.metricSystem)
-            GeometryReader{ proxy in
-                countView(unitMeasure, proxy: proxy)
-                    .frame(width: proxy.size.width, height: proxy.size.height)
-            }
             Spacer()
-            platesPickerView(unitMeasure).padding()
-            
+            GeometryReader{ proxy in
+                countView(settings.metricSystem, proxy: proxy)
+                    .frame(width: proxy.size.width, height: proxy.size.height)
+            }.frame(maxHeight:100)
+            Spacer()
+            platesPickerView(isKg: settings.metricSystem).padding()
+            Spacer()
         }
         .onAppear {
             computeSum(isKg: settings.metricSystem)
@@ -54,8 +54,9 @@ struct WeightCounter: View {
     private func displayPlate(_ weight: Double, isKg: Bool = false) -> some View{
         let minWeight: Double = isKg ? 2.5 : 5.5
         let height: CGFloat = weight <= minWeight ? 50 : 90
-        let width: CGFloat = weight <= minWeight ? 10 : weight*2
-        return Rectangle().fill(supportedWeightsKg[weight] ?? Color.black).frame(width:width, height: height);
+        let width: CGFloat = weight <= minWeight ? 10 : (isKg ? weight*2 : weight/1.5)
+        let supportedWeights = isKg ? supportedWeightsKg : supportedWeightsLbs
+        return Rectangle().fill(supportedWeights[weight] ?? Color.black).frame(width:width, height: height);
     }
     
     private func computeSum(isKg: Bool = false){
@@ -63,11 +64,16 @@ struct WeightCounter: View {
         sum =  (plates.reduce(0, +)) * 2 + barWeight
     }
     
-    private func plateText(_ weight: Double, unitMeasure: String = "Kg") -> String{
+    private func getUnitMeasure(_ isKg: Bool = false) -> String{
+        settings.metricSystem ? "Kg" : "lbs"
+    }
+    
+    private func plateText(_ weight: Double, isKg: Bool) -> String{
+        let unitMeasure = getUnitMeasure(isKg)
         if(weight.truncatingRemainder(dividingBy: 1) == 0 ){
-            "\(String(Int(weight))) \(unitMeasure)"
+            return "\(String(Int(weight))) \(unitMeasure)"
         } else {
-            "\(String(format: "%.2f", weight)) \(unitMeasure)"
+            return "\(String(format: "%.2f", weight)) \(unitMeasure)"
         }
     }
     
@@ -87,24 +93,25 @@ struct WeightCounter: View {
         }
     }
     
-    private func countView(_ unitMeasure: String, proxy: GeometryProxy) -> some View{
+    private func countView(_ isKg: Bool = false, proxy: GeometryProxy) -> some View{
         HStack(alignment: .bottom){
             let fontSize:CGFloat = proxy.size.height>=500 ? 92 : 55
             Text(String(sum)).font(.custom(Theme.fontName, size: fontSize).bold())
-            Text(unitMeasure).font(.body1).padding(.vertical)
+            Text(getUnitMeasure(isKg)).font(.body1).padding(.vertical)
         }
     }
     
-    private func platesPickerView(_ unitMeasure: String) -> some View{
+    private func platesPickerView(isKg: Bool) -> some View{
         ScrollView(.horizontal){
             HStack{
-                ForEach(Array(supportedWeightsKg.keys.sorted()), id: \.self){ key in
-                    if(supportedWeightsKg[key] == .white){
-                        RoundButton(plateText(key, unitMeasure: unitMeasure), fillColor: supportedWeightsKg[key], textColor: .black){
+                let supportedWeights = isKg ? supportedWeightsKg : supportedWeightsLbs
+                ForEach(Array(supportedWeights.keys.sorted()), id: \.self){ key in
+                    if(supportedWeights[key] == .white || supportedWeights[key] == .yellow){
+                        RoundButton(plateText(key, isKg: isKg), fillColor: supportedWeights[key], textColor: .black){
                             addPlate(key)
                         }
                     }else{
-                        RoundButton(plateText(key, unitMeasure: unitMeasure), fillColor: supportedWeightsKg[key]){
+                        RoundButton(plateText(key, isKg: isKg), fillColor: supportedWeights[key], textColor: .white){
                             addPlate(key)
                         }
                     }
@@ -118,5 +125,5 @@ struct WeightCounter: View {
 }
 
 #Preview{
-    WeightCounter([25,20,10,15,5,2.5,1.25]).environmentObject(Settings())
+    WeightCounter().environmentObject(Settings())
 }
