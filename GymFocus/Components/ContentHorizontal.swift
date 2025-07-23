@@ -6,21 +6,26 @@
 //
 import SwiftUI
 
-struct SinglePageVertical: View {
+struct ContentHorizontal: View {
     @EnvironmentObject private var settings: Settings
     
     @ObservedObject private var viewModel: ItemsViewModel
     
-    init(_ viewModel: ItemsViewModel) {
+    private var proxy: GeometryProxy
+    
+    init(_ viewModel: ItemsViewModel, geometryProxy: GeometryProxy) {
         self.viewModel = viewModel
+        self.proxy = geometryProxy
     }
     
     var body: some View {
         TabView {
-            ScrollView(showsIndicators:false){
+            HStack{
                 SetsView(viewModel)
+                    .frame(width: proxy.size.width * 0.3)
                 TimerView(viewModel)
-                SavedTimers(viewModel)
+                    .frame(width: proxy.size.width * 0.5)
+                SavedTimers(viewModel).frame(width: proxy.size.width * 0.2)
             }.tabItem{
                 Label("Execution", systemImage: "figure.strengthtraining.traditional")
             }
@@ -32,16 +37,18 @@ struct SinglePageVertical: View {
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
                 }
-        }.accentColor(settings.getThemeColor())
-        
+        }
+        .accentColor(settings.getThemeColor())
     }
 }
 
 #Preview {
     let viewModel = ItemsViewModel();
-    SinglePageVertical(viewModel)
-        .onAppear{
-            viewModel.item.timers=[30,60,90,120,180]
-        }
-        .environmentObject(Settings())
+    GeometryReader { proxy in
+        ContentHorizontal(viewModel, geometryProxy: proxy)
+    }
+    .onAppear{
+        viewModel.item.timers=[30,60,90,120,180]
+    }
+    .environmentObject(Settings())
 }

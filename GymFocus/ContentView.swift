@@ -20,13 +20,7 @@ struct ContentView: View {
         NavigationStack{
             ViewThatFits(in: .horizontal){
                 GeometryReader { proxy in
-                    HStack{
-                        SetsView(viewModel)
-                            .frame(width: proxy.size.width * 0.3)
-                        TimerView(viewModel)
-                            .frame(width: proxy.size.width * 0.5)
-                        SavedTimers(viewModel).frame(width: proxy.size.width * 0.2)
-                    }
+                   ContentHorizontal(viewModel, geometryProxy: proxy)
                 }
                 .frame(minWidth: 500)
                 
