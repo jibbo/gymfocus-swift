@@ -29,7 +29,7 @@ final class Settings: ObservableObject {
     
     @Published var powerLifting: Bool {
         didSet {
-            UserDefaults.standard.set(singlePage, forKey: "powerLifting")
+            UserDefaults.standard.set(powerLifting, forKey: "powerLifting")
         }
     }
 
