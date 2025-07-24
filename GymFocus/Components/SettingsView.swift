@@ -26,6 +26,14 @@ struct SettingsView: View {
                     }.tint(settings.getThemeColor())
                     Text("Helps compute RM % ").opacity(0.8)
                 }
+                
+                Picker("Bar weight", selection: $settings.selectedBar) {
+                    let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
+                    ForEach(bars, id: \.self){ bar in
+                        Text(String(bar)).tag(bar)
+                    }
+                }.tint(settings.getThemeColor())
+            
             }
             Section("Themes"){
                 ScrollView(.horizontal, showsIndicators: false){

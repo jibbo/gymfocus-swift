@@ -15,13 +15,12 @@ struct WeightCounter: View {
     @State private var maxKg: String = "20"
     @State private var percent: String = "70"
     @State private var weightLeft: String = "0"
-    @State private var showWeightAlert: Bool = false
+    @State private var showBarbellSelector: Bool = false
     @FocusState var isInputActive: Bool
     
     private let supportedWeightsKg: [Double: Color] = [0.25:.gray, 0.5:.gray, 1: .gray, 1.25:.darkGray, 2.5:.darkGray, 5:.white, 10:.green, 15:.orange, 20:.blue, 25:.red]
     private let supportedWeightsLbs: [Double: Color] = [0.25:.darkGray, 0.5:.darkGray, 0.75:.darkGray, 1:.darkGray, 2.5:.darkGray, 5:.darkGray, 10:.white, 15:.yellow, 20:.blue, 25:.green, 35:.orange, 45: .blue, 55:.red]
-    private let barWeightKg: Double = 20
-    private let barWeightLbs: Double = 45
+    
     
     init(_ plates: [Double] = []) {
         self.plates = plates
@@ -34,10 +33,18 @@ struct WeightCounter: View {
                     powerLifintMode()
                 }
                 Group{
+                    //                    HStack{
                     Text("Barbell")
                         .font(.body1)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()
+                    //                        Picker("Edit", selection: $settings.selectedBar) {
+                    //                            let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
+                    //                            ForEach(bars, id: \.self){ bar in
+                    //                                Text(String(bar)).tag(bar)
+                    //                            }
+                    //                        }.tint(settings.getThemeColor())
+                    //                    }
                     Spacer()
                     barbellView()
                     Spacer()
@@ -47,18 +54,28 @@ struct WeightCounter: View {
                     }.frame(maxHeight:100)
                     Spacer()
                     platesPickerView().padding()
-                    Spacer()
                 }.frame(minHeight: 50)
             }
             .onAppear {
                 computeSum()
-                maxKg = settings.metricSystem ? "\(barWeightKg)" : "\(barWeightLbs)"
-            }
-            .alert(isPresented: $showWeightAlert) {
-                Alert(title: Text("This weight can't be added to the bar"), message: Text("\(weightLeft) \(getUnitMeasure())"), dismissButton: .default(Text("OK")))
+                maxKg = String(settings.selectedBar)
             }
         }
     }
+    
+    //    private func barbellSelector() -> some View{
+    //        VStack{
+    //            Text("Select barbell weight")
+    //            let bars = settings.metricSystem ? barsKg : barsLbs
+    //            ForEach(bars, id: \.self){ bar in
+    //                Button(String(bar)){
+    //                    if(settings.metricSystem){
+    //                        
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
     
     private func powerLifintMode() -> some View{
         VStack{
@@ -113,7 +130,7 @@ struct WeightCounter: View {
     }
     
     private func automaticPlates(_ value: String, _ percent: String){
-        let barWeight = settings.metricSystem ? barWeightKg : barWeightLbs
+        let barWeight = Double(settings.selectedBar)
         let percent = Double(percent) ?? 100
         let weight = (Double(value) ?? 0) * (percent/100)
         let weightPerSide = (weight - barWeight) / 2
@@ -130,7 +147,7 @@ struct WeightCounter: View {
         
         let availablePlates = settings.metricSystem ? supportedWeightsKg.keys.sorted{$0>$1} : supportedWeightsLbs.keys.sorted{$0>$1}
         for plate in availablePlates {
-            while remaining >= plate - 0.001 { // use a tolerance for floating point
+            while remaining >= plate - 0.001 {
                 plates.append(plate)
                 remaining -= plate
             }
@@ -156,7 +173,7 @@ struct WeightCounter: View {
     }
     
     private func computeSum(){
-        let barWeight = settings.metricSystem ? barWeightKg : barWeightLbs
+        let barWeight = Double(settings.selectedBar)
         sum =  (plates.reduce(0, +)) * 2 + barWeight
     }
     
