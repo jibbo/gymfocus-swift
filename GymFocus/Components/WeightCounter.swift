@@ -41,14 +41,14 @@ struct WeightCounter: View {
             Spacer()
         }
         .onAppear {
-            computeSum(isKg: settings.metricSystem)
+            computeSum(settings.metricSystem)
         }
     }
     
     private func addPlate(_ weight: Double) {
         plates.append(weight)
         plates.sort()
-        computeSum(isKg: settings.metricSystem)
+        computeSum(settings.metricSystem)
     }
     
     private func displayPlate(_ weight: Double, isKg: Bool = false) -> some View{
@@ -59,12 +59,12 @@ struct WeightCounter: View {
         return Rectangle().fill(supportedWeights[weight] ?? Color.black).frame(width:width, height: height);
     }
     
-    private func computeSum(isKg: Bool = false){
+    private func computeSum(_ isKg: Bool){
         let barWeight = isKg ? barWeightKg : barWeightLbs
         sum =  (plates.reduce(0, +)) * 2 + barWeight
     }
     
-    private func getUnitMeasure(_ isKg: Bool = false) -> String{
+    private func getUnitMeasure(_ isKg: Bool) -> String{
         settings.metricSystem ? "Kg" : "lbs"
     }
     
@@ -86,7 +86,7 @@ struct WeightCounter: View {
             ForEach(plates.indices, id: \.self) { index in
                 displayPlate(plates[index], isKg: isKg).onTapGesture {
                     plates.remove(at: index)
-                    computeSum()
+                    computeSum(isKg)
                 }
             }
             Rectangle().fill(Color.lightGray).frame(width:100, height: 30)
@@ -102,23 +102,23 @@ struct WeightCounter: View {
     }
     
     private func platesPickerView(isKg: Bool) -> some View{
-        ScrollView(.horizontal){
+        ScrollView(.horizontal, showsIndicators: false){
             HStack{
                 let supportedWeights = isKg ? supportedWeightsKg : supportedWeightsLbs
                 ForEach(Array(supportedWeights.keys.sorted()), id: \.self){ key in
                     if(supportedWeights[key] == .white || supportedWeights[key] == .yellow){
-                        RoundButton(plateText(key, isKg: isKg), fillColor: supportedWeights[key], textColor: .black){
+                        RoundButton(plateText(key, isKg: isKg), fillColor: supportedWeights[key], textColor: .black, size: 90 ){
                             addPlate(key)
                         }
                     }else{
-                        RoundButton(plateText(key, isKg: isKg), fillColor: supportedWeights[key], textColor: .white){
+                        RoundButton(plateText(key, isKg: isKg), fillColor: supportedWeights[key], textColor: .white, size: 90){
                             addPlate(key)
                         }
                     }
                 }
             }.onAppear{
                 plates.sort()
-                computeSum()
+                computeSum(isKg)
             }
         }
     }

@@ -17,8 +17,12 @@ extension Font {
 }
 
 extension Color {
-    static let primaryGreen: Color = Color(red: 0.81, green: 1, blue: 0.01)
-    static let primaryPurple: Color = Color(red: 0.533, green: 0, blue: 0.906)
+    static let primaryDefault: Color = Color(red: 0.81, green: 1, blue: 0.01)
+    static let primaryA: Color = Color(red: 0.761, green: 0.529, blue: 0.482)
+    static let primaryD: Color = Color(red: 0.533, green: 0, blue: 0.906)
+    static let primaryE: Color = Color(red: 0, green: 0.404, blue: 0.31)
+    static let primaryF: Color = Color(red: 0.043, green: 0.4, blue: 0.137)
+    static let primaryG: Color = Color(red: 1, green: 0.455, blue: 0)
     static let lightGray: Color = Color(red: 0.63, green: 0.63, blue: 0.63)
     static let darkGray: Color = Color(red: 0.21, green: 0.21, blue: 0.21)
     
@@ -46,7 +50,7 @@ extension Color {
 
 enum Theme {
     static let fontName: String = "BebasNeue-Regular"
-    static let themes: [String: Color] = ["green":.primaryGreen, "purple":.primaryPurple]
+    static let themes: [String: Color] = ["S":.primaryDefault, "A": .primaryA, "D":.primaryD, "F": .primaryF,  "E": .primaryE, "G": .primaryG]
 }
 
 struct PrimaryButton: View {
@@ -104,16 +108,27 @@ struct SecondaryButton: View {
 struct RoundButton : View{
     @EnvironmentObject private var settings: Settings
     
-    var color: Color?
-    var title: String
-    var dashed: Bool
-    var fillColor: Color?
-    var textColor: Color
-    var action: ()->Void
-    let isEditMode: Bool
+    private var color: Color?
+    private var title: String
+    private var dashed: Bool
+    private var fillColor: Color?
+    private var textColor: Color
+    private var action: ()->Void
+    private let isEditMode: Bool
+    private let size: CGFloat
     
     
-    init(_ title: String, dashed: Bool = false, color: Color? = nil, fillColor: Color? = nil, textColor: Color? = nil, isEditMode: Bool = false,  action: @escaping ()->Void){
+    
+    init(
+        _ title: String,
+        dashed: Bool = false,
+        color: Color? = nil,
+        fillColor: Color? = nil,
+        textColor: Color? = nil,
+        isEditMode: Bool = false,
+        size: CGFloat = 100,
+        action: @escaping ()->Void
+    ){
         self.title = title
         self.action = action
         self.dashed = dashed
@@ -121,6 +136,7 @@ struct RoundButton : View{
         self.fillColor = fillColor
         self.textColor = textColor ?? fillColor?.textColor() ?? .white
         self.color = color
+        self.size = size
     }
     
     var body: some View {
@@ -130,11 +146,11 @@ struct RoundButton : View{
                 .font(.body1)
                 .bold()
                 .foregroundColor(textColor)
-                .padding(50)
+                .padding(size/2)
                 .frame(maxWidth: .infinity)
                 .background(fillColor != nil ? fillColor : Color.clear)
         }
-        .frame(minWidth: 100, minHeight: 100)
+        .frame(minWidth: size, minHeight: size)
         .clipShape(Circle())
         .overlay{
             let innerColor: Color = isEditMode ? .red : themeColor
@@ -151,7 +167,7 @@ struct RoundButton : View{
 
 struct DarkenOnTapButtonStyle: ButtonStyle {
     private var color: Color
-    init(_ color: Color? = .primaryGreen) {
+    init(_ color: Color? = .primaryDefault) {
         self.color = color ?? .black
     }
     func makeBody(configuration: Configuration) -> some View {
@@ -177,32 +193,50 @@ extension Color {
 
 #Preview {
     let settings = Settings()
-    VStack{
-        ScrollView(.horizontal){
-            HStack{
-                Text("primaryColor").background(Color.primaryGreen).foregroundStyle(.black)
-                Text("primaryColor").background(Color.primaryPurple)
-                Text("darkGray").background(Color.darkGray)
-                Text("lightGray").background(Color.lightGray)
+    ScrollView{
+        VStack(alignment: .leading) {
+            Text("Colors").font(.body1)
+            ScrollView(.horizontal){
+                HStack{
+                    Text("default").background(Color.primaryDefault).foregroundStyle(.black)
+                    Text("primaryA").background(Color.primaryA)
+                    Text("primaryD").background(Color.primaryD)
+                    Text("primaryE").background(Color.primaryE)
+                    Text("primaryF").background(Color.primaryF)
+                    Text("primaryG").background(Color.primaryG)
+                    Text("darkGray").background(Color.darkGray)
+                    Text("lightGray").background(Color.lightGray)
+                }
+            }.padding()
+            
+            Text("Typography").font(.body1)
+            VStack{
+                Text("Primary").font(.primaryTitle)
+                Text("Caption").font(.caption)
+                Text("body1").font(.body1)
+                Text("body2").font(.body1)
             }
-        }
-        Text("Primary").font(.primaryTitle)
-        Text("Caption").font(.caption)
-        Text("body").font(.body)
-        PrimaryButton("Primary"){
-            settings.theme = "purple"
-        }
-        SecondaryButton("Secondary"){_ in
-            settings.theme = "green"
-        }
-        RoundButton("fill", fillColor: .red){
+            .padding()
+            .background()
             
-        }
-        RoundButton("line"){
-            
-        }
-        RoundButton("dashed", dashed: true){
-            
-        }
+            Text("Buttons").font(.body1)
+            VStack{
+                PrimaryButton("Primary"){
+                    settings.theme = "purple"
+                }
+                SecondaryButton("Secondary"){_ in
+                    settings.theme = "green"
+                }
+                RoundButton("fill", fillColor: .red){
+                    
+                }
+                RoundButton("line"){
+                    
+                }
+                RoundButton("dashed", dashed: true){
+                    
+                }
+            }.padding()
+        }.padding()
     }.environmentObject(settings)
 }

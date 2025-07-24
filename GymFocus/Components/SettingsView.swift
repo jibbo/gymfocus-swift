@@ -21,14 +21,14 @@ struct SettingsView: View {
                 }
             }
             Section("Theme"){
-                ScrollView(.horizontal){
+                ScrollView(.horizontal, showsIndicators: false){
                     HStack{
-                        ForEach(Array(Theme.themes.keys), id: \.self) { key in
-                            ThemeButton(key){
+                        ForEach(Array(Theme.themes.keys.sorted()), id: \.self) { key in
+                            ThemeButton(key, selected: settings.theme == key){
                                 settings.theme = key
                             }
                         }
-                    }
+                    }.padding()
                 }
             }
         }
@@ -44,24 +44,24 @@ struct SettingsView: View {
 struct ThemeButton: View {
     private var key: String
     private var color: Color
+    private var selected: Bool
     private var action: () -> Void
     
-    init(_ key: String, action: @escaping () -> Void) {
+    init(_ key: String, selected: Bool = false, action: @escaping () -> Void) {
         self.key = key
         self.color = Theme.themes[key] ?? .black
         self.action = action
+        self.selected = selected
     }
     
     var body: some View {
-        Button(action: {
+        RoundButton(key, fillColor: color, size: 30){
             action()
-        }) {
-            ZStack {
-                Circle().fill(color)
-                    .frame(width: 60, height: 60)
+        }
+        .overlay{
+            if(selected){
+                Circle().stroke(.white, lineWidth: 4)
             }
         }
-        .clipShape(Circle())
-        .buttonStyle(DarkenOnTapButtonStyle(color))
     }
 }

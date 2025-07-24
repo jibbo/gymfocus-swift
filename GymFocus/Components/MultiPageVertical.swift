@@ -11,6 +11,8 @@ struct MultiPageVertical: View {
     
     @ObservedObject private var viewModel: ItemsViewModel
     
+    @SceneStorage("selectedTab") private var selectedTab: Int = 0
+    
     init(_ viewModel: ItemsViewModel) {
         self.viewModel = viewModel
     }
@@ -20,19 +22,20 @@ struct MultiPageVertical: View {
             SetsView(viewModel).tabItem {
                 Label("Sets", systemImage: "gauge.with.needle")
             }
-            ScrollView{
+            ScrollView(showsIndicators: false){
                 TimerView(viewModel)
                 SavedTimers(viewModel)
             }.tabItem {
                 Label("Timer", systemImage: "clock")
-            }
+            }.tag(0)
             WeightCounter()
-            .tabItem{
-                Label("Plates Counter", systemImage: "figure.strengthtraining.traditional")
-            }
-            SettingsView().tabItem {
-                Label("Settings", systemImage: "gearshape")
-            }
+                .tabItem{
+                    Label("Plates Counter", systemImage: "figure.strengthtraining.traditional")
+                }.tag(1)
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gearshape")
+                }.tag(2)
         }.accentColor(settings.getThemeColor())
     }
 }

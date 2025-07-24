@@ -14,6 +14,7 @@ struct ContentView: View {
     @EnvironmentObject private var settings: Settings
     
     @StateObject private var viewModel: ItemsViewModel = ItemsViewModel()
+    
     @Query private var items: [Item]
     
     var body: some View {

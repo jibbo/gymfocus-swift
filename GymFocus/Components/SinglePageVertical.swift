@@ -11,6 +11,8 @@ struct SinglePageVertical: View {
     
     @ObservedObject private var viewModel: ItemsViewModel
     
+    @SceneStorage("selectedTab") private var selectedTab: Int = 0
+    
     init(_ viewModel: ItemsViewModel) {
         self.viewModel = viewModel
     }
@@ -21,17 +23,21 @@ struct SinglePageVertical: View {
                 SetsView(viewModel)
                 TimerView(viewModel)
                 SavedTimers(viewModel)
-            }.tabItem{
+            }
+            .tabItem{
                 Label("Execution", systemImage: "figure.strengthtraining.traditional")
             }
+            .tag(0)
             WeightCounter()
                 .tabItem{
                     Label("Plate counter", systemImage: "dumbbell")
                 }
+                .tag(1)
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
                 }
+                .tag(2)
         }.accentColor(settings.getThemeColor())
         
     }

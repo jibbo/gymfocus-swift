@@ -28,7 +28,7 @@ final class Settings: ObservableObject {
     }
 
     init() {
-        self.theme = UserDefaults.standard.string(forKey: "theme") ?? Theme.themes.keys.first!
+        self.theme = UserDefaults.standard.string(forKey: "theme") ?? "S"
         self.metricSystem = UserDefaults.standard.bool(forKey: "metricSystem")
         self.singlePage = UserDefaults.standard.bool(forKey: "singlePage")
     }
