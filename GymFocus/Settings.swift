@@ -26,11 +26,18 @@ final class Settings: ObservableObject {
             UserDefaults.standard.set(singlePage, forKey: "singlePage")
         }
     }
+    
+    @Published var powerLifting: Bool {
+        didSet {
+            UserDefaults.standard.set(singlePage, forKey: "powerLifting")
+        }
+    }
 
     init() {
         self.theme = UserDefaults.standard.string(forKey: "theme") ?? "S"
         self.metricSystem = UserDefaults.standard.bool(forKey: "metricSystem")
         self.singlePage = UserDefaults.standard.bool(forKey: "singlePage")
+        self.powerLifting = UserDefaults.standard.bool(forKey: "powerLifting")
     }
     
     func getThemeColor() -> Color {

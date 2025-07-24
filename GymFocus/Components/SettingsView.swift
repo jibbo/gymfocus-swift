@@ -19,6 +19,10 @@ struct SettingsView: View {
                 Toggle(isOn: $settings.singlePage){
                     Text("Single page mode")
                 }.tint(settings.getThemeColor())
+                
+                Toggle(isOn: $settings.powerLifting){
+                    Text("Power lifting mode")
+                }.tint(settings.getThemeColor())
             }
             Section("Themes"){
                 ScrollView(.horizontal, showsIndicators: false){

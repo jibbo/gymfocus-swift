@@ -18,7 +18,7 @@ struct SinglePageVertical: View {
     }
     
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             ScrollView(showsIndicators:false){
                 SetsView(viewModel)
                 TimerView(viewModel)
@@ -38,8 +38,8 @@ struct SinglePageVertical: View {
                     Label("Settings", systemImage: "gearshape")
                 }
                 .tag(2)
-        }.accentColor(settings.getThemeColor())
-        
+        }
+        .accentColor(settings.getThemeColor())
     }
 }
 

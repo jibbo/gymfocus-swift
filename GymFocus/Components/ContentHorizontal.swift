@@ -21,7 +21,7 @@ struct ContentHorizontal: View {
     }
     
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab){
             HStack{
                 SetsView(viewModel)
                     .frame(width: proxy.size.width * 0.3)

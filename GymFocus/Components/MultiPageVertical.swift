@@ -18,7 +18,7 @@ struct MultiPageVertical: View {
     }
     
     var body: some View {
-        TabView{
+        TabView(selection: $selectedTab){
             SetsView(viewModel).tabItem {
                 Label("Sets", systemImage: "figure.strengthtraining.traditional")
             }
