@@ -16,6 +16,7 @@ struct WeightCounter: View {
     @State private var percent: String = "70"
     @State private var weightLeft: String = "0"
     @State private var showWeightAlert: Bool = false
+    @FocusState var isInputActive: Bool
     
     private let supportedWeightsKg: [Double: Color] = [0.25:.gray, 0.5:.gray, 1: .gray, 1.25:.darkGray, 2.5:.darkGray, 5:.white, 10:.green, 15:.orange, 20:.blue, 25:.red]
     private let supportedWeightsLbs: [Double: Color] = [0.25:.darkGray, 0.5:.darkGray, 0.75:.darkGray, 1:.darkGray, 2.5:.darkGray, 5:.darkGray, 10:.white, 15:.yellow, 20:.blue, 25:.green, 35:.orange, 45: .blue, 55:.red]
@@ -69,6 +70,7 @@ struct WeightCounter: View {
                 HStack(spacing: 1) { // adjust spacing if needed
                     TextField("One Rep Max", text: $maxKg)
                         .font(.primaryTitle)
+                        .focused($isInputActive)
                         .keyboardType(.numberPad)
                         .multilineTextAlignment(.trailing)
                         .onChange(of: maxKg) { _, newValue in
@@ -82,15 +84,29 @@ struct WeightCounter: View {
                 HStack(spacing: 1) {
                     TextField("%", text: $percent)
                         .font(.primaryTitle)
+                        .focused($isInputActive)
                         .keyboardType(.numberPad)
                         .multilineTextAlignment(.trailing)
                         .onChange(of: percent) { _, newValue in
                             automaticPlates(maxKg, newValue)
                         }
+                        .onSubmit {
+                            automaticPlates(maxKg, percent)
+                        }
+                        .submitLabel(.done)
                     Text("%")
                         .font(.body2)
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    
+                    Button("Done") {
+                        isInputActive = false
+                    }
+                }
             }
             .padding()
         }
@@ -157,7 +173,7 @@ struct WeightCounter: View {
         }
     }
     
-    private func barbellView(isKg: Bool = false) -> some View{
+    private func barbellView() -> some View{
         HStack{
             Spacer()
             if(!plates.isEmpty){

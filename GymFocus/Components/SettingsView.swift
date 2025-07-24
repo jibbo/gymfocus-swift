@@ -20,9 +20,12 @@ struct SettingsView: View {
                     Text("Single page mode")
                 }.tint(settings.getThemeColor())
                 
-                Toggle(isOn: $settings.powerLifting){
-                    Text("Power lifting mode")
-                }.tint(settings.getThemeColor())
+                VStack(alignment: .leading){
+                    Toggle(isOn: $settings.powerLifting){
+                        Text("Power lifting mode")
+                    }.tint(settings.getThemeColor())
+                    Text("Helps compute RM % ").opacity(0.8)
+                }
             }
             Section("Themes"){
                 ScrollView(.horizontal, showsIndicators: false){
