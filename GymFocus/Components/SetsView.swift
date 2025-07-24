@@ -15,10 +15,16 @@ struct SetsView: View {
     
     var body: some View {
         VStack {
-            Text("Sets")
-                .font(.body1)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
+            HStack{
+                Text("Sets")
+                    .font(.body1)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                Spacer()
+                SecondaryButton("RESET"){_ in
+                    viewModel.item.steps = 0
+                }
+            }
             Spacer()
             HStack(alignment: .bottom){
                 Text(String(viewModel.item.steps))
@@ -28,20 +34,14 @@ struct SetsView: View {
                     .padding(.vertical)
             }
             Spacer()
-            HStack(spacing:5){
-                PrimaryButton("RESET"){
-                    viewModel.item.steps = 0
-                }
-                .frame(maxWidth: .infinity)
-                PrimaryButton("+1"){
-                    viewModel.item.steps += 1
-                }.frame(maxWidth: .infinity)
-            }.padding()
+            PrimaryButton("+1"){
+                viewModel.item.steps += 1
+            }
+            .padding()
         }
-
     }
 }
 
 #Preview {
-    SetsView(ItemsViewModel())
+    SetsView(ItemsViewModel()).environmentObject(Settings())
 }

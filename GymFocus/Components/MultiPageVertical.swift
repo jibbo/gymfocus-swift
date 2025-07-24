@@ -20,7 +20,7 @@ struct MultiPageVertical: View {
     var body: some View {
         TabView{
             SetsView(viewModel).tabItem {
-                Label("Sets", systemImage: "gauge.with.needle")
+                Label("Sets", systemImage: "figure.strengthtraining.traditional")
             }
             ScrollView(showsIndicators: false){
                 TimerView(viewModel)
@@ -30,7 +30,7 @@ struct MultiPageVertical: View {
             }.tag(0)
             WeightCounter()
                 .tabItem{
-                    Label("Plates Counter", systemImage: "figure.strengthtraining.traditional")
+                    Label("Plates Counter", systemImage: "dumbbell")
                 }.tag(1)
             SettingsView()
                 .tabItem {

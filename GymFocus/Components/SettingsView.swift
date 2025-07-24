@@ -14,13 +14,13 @@ struct SettingsView: View {
             Section("Settings"){
                 Toggle(isOn: $settings.metricSystem){
                     Text("Use metric system")
-                }
+                }.tint(settings.getThemeColor())
                 
                 Toggle(isOn: $settings.singlePage){
                     Text("Single page mode")
-                }
+                }.tint(settings.getThemeColor())
             }
-            Section("Theme"){
+            Section("Themes"){
                 ScrollView(.horizontal, showsIndicators: false){
                     HStack{
                         ForEach(Array(Theme.themes.keys.sorted()), id: \.self) { key in
@@ -28,7 +28,7 @@ struct SettingsView: View {
                                 settings.theme = key
                             }
                         }
-                    }.padding()
+                    }
                 }
             }
         }
@@ -55,7 +55,7 @@ struct ThemeButton: View {
     }
     
     var body: some View {
-        RoundButton(key, fillColor: color, size: 30){
+        RoundButton(key, fillColor: color, size: 50){
             action()
         }
         .overlay{

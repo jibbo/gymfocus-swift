@@ -19,7 +19,8 @@ extension Font {
 extension Color {
     static let primaryDefault: Color = Color(red: 0.81, green: 1, blue: 0.01)
     static let primaryA: Color = Color(red: 0.761, green: 0.529, blue: 0.482)
-    static let primaryD: Color = Color(red: 0.533, green: 0, blue: 0.906)
+//    static let primaryD: Color = Color(red: 0.533, green: 0, blue: 0.906)
+    static let primaryD: Color = Color(red: 0.804, green: 0, blue: 1)
     static let primaryE: Color = Color(red: 0, green: 0.404, blue: 0.31)
     static let primaryF: Color = Color(red: 0.043, green: 0.4, blue: 0.137)
     static let primaryG: Color = Color(red: 1, green: 0.455, blue: 0)

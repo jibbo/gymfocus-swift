@@ -22,7 +22,17 @@ struct AddTimerView : View {
     
     var body: some View {
         VStack{
-            Text("Time in seconds:").font(.body).padding()
+            HStack{
+                Image(systemName: "xmark")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.white)
+                    .onTapGesture {
+                        dismiss()
+                    }
+                Spacer()
+                Text("Time in seconds").font(.body1).padding()
+                Spacer()
+            }
             Spacer()
             TextField("seconds", text: $text)
                 .font(.primaryTitle)
@@ -37,16 +47,10 @@ struct AddTimerView : View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             Spacer()
-            HStack{
-                Spacer()
-                PrimaryButton("Cancel", color: .gray){
-                    dismiss()
-                }
-                PrimaryButton("Add"){
-                    viewModel.item.timers.append(Double(text) ?? 0)
-                    viewModel.item.timers.sort()
-                    dismiss()
-                }
+            PrimaryButton("Add"){
+                viewModel.item.timers.append(Double(text) ?? 0)
+                viewModel.item.timers.sort()
+                dismiss()
             }
         }
         .padding()
@@ -54,5 +58,5 @@ struct AddTimerView : View {
 }
 
 #Preview {
-    AddTimerView(ItemsViewModel())
+    AddTimerView(ItemsViewModel()).environmentObject(Settings())
 }
