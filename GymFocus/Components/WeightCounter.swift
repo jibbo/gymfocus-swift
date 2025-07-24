@@ -17,7 +17,7 @@ struct WeightCounter: View {
     @State private var weightLeft: String = "0"
     @State private var showWeightAlert: Bool = false
     
-    private let supportedWeightsKg: [Double: Color] = [0.25:.gray, 1: .gray, 1.25:.darkGray, 2.5:.darkGray, 5:.white, 10:.green, 15:.orange, 20:.blue, 25:.red]
+    private let supportedWeightsKg: [Double: Color] = [0.25:.gray, 0.5:.gray, 1: .gray, 1.25:.darkGray, 2.5:.darkGray, 5:.white, 10:.green, 15:.orange, 20:.blue, 25:.red]
     private let supportedWeightsLbs: [Double: Color] = [0.25:.darkGray, 0.5:.darkGray, 0.75:.darkGray, 1:.darkGray, 2.5:.darkGray, 5:.darkGray, 10:.white, 15:.yellow, 20:.blue, 25:.green, 35:.orange, 45: .blue, 55:.red]
     private let barWeightKg: Double = 20
     private let barWeightLbs: Double = 45
@@ -51,6 +51,7 @@ struct WeightCounter: View {
             }
             .onAppear {
                 computeSum()
+                maxKg = settings.metricSystem ? "\(barWeightKg)" : "\(barWeightLbs)"
             }
             .alert(isPresented: $showWeightAlert) {
                 Alert(title: Text("This weight can't be added to the bar"), message: Text("\(weightLeft) \(getUnitMeasure())"), dismissButton: .default(Text("OK")))
@@ -206,7 +207,7 @@ struct WeightCounter: View {
 #Preview{
     let settings = Settings()
     WeightCounter().environmentObject(settings).onAppear {
-        settings.metricSystem = true
+        settings.metricSystem = false
         settings.powerLifting = true
     }
 }
