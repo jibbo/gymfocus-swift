@@ -27,6 +27,16 @@ struct WeightCounter: View {
     }
     
     var body: some View {
+        ViewThatFits(in: .horizontal){
+            GeometryReader { proxy in
+                horizontal()
+            }
+            .frame(minWidth: 500)
+            vertical()
+        }
+    }
+    
+    private func vertical() -> some View{
         ScrollView(showsIndicators: false){
             VStack {
                 if(settings.powerLifting){
@@ -52,6 +62,34 @@ struct WeightCounter: View {
                 maxKg = String(settings.selectedBar)
             }
         }
+    }
+    
+    private func horizontal() -> some View{
+            HStack {
+                VStack{
+                    header()
+                    barbellView()
+                    GeometryReader{ proxy in
+                        countView(proxy: proxy)
+                            .frame(width: proxy.size.width, height: proxy.size.height)
+                    }.frame(maxHeight:100)
+                }
+                VStack{
+                    if(settings.powerLifting){
+                        percentageCalculator()
+                    }
+                    Group{
+                        Text("Plates")
+                            .font(.body1)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        platesPickerView().padding()
+                    }.frame(minHeight: 50)
+                }
+            }
+            .onAppear {
+                computeSum()
+                maxKg = String(settings.selectedBar)
+            }
     }
     
     private func header() -> some View{
