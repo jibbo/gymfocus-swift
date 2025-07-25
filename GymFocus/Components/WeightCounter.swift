@@ -58,12 +58,10 @@ struct WeightCounter: View {
                     ScrollView(.horizontal, showsIndicators: false){
                         barbellView()
                     }
-                    Spacer()
                     GeometryReader{ proxy in
                         countView(proxy: proxy)
                             .frame(width: proxy.size.width, height: proxy.size.height)
-                    }.frame(maxHeight:100)
-                    Spacer()
+                    }.frame(maxHeight:50).padding()
                     platesPickerView()
                     Spacer()
                 }.frame(minHeight: 50)
@@ -91,12 +89,7 @@ struct WeightCounter: View {
                     if(settings.powerLifting){
                         percentageCalculator()
                     }
-                    Group{
-                        Text("Plates")
-                            .font(.body1)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        platesPickerView().padding()
-                    }.frame(minHeight: 30)
+                    platesPickerView()
                 }
             }
             .onAppear {
@@ -136,7 +129,6 @@ struct WeightCounter: View {
             Text("Percentage calculator")
                 .font(.body1)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
             HStack {
                 HStack(spacing: 1) { // adjust spacing if needed
                     TextField("One Rep Max", text: $maxKg)
@@ -169,8 +161,7 @@ struct WeightCounter: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            .padding()
-        }
+        }.padding()
     }
     
     private func automaticPlates(_ value: String, _ percent: String){
@@ -272,23 +263,29 @@ struct WeightCounter: View {
     }
     
     private func platesPickerView() -> some View{
-        ScrollView(.horizontal, showsIndicators: false){
-            HStack{
-                let supportedWeights = settings.metricSystem ? supportedWeightsKg : supportedWeightsLbs
-                ForEach(Array(supportedWeights.keys.sorted()), id: \.self){ key in
-                    if(supportedWeights[key] == .white || supportedWeights[key] == .yellow){
-                        RoundButton(plateText(key), fillColor: supportedWeights[key], textColor: .black, size: 90 ){
-                            addPlate(key)
-                        }
-                    }else{
-                        RoundButton(plateText(key), fillColor: supportedWeights[key], textColor: .white, size: 90){
-                            addPlate(key)
+        Group{
+            Text("Plates")
+                .font(.body1)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+            ScrollView(.horizontal, showsIndicators: false){
+                HStack(spacing:2){
+                    let supportedWeights = settings.metricSystem ? supportedWeightsKg : supportedWeightsLbs
+                    ForEach(Array(supportedWeights.keys.sorted()), id: \.self){ key in
+                        if(supportedWeights[key] == .white || supportedWeights[key] == .yellow){
+                            RoundButton(plateText(key), fillColor: supportedWeights[key], textColor: .black, size: 90 ){
+                                addPlate(key)
+                            }
+                        }else{
+                            RoundButton(plateText(key), fillColor: supportedWeights[key], textColor: .white, size: 90){
+                                addPlate(key)
+                            }
                         }
                     }
+                }.onAppear{
+                    plates.sort{$0 > $1}
+                    computeSum()
                 }
-            }.onAppear{
-                plates.sort{$0 > $1}
-                computeSum()
             }
         }
     }
