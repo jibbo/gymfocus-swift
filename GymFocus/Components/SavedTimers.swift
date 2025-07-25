@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SavedTimers: View {
     @ObservedObject private var viewModel: ItemsViewModel
+    @EnvironmentObject private var settings: Settings
     
     init(_ viewModel: ItemsViewModel) {
         self.viewModel = viewModel
@@ -49,7 +50,7 @@ struct SavedTimers: View {
                         viewModel.showDeleteAlert = true
                         viewModel.selectedTimer = timer
                     } else {
-                        viewModel.startTimer(time: timer)
+                        viewModel.startTimer(time: timer, themeColor: settings.getThemeColor())
                         viewModel.stopBlinking()
                     }
                 }

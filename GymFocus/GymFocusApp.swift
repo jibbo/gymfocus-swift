@@ -44,3 +44,4 @@ struct GymFocusApp: App {
         .environmentObject(settings)
     }
 }
+
