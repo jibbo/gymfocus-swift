@@ -16,7 +16,8 @@ struct WeightCounter: View {
     @State private var percent: String = "70"
     @State private var weightLeft: String = "0"
     @State private var showBarbellSelector: Bool = false
-    @FocusState var isInputActive: Bool
+    @FocusState var isWeightActive: Bool
+    @FocusState var isPercentActive: Bool
     
     private let supportedWeightsKg: [Double: Color] = [0.25:.gray, 0.5:.gray, 1: .gray, 1.25:.darkGray, 2.5:.darkGray, 5:.white, 10:.green, 15:.orange, 20:.blue, 25:.red]
     private let supportedWeightsLbs: [Double: Color] = [0.25:.darkGray, 0.5:.darkGray, 0.75:.darkGray, 1:.darkGray, 2.5:.darkGray, 5:.darkGray, 10:.white, 15:.yellow, 20:.blue, 25:.green, 35:.orange, 45: .blue, 55:.red]
@@ -33,6 +34,15 @@ struct WeightCounter: View {
             }
             .frame(minWidth: 500)
             vertical()
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    isWeightActive = false
+                    isPercentActive = false
+                }
+            }
         }
     }
     
@@ -54,7 +64,8 @@ struct WeightCounter: View {
                             .frame(width: proxy.size.width, height: proxy.size.height)
                     }.frame(maxHeight:100)
                     Spacer()
-                    platesPickerView().padding()
+                    platesPickerView()
+                    Spacer()
                 }.frame(minHeight: 50)
             }
             .onAppear {
@@ -68,7 +79,9 @@ struct WeightCounter: View {
             HStack {
                 VStack{
                     header()
-                    barbellView()
+                    ScrollView(.horizontal, showsIndicators: false){
+                        barbellView()
+                    }
                     GeometryReader{ proxy in
                         countView(proxy: proxy)
                             .frame(width: proxy.size.width, height: proxy.size.height)
@@ -83,7 +96,7 @@ struct WeightCounter: View {
                             .font(.body1)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         platesPickerView().padding()
-                    }.frame(minHeight: 50)
+                    }.frame(minHeight: 30)
                 }
             }
             .onAppear {
@@ -128,7 +141,7 @@ struct WeightCounter: View {
                 HStack(spacing: 1) { // adjust spacing if needed
                     TextField("One Rep Max", text: $maxKg)
                         .font(.primaryTitle)
-                        .focused($isInputActive)
+                        .focused($isWeightActive)
                         .keyboardType(.numberPad)
                         .multilineTextAlignment(.trailing)
                         .onChange(of: maxKg) { _, newValue in
@@ -142,7 +155,7 @@ struct WeightCounter: View {
                 HStack(spacing: 1) {
                     TextField("%", text: $percent)
                         .font(.primaryTitle)
-                        .focused($isInputActive)
+                        .focused($isPercentActive)
                         .keyboardType(.numberPad)
                         .multilineTextAlignment(.trailing)
                         .onChange(of: percent) { _, newValue in
@@ -151,19 +164,10 @@ struct WeightCounter: View {
                         .onSubmit {
                             automaticPlates(maxKg, percent)
                         }
-                        .submitLabel(.done)
                     Text("%")
                         .font(.body2)
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
-            }
-            .toolbar {
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
-                    Button("Done") {
-                        isInputActive = false
-                    }
-                }
             }
             .padding()
         }
@@ -237,7 +241,7 @@ struct WeightCounter: View {
     
     private func barbellView() -> some View{
         HStack(spacing: 1){
-            let wid: CGFloat = Double(150-(plates.count*10))
+            let wid: CGFloat = Double(150-(plates.count*25))
             Rectangle().fill(Color.lightGray).frame(width:50, height: 25)
             Rectangle().fill(Color.lightGray).frame(width:10, height: 65)
             ForEach(plates.indices, id: \.self) { index in
@@ -256,12 +260,12 @@ struct WeightCounter: View {
             }
         }
         .padding()
-        .frame(minHeight: 100)
+        .frame(height: 100)
     }
     
     private func countView(proxy: GeometryProxy) -> some View{
         HStack(alignment: .bottom){
-            let fontSize:CGFloat = proxy.size.height>=500 ? 92 : 55
+            let fontSize:CGFloat = proxy.size.height>=500 ? 95 : 55
             Text(String(sum)).font(.custom(Theme.fontName, size: fontSize).bold())
             Text(getUnitMeasure()).font(.body1).padding(.vertical)
         }
@@ -293,7 +297,7 @@ struct WeightCounter: View {
 #Preview{
     let settings = Settings()
     WeightCounter().environmentObject(settings).onAppear {
-        settings.metricSystem = true
+        settings.metricSystem = false
         settings.powerLifting = true
     }
 }
