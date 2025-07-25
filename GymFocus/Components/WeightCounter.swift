@@ -27,7 +27,7 @@ struct WeightCounter: View {
     }
     
     var body: some View {
-        ScrollView{
+        ScrollView(showsIndicators: false){
             VStack {
                 if(settings.powerLifting){
                     percentageCalculator()
@@ -35,7 +35,9 @@ struct WeightCounter: View {
                 Group{
                     header()
                     Spacer()
-                    barbellView()
+                    ScrollView(.horizontal, showsIndicators: false){
+                        barbellView()
+                    }
                     Spacer()
                     GeometryReader{ proxy in
                         countView(proxy: proxy)
@@ -53,33 +55,29 @@ struct WeightCounter: View {
     }
     
     private func header() -> some View{
-        HStack{
-            Text("Barbell")
-                .font(.body1)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
-            SecondaryButton("Edit"){_ in
-                showBarbellSelector = true
-            }
-        }.sheet(isPresented: $showBarbellSelector) {
-            VStack{
-                Text("Select the weight of the barbell").font(.body2)
-                Picker("Edit", selection: $settings.selectedBar) {
-                    let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
-                    ForEach(bars, id: \.self){ bar in
-                        Text(String(bar)).tag(bar)
+        Text("Barbell")
+            .font(.body1)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+            .sheet(isPresented: $showBarbellSelector) {
+                VStack{
+                    Text("Select the weight of the barbell").font(.body2)
+                    Picker("Edit", selection: $settings.selectedBar) {
+                        let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
+                        ForEach(bars, id: \.self){ bar in
+                            Text(String(bar)).tag(bar)
+                        }
+                    }
+                    .pickerStyle(.wheel)
+                    .tint(settings.getThemeColor())
+                    .onChange(of: settings.selectedBar){ oldVal, newVal in
+                        self.maxKg = String(newVal)
+                        self.plates = []
+                        computeSum()
+                        showBarbellSelector = false
                     }
                 }
-                .pickerStyle(.wheel)
-                .tint(settings.getThemeColor())
-                .onChange(of: settings.selectedBar){ oldVal, newVal in
-                    self.maxKg = String(newVal)
-                    self.plates = []
-                    computeSum()
-                    showBarbellSelector = false
-                }
             }
-        }
     }
     
     private func percentageCalculator() -> some View{
@@ -124,7 +122,6 @@ struct WeightCounter: View {
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
-                    
                     Button("Done") {
                         isInputActive = false
                     }
@@ -158,23 +155,28 @@ struct WeightCounter: View {
             }
         }
         
-        plates.sort()
+        plates.sort{$0 > $1}
         
         computeSum()
     }
     
     private func addPlate(_ weight: Double) {
         plates.append(weight)
-        plates.sort()
+        plates.sort{$0 > $1}
         computeSum()
     }
     
     private func displayPlate(_ weight: Double) -> some View{
         let minWeight: Double = settings.metricSystem ? 2.5 : 5.5
-        let height: CGFloat = weight <= minWeight ? 50 : 90
-        let width: CGFloat = weight <= minWeight ? 10 : (settings.metricSystem ? weight*2 : weight/1.5)
+        let height: CGFloat = weight <= minWeight ? 75 : 150
+        let width: CGFloat = weight <= minWeight ? 25 : (settings.metricSystem ? weight*2 : weight/1.25)
         let supportedWeights = settings.metricSystem ? supportedWeightsKg : supportedWeightsLbs
-        return Rectangle().fill(supportedWeights[weight] ?? Color.black).frame(width:width, height: height);
+        return ZStack{
+            let color = supportedWeights[weight] ?? Color.black
+            RoundedRectangle(cornerRadius: 3).fill(color)
+            let weightText = weight.truncatingRemainder(dividingBy: 1) > 0 ? String(format: "%.2f", weight) : String(Int(weight))
+            Text(weightText).font(.body2).foregroundStyle(color.textColor())
+        }.frame(width:width, height: height);
     }
     
     private func computeSum(){
@@ -196,19 +198,27 @@ struct WeightCounter: View {
     }
     
     private func barbellView() -> some View{
-        HStack{
-            Spacer()
-            if(!plates.isEmpty){
-                Rectangle().fill(Color.lightGray).frame(width:10, height: 30)
-            }
+        HStack(spacing: 1){
+            let wid: CGFloat = Double(150-(plates.count*10))
+            Rectangle().fill(Color.lightGray).frame(width:50, height: 25)
+            Rectangle().fill(Color.lightGray).frame(width:10, height: 65)
             ForEach(plates.indices, id: \.self) { index in
                 displayPlate(plates[index]).onTapGesture {
                     plates.remove(at: index)
                     computeSum()
                 }
             }
-            Rectangle().fill(Color.lightGray).frame(width:100, height: 30)
+            ZStack{
+                Rectangle().fill(Color.lightGray).frame(width:wid, height: 45)
+                Text(String(settings.selectedBar))
+                    .font(.body2)
+                    .foregroundColor(.white)
+            }.onTapGesture {
+                showBarbellSelector = true
+            }
         }
+        .padding()
+        .frame(minHeight: 100)
     }
     
     private func countView(proxy: GeometryProxy) -> some View{
@@ -235,7 +245,7 @@ struct WeightCounter: View {
                     }
                 }
             }.onAppear{
-                plates.sort()
+                plates.sort{$0 > $1}
                 computeSum()
             }
         }
@@ -245,7 +255,7 @@ struct WeightCounter: View {
 #Preview{
     let settings = Settings()
     WeightCounter().environmentObject(settings).onAppear {
-        settings.metricSystem = false
+        settings.metricSystem = true
         settings.powerLifting = true
     }
 }
