@@ -30,7 +30,7 @@ struct SinglePageVertical: View {
             .tag(0)
             WeightCounter()
                 .tabItem{
-                    Label(NSLocalizedString("plate_counter", comment: "Plate counter tab"), systemImage: "dumbbell")
+                    Label(NSLocalizedString("plates_counter", comment: "Plate counter tab"), systemImage: "dumbbell")
                 }
                 .tag(1)
             SettingsView()
