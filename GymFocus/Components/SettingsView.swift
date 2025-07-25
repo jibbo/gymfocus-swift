@@ -11,7 +11,7 @@ struct SettingsView: View {
     
     var body: some View {
         Form{
-            Section("Measure unit"){
+            Section("Unit of Measure"){
                 Toggle(isOn: $settings.metricSystem){
                     Text("Use metric system")
                 }
@@ -25,9 +25,6 @@ struct SettingsView: View {
                 Toggle(isOn: $settings.singlePage){
                     Text("Single page mode")
                 }.tint(settings.getThemeColor())
-                
-                
-                
             }
             Section("Experimental Features"){
                 Toggle(isOn: $settings.powerLifting){
@@ -35,10 +32,12 @@ struct SettingsView: View {
                 }.tint(settings.getThemeColor())
             }
             Section("Themes"){
-                FlowLayout{
-                    ForEach(Array(Theme.themes.map(\.key)), id: \.self) { key in
-                        ThemeButton(key, selected: settings.theme == key){
-                            settings.theme = key
+                ScrollView(showsIndicators: false){
+                    FlowLayout{
+                        ForEach(Array(Theme.themes.map(\.key)), id: \.self) { key in
+                            ThemeButton(key, selected: settings.theme == key){
+                                settings.theme = key
+                            }
                         }
                     }
                 }
@@ -62,7 +61,7 @@ struct ThemeButton: View {
     init(_ key: String, selected: Bool = false, action: @escaping () -> Void) {
         self.key = key
         self.color = Theme.themes.first(where: { $0.key == key })?.color ?? .primaryDefault
-        
+
         self.action = action
         self.selected = selected
     }
