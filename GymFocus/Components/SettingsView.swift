@@ -33,7 +33,7 @@ struct SettingsView: View {
             Section("Themes"){
                 ScrollView(.horizontal, showsIndicators: false){
                     HStack{
-                        ForEach(Array(Theme.themes.keys.sorted()), id: \.self) { key in
+                        ForEach(Array(Theme.themes.map(\.key)), id: \.self) { key in
                             ThemeButton(key, selected: settings.theme == key){
                                 settings.theme = key
                             }
@@ -59,7 +59,8 @@ struct ThemeButton: View {
     
     init(_ key: String, selected: Bool = false, action: @escaping () -> Void) {
         self.key = key
-        self.color = Theme.themes[key] ?? .black
+        self.color = Theme.themes.first(where: { $0.key == key })?.color ?? .primaryDefault
+
         self.action = action
         self.selected = selected
     }

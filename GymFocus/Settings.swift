@@ -57,6 +57,6 @@ final class Settings: ObservableObject {
     }
     
     func getThemeColor() -> Color {
-        return Theme.themes[theme] ?? .primaryDefault
+        Theme.themes.first(where: { $0.key == theme })?.color ?? .primaryDefault
     }
 }

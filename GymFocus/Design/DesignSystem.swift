@@ -23,6 +23,8 @@ extension Color {
     static let primaryE: Color = Color(red: 0, green: 0.404, blue: 0.31)
     static let primaryF: Color = Color(red: 0.043, green: 0.4, blue: 0.137)
     static let primaryG: Color = Color(red: 1, green: 0.455, blue: 0)
+    static let primaryB: Color = Color(red: 0.204, green: 0.596, blue: 0.859)
+    static let primaryR: Color = Color(red: 0.906, green: 0.298, blue: 0.235)
     static let lightGray: Color = Color(red: 0.63, green: 0.63, blue: 0.63)
     static let darkGray: Color = Color(red: 0.21, green: 0.21, blue: 0.21)
     
@@ -50,7 +52,16 @@ extension Color {
 
 enum Theme {
     static let fontName: String = "BebasNeue-Regular"
-    static let themes: [String: Color] = ["S":.primaryDefault, "A": .primaryA, "D":.primaryD, "F": .primaryF,  "E": .primaryE, "G": .primaryG]
+    static let themes: [(key: String, color: Color)] = [
+        ("S", .primaryDefault),
+        ("A", .primaryA),
+        ("B", .primaryB),
+        ("D", .primaryD),
+        ("F", .primaryF),
+        ("E", .primaryE),
+        ("G", .primaryG),
+        ("R", .primaryR)
+    ]
 }
 
 struct PrimaryButton: View {
@@ -200,10 +211,12 @@ extension Color {
                 HStack{
                     Text("default").background(Color.primaryDefault).foregroundStyle(.black)
                     Text("primaryA").background(Color.primaryA)
+                    Text("primaryB").background(Color.primaryB)
                     Text("primaryD").background(Color.primaryD)
                     Text("primaryE").background(Color.primaryE)
                     Text("primaryF").background(Color.primaryF)
                     Text("primaryG").background(Color.primaryG)
+                    Text("primaryR").background(Color.primaryR)
                     Text("darkGray").background(Color.darkGray)
                     Text("lightGray").background(Color.lightGray)
                 }
