@@ -20,21 +20,21 @@ struct MultiPageVertical: View {
     var body: some View {
         TabView(selection: $selectedTab){
             SetsView(viewModel).tabItem {
-                Label("Sets", systemImage: "figure.strengthtraining.traditional")
+                Label(NSLocalizedString("sets", comment: "Sets tab"), systemImage: "figure.strengthtraining.traditional")
             }
             ScrollView(showsIndicators: false){
                 TimerView(viewModel)
                 SavedTimers(viewModel)
             }.tabItem {
-                Label("Timer", systemImage: "clock")
+                Label(NSLocalizedString("timer", comment: "Timer tab"), systemImage: "clock")
             }.tag(0)
             WeightCounter()
                 .tabItem{
-                    Label("Plates Counter", systemImage: "dumbbell")
+                    Label(NSLocalizedString("plates_counter", comment: "Plates Counter tab"), systemImage: "dumbbell")
                 }.tag(1)
             SettingsView()
                 .tabItem {
-                    Label("Settings", systemImage: "gearshape")
+                    Label(NSLocalizedString("settings", comment: "Settings tab"), systemImage: "gearshape")
                 }.tag(2)
         }.accentColor(settings.getThemeColor())
     }

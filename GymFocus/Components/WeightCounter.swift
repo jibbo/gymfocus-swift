@@ -38,7 +38,7 @@ struct WeightCounter: View {
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
-                Button("Done") {
+                Button(NSLocalizedString("done", comment: "Done button")) {
                     isWeightActive = false
                     isPercentActive = false
                 }
@@ -99,14 +99,14 @@ struct WeightCounter: View {
     }
     
     private func header() -> some View{
-        Text("Barbell")
+        Text(NSLocalizedString("barbell", comment: "Barbell label"))
             .font(.body1)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
             .sheet(isPresented: $showBarbellSelector) {
                 VStack{
-                    Text("Select the weight of the barbell").font(.body2)
-                    Picker("Edit", selection: $settings.selectedBar) {
+                    Text(NSLocalizedString("select_barbell_weight", comment: "Select barbell weight text")).font(.body2)
+                    Picker(NSLocalizedString("edit", comment: "Edit picker"), selection: $settings.selectedBar) {
                         let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
                         ForEach(bars, id: \.self){ bar in
                             Text(String(bar)).tag(bar)
@@ -126,12 +126,12 @@ struct WeightCounter: View {
     
     private func percentageCalculator() -> some View{
         VStack{
-            Text("Percentage calculator")
+            Text(NSLocalizedString("percentage_calculator", comment: "Percentage calculator label"))
                 .font(.body1)
                 .frame(maxWidth: .infinity, alignment: .leading)
             HStack {
                 HStack(spacing: 1) { // adjust spacing if needed
-                    TextField("One Rep Max", text: $maxKg)
+                    TextField(NSLocalizedString("one_rep_max", comment: "One Rep Max placeholder"), text: $maxKg)
                         .font(.primaryTitle)
                         .focused($isWeightActive)
                         .keyboardType(.numberPad)
@@ -139,7 +139,7 @@ struct WeightCounter: View {
                         .onChange(of: maxKg) { _, newValue in
                             automaticPlates(newValue, percent)
                         }
-                    Text(settings.metricSystem ? "Kg": "Lbs")
+                    Text(settings.metricSystem ? NSLocalizedString("kg", comment: "Kg unit") : NSLocalizedString("lbs", comment: "Lbs unit"))
                         .font(.body2)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -218,7 +218,7 @@ struct WeightCounter: View {
     }
     
     private func getUnitMeasure() -> String{
-        settings.metricSystem ? "Kg" : "lbs"
+        settings.metricSystem ? NSLocalizedString("kg", comment: "Kg unit") : NSLocalizedString("lbs", comment: "Lbs unit")
     }
     
     private func plateText(_ weight: Double) -> String{
@@ -264,7 +264,7 @@ struct WeightCounter: View {
     
     private func platesPickerView() -> some View{
         Group{
-            Text("Plates")
+            Text(NSLocalizedString("plates", comment: "Plates label"))
                 .font(.body1)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()

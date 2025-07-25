@@ -42,7 +42,7 @@ struct TimerLiveActivity: Widget {
                 HStack {
                     Image(systemName: "timer")
                         .foregroundColor(themeColor)
-                    Text("Rest Time")
+                    Text(NSLocalizedString("rest_time", comment: "Rest time label"))
                         .font(.headline)
                         .foregroundColor(.white)
                     Spacer()
@@ -70,7 +70,7 @@ struct TimerLiveActivity: Widget {
                     HStack {
                         Image(systemName: "timer")
                             .foregroundColor(themeColor)
-                        Text("Rest Time")
+                        Text(NSLocalizedString("rest_time", comment: "Rest time label"))
                             .font(.caption)
                             .foregroundColor(.white)
                     }
@@ -87,7 +87,7 @@ struct TimerLiveActivity: Widget {
                         .frame(height: 4)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Text("Rest Timer")
+                    Text(NSLocalizedString("rest_timer", comment: "Rest timer label"))
                         .font(.caption2)
                         .foregroundColor(.secondary)
                 }

@@ -118,8 +118,8 @@ final class ItemsViewModel: ObservableObject {
     
     private func scheduleTimerNotification(at date: Date) {
         let content = UNMutableNotificationContent()
-        content.title = "Time's up!"
-        content.body = "Yeah buddy! Light weight!"
+        content.title = NSLocalizedString("times_up", comment: "Timer completion notification title")
+        content.body = NSLocalizedString("times_up_message", comment: "Timer completion notification body")
         content.sound = .default
         
         let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
@@ -149,7 +149,7 @@ final class ItemsViewModel: ObservableObject {
             
             let rgb = themeColor.toRGB()
             let attributes = TimerActivityAttributes(
-                timerName: "Rest Timer",
+                timerName: NSLocalizedString("rest_timer", comment: "Rest timer name"),
                 themeColorRed: rgb.red,
                 themeColorGreen: rgb.green,
                 themeColorBlue: rgb.blue

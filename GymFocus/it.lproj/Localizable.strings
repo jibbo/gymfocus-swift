@@ -1,0 +1,60 @@
+/* App Name */
+"app_name" = "Gym Focus";
+
+/* Timer related */
+"rest_timer" = "Rest Timer";
+"rest_time" = "Riposo";
+"active_timer" = "Timer Attivo";
+"pinned_timers" = "Timer Salvati";
+
+/* Actions */
+"stop" = "stop";
+"delete" = "cancella";
+"cancel" = "annulla";
+
+/* Alerts */
+"delete_timer" = "Cancella timer";
+"delete_timer_message" = "Sei sicur* di voler cancellare questo timer?";
+
+/* Notifications */
+"times_up" = "Pausa finita!";
+"times_up_message" = "Daje, Daje, Daje!";
+
+/* Navigation */
+"gym_focus" = "GYM FOCUS";
+
+/* Add Timer */
+"time_in_seconds" = "Tempo in secondi";
+"seconds" = "secondi";
+"add" = "aggiungi";
+
+/* Sets */
+"sets" = "serie";
+"reset" = "reset";
+"completed" = "completati";
+"plus_one" = "+1";
+
+/* Settings */
+"unit_of_measure" = "Unità di misura";
+"use_metric_system" = "use il sistema metrico";
+"advanced" = "Avanzate";
+"single_page_mode" = "Modalità pagina singola";
+"experimental_features" = "Funzioni sperimentali";
+"weight_percentage_calculator" = "Calcolo peso percentuale";
+"themes" = "Temi";
+
+/* Weight Counter */
+"barbell" = "Bilanciere";
+"select_barbell_weight" = "Scegli il peso del bilanciere";
+"edit" = "Modifica";
+"percentage_calculator" = "Calcolo Percentuale";
+"one_rep_max" = "1RM Max";
+"kg" = "Kg";
+"lbs" = "Lbs";
+"plates" = "Dischi";
+"done" = "Fatto";
+
+/* Tab Labels */
+"timer" = "Timer";
+"plates_counter" = "Conteggio Dischi";
+"settings" = "Impostazioni";

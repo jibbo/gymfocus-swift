@@ -25,17 +25,17 @@ struct SinglePageVertical: View {
                 SavedTimers(viewModel)
             }
             .tabItem{
-                Label("Execution", systemImage: "figure.strengthtraining.traditional")
+                Label(NSLocalizedString("sets", comment: "sets tab"), systemImage: "figure.strengthtraining.traditional")
             }
             .tag(0)
             WeightCounter()
                 .tabItem{
-                    Label("Plate counter", systemImage: "dumbbell")
+                    Label(NSLocalizedString("plate_counter", comment: "Plate counter tab"), systemImage: "dumbbell")
                 }
                 .tag(1)
             SettingsView()
                 .tabItem {
-                    Label("Settings", systemImage: "gearshape")
+                    Label(NSLocalizedString("settings", comment: "Settings tab"), systemImage: "gearshape")
                 }
                 .tag(2)
         }
