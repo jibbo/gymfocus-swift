@@ -36,7 +36,7 @@
 
 /* Settings */
 "unit_of_measure" = "Unità di misura";
-"use_metric_system" = "use il sistema metrico";
+"use_metric_system" = "Usa il sistema metrico";
 "advanced" = "Avanzate";
 "single_page_mode" = "Modalità pagina singola";
 "experimental_features" = "Funzioni sperimentali";
