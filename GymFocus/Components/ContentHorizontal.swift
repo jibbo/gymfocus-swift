@@ -11,8 +11,6 @@ struct ContentHorizontal: View {
     
     @ObservedObject private var viewModel: ItemsViewModel
     
-    @SceneStorage("selectedTab") private var selectedTab: Int = 0
-    
     private var proxy: GeometryProxy
     
     init(_ viewModel: ItemsViewModel, geometryProxy: GeometryProxy) {
@@ -21,7 +19,7 @@ struct ContentHorizontal: View {
     }
     
     var body: some View {
-        TabView(selection: $selectedTab){
+        TabView{
             HStack{
                 SetsView(viewModel)
                     .frame(width: proxy.size.width * 0.3)

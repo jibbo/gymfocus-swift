@@ -11,14 +11,12 @@ struct SinglePageVertical: View {
     
     @ObservedObject private var viewModel: ItemsViewModel
     
-    @SceneStorage("selectedTab") private var selectedTab: Int = 0
-    
     init(_ viewModel: ItemsViewModel) {
         self.viewModel = viewModel
     }
     
     var body: some View {
-        TabView(selection: $selectedTab) {
+        TabView {
             ScrollView(showsIndicators:false){
                 SetsView(viewModel)
                 TimerView(viewModel)
