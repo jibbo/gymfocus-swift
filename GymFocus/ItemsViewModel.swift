@@ -179,10 +179,14 @@ final class ItemsViewModel: ObservableObject {
             return 
         }
         
+        // Calculate remaining time based on current date to ensure accuracy in background
+        let now = Date()
+        let calculatedTimeRemaining = max(0, timerDate.timeIntervalSince(now))
+        
         let updatedContentState = TimerActivityAttributes.ContentState(
-            timeRemaining: timeRemaining,
+            timeRemaining: calculatedTimeRemaining,
             totalDuration: originalTimerDuration,
-            isRunning: timerRunning,
+            isRunning: timerRunning && calculatedTimeRemaining > 0,
             endTime: timerDate
         )
         
