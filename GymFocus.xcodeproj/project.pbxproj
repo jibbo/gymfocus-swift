@@ -6,11 +6,51 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4A4528042E33C91E00E64685 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4528032E33C91D00E64685 /* WidgetKit.framework */; };
+		4A4528062E33C91E00E64685 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4528052E33C91E00E64685 /* SwiftUI.framework */; };
+		4A4528172E33C91F00E64685 /* GymFocusWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4A4528012E33C91D00E64685 /* GymFocusWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4A4528152E33C91F00E64685 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A5713932E2527DF006DCB74 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4A4528002E33C91D00E64685;
+			remoteInfo = GymFocusWidgetsExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4A45281C2E33C91F00E64685 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4A4528172E33C91F00E64685 /* GymFocusWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		4A4528012E33C91D00E64685 /* GymFocusWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GymFocusWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A4528032E33C91D00E64685 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		4A4528052E33C91E00E64685 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		4A57139B2E2527DF006DCB74 /* GymFocus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymFocus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4A45281B2E33C91F00E64685 /* Exceptions for "GymFocusWidgets" folder in "GymFocusWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4A4528002E33C91D00E64685 /* GymFocusWidgetsExtension */;
+		};
 		4A5713A82E2527E1006DCB74 /* Exceptions for "GymFocus" folder in "GymFocus" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -21,6 +61,14 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		4A4528072E33C91E00E64685 /* GymFocusWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4A45281B2E33C91F00E64685 /* Exceptions for "GymFocusWidgets" folder in "GymFocusWidgetsExtension" target */,
+			);
+			path = GymFocusWidgets;
+			sourceTree = "<group>";
+		};
 		4A57139D2E2527DF006DCB74 /* GymFocus */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -32,6 +80,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4A4527FE2E33C91D00E64685 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A4528062E33C91E00E64685 /* SwiftUI.framework in Frameworks */,
+				4A4528042E33C91E00E64685 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4A5713982E2527DF006DCB74 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -42,10 +99,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A4528022E33C91D00E64685 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4A4528032E33C91D00E64685 /* WidgetKit.framework */,
+				4A4528052E33C91E00E64685 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4A5713922E2527DF006DCB74 = {
 			isa = PBXGroup;
 			children = (
 				4A57139D2E2527DF006DCB74 /* GymFocus */,
+				4A4528072E33C91E00E64685 /* GymFocusWidgets */,
+				4A4528022E33C91D00E64685 /* Frameworks */,
 				4A57139C2E2527DF006DCB74 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				4A57139B2E2527DF006DCB74 /* GymFocus.app */,
+				4A4528012E33C91D00E64685 /* GymFocusWidgetsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,6 +130,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4A4528002E33C91D00E64685 /* GymFocusWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A4528182E33C91F00E64685 /* Build configuration list for PBXNativeTarget "GymFocusWidgetsExtension" */;
+			buildPhases = (
+				4A4527FD2E33C91D00E64685 /* Sources */,
+				4A4527FE2E33C91D00E64685 /* Frameworks */,
+				4A4527FF2E33C91D00E64685 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				4A4528072E33C91E00E64685 /* GymFocusWidgets */,
+			);
+			name = GymFocusWidgetsExtension;
+			packageProductDependencies = (
+			);
+			productName = GymFocusWidgetsExtension;
+			productReference = 4A4528012E33C91D00E64685 /* GymFocusWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		4A57139A2E2527DF006DCB74 /* GymFocus */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A5713A92E2527E1006DCB74 /* Build configuration list for PBXNativeTarget "GymFocus" */;
@@ -68,10 +159,12 @@
 				4A5713972E2527DF006DCB74 /* Sources */,
 				4A5713982E2527DF006DCB74 /* Frameworks */,
 				4A5713992E2527DF006DCB74 /* Resources */,
+				4A45281C2E33C91F00E64685 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4A4528162E33C91F00E64685 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				4A57139D2E2527DF006DCB74 /* GymFocus */,
@@ -93,6 +186,9 @@
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
+					4A4528002E33C91D00E64685 = {
+						CreatedOnToolsVersion = 16.4;
+					};
 					4A57139A2E2527DF006DCB74 = {
 						CreatedOnToolsVersion = 16.4;
 					};
@@ -113,11 +209,19 @@
 			projectRoot = "";
 			targets = (
 				4A57139A2E2527DF006DCB74 /* GymFocus */,
+				4A4528002E33C91D00E64685 /* GymFocusWidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4A4527FF2E33C91D00E64685 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4A5713992E2527DF006DCB74 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -128,6 +232,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4A4527FD2E33C91D00E64685 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4A5713972E2527DF006DCB74 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -137,7 +248,73 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4A4528162E33C91F00E64685 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4A4528002E33C91D00E64685 /* GymFocusWidgetsExtension */;
+			targetProxy = 4A4528152E33C91F00E64685 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		4A4528192E33C91F00E64685 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y39Y2Z84MF;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GymFocusWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GymFocusWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.jibbo.GymFocus.GymFocusWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4A45281A2E33C91F00E64685 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y39Y2Z84MF;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GymFocusWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GymFocusWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.jibbo.GymFocus.GymFocusWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		4A5713AA2E2527E1006DCB74 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -330,6 +507,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4A4528182E33C91F00E64685 /* Build configuration list for PBXNativeTarget "GymFocusWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A4528192E33C91F00E64685 /* Debug */,
+				4A45281A2E33C91F00E64685 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4A5713962E2527DF006DCB74 /* Build configuration list for PBXProject "GymFocus" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
