@@ -30,21 +30,10 @@ struct WeightCounter: View {
         ScrollView{
             VStack {
                 if(settings.powerLifting){
-                    powerLifintMode()
+                    percentageCalculator()
                 }
                 Group{
-                    //                    HStack{
-                    Text("Barbell")
-                        .font(.body1)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding()
-                    //                        Picker("Edit", selection: $settings.selectedBar) {
-                    //                            let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
-                    //                            ForEach(bars, id: \.self){ bar in
-                    //                                Text(String(bar)).tag(bar)
-                    //                            }
-                    //                        }.tint(settings.getThemeColor())
-                    //                    }
+                    header()
                     Spacer()
                     barbellView()
                     Spacer()
@@ -70,14 +59,41 @@ struct WeightCounter: View {
     //            ForEach(bars, id: \.self){ bar in
     //                Button(String(bar)){
     //                    if(settings.metricSystem){
-    //                        
+    //
     //                    }
     //                }
     //            }
     //        }
     //    }
     
-    private func powerLifintMode() -> some View{
+    private func header() -> some View{
+        HStack{
+            Text("Barbell")
+                .font(.body1)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+            SecondaryButton("Edit"){_ in
+                showBarbellSelector = true
+            }
+        }.popover(isPresented: $showBarbellSelector) {
+            Picker("Edit", selection: $settings.selectedBar) {
+                let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
+                ForEach(bars, id: \.self){ bar in
+                    Text(String(bar)).tag(bar)
+                }
+            }
+            .pickerStyle(.wheel)
+            .tint(settings.getThemeColor())
+            .onChange(of: settings.selectedBar){ oldVal, newVal in
+                self.maxKg = String(newVal)
+                self.plates = []
+                computeSum()
+                showBarbellSelector = false
+            }
+        }
+    }
+    
+    private func percentageCalculator() -> some View{
         VStack{
             Text("Power lifting mode")
                 .font(.body1)

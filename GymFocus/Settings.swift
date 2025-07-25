@@ -10,48 +10,53 @@ import SwiftUI
 
 final class Settings: ObservableObject {
     @Published var theme: String {
-        didSet {
-            UserDefaults.standard.set(theme, forKey: "theme")
-        }
+        didSet { UserDefaults.standard.set(theme, forKey: "theme") }
     }
-    
     @Published var metricSystem: Bool {
-        didSet {
-            UserDefaults.standard.set(metricSystem, forKey: "metricSystem")
-        }
+        didSet { UserDefaults.standard.set(metricSystem, forKey: "metricSystem") }
     }
-    
     @Published var singlePage: Bool {
-        didSet {
-            UserDefaults.standard.set(singlePage, forKey: "singlePage")
-        }
+        didSet { UserDefaults.standard.set(singlePage, forKey: "singlePage") }
     }
-    
     @Published var powerLifting: Bool {
-        didSet {
-            UserDefaults.standard.set(powerLifting, forKey: "powerLifting")
-        }
+        didSet { UserDefaults.standard.set(powerLifting, forKey: "powerLifting") }
     }
     
     let barsKg: [Int] = [7, 10, 15, 20]
     let barsLbs: [Int] = [15, 35, 45]
     
     @Published var selectedBar: Int {
-        didSet {
-            UserDefaults.standard.set(selectedBar, forKey: "selectedBar")
-        }
+        didSet { UserDefaults.standard.set(selectedBar, forKey: "selectedBar") }
     }
-
+    
     init() {
+        // Get country code
+        let countryCode = Locale.current.region?.identifier ?? "US"
+        
+        // Try to load from UserDefaults or set sensible defaults
         self.theme = UserDefaults.standard.string(forKey: "theme") ?? "S"
-        self.metricSystem = UserDefaults.standard.bool(forKey: "metricSystem")
+        
+        if UserDefaults.standard.object(forKey: "metricSystem") != nil {
+            self.metricSystem = UserDefaults.standard.bool(forKey: "metricSystem")
+        } else {
+            self.metricSystem = (countryCode != "US")
+        }
+        
         self.singlePage = UserDefaults.standard.bool(forKey: "singlePage")
         self.powerLifting = UserDefaults.standard.bool(forKey: "powerLifting")
-        self.selectedBar = (UserDefaults.standard.integer(forKey: "selectedBar") > 0) ? UserDefaults.standard.integer(forKey: "selectedBar") : ((UserDefaults.standard.bool(forKey: "metricSystem") ? barsKg.last : barsLbs.last) ?? 20)
+        
+        if UserDefaults.standard.object(forKey: "selectedBar") != nil {
+            self.selectedBar = UserDefaults.standard.integer(forKey: "selectedBar")
+        } else {
+            if countryCode == "US" {
+                self.selectedBar = barsLbs.last! // 45 lbs
+            } else {
+                self.selectedBar = barsKg.last! // 20 kg
+            }
+        }
     }
     
     func getThemeColor() -> Color {
-        return Theme.themes[theme] ?? .green
+        return Theme.themes[theme] ?? .primaryDefault
     }
-
 }

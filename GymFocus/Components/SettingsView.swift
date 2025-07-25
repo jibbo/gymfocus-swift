@@ -14,26 +14,21 @@ struct SettingsView: View {
             Section("Settings"){
                 Toggle(isOn: $settings.metricSystem){
                     Text("Use metric system")
-                }.tint(settings.getThemeColor())
+                }
+                .onChange(of: settings.metricSystem) { oldValue, newValue in
+                    let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
+                    settings.selectedBar = bars.last ?? 0
+                }
+                .tint(settings.getThemeColor())
                 
                 Toggle(isOn: $settings.singlePage){
                     Text("Single page mode")
                 }.tint(settings.getThemeColor())
                 
-                VStack(alignment: .leading){
-                    Toggle(isOn: $settings.powerLifting){
-                        Text("Power lifting mode")
-                    }.tint(settings.getThemeColor())
-                    Text("Helps compute RM % ").opacity(0.8)
-                }
-                
-                Picker("Bar weight", selection: $settings.selectedBar) {
-                    let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
-                    ForEach(bars, id: \.self){ bar in
-                        Text(String(bar)).tag(bar)
-                    }
+                Toggle(isOn: $settings.powerLifting){
+                    Text("Weigth Percentage calculator")
                 }.tint(settings.getThemeColor())
-            
+                
             }
             Section("Themes"){
                 ScrollView(.horizontal, showsIndicators: false){
@@ -70,7 +65,7 @@ struct ThemeButton: View {
     }
     
     var body: some View {
-        RoundButton(key, fillColor: color, size: 50){
+        RoundButton("", fillColor: color, size: 45){
             action()
         }
         .overlay{
