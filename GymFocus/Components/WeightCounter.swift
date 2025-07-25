@@ -84,7 +84,7 @@ struct WeightCounter: View {
     
     private func percentageCalculator() -> some View{
         VStack{
-            Text("Power lifting mode")
+            Text("Percentage calculator")
                 .font(.body1)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()

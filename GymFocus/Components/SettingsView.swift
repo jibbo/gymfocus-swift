@@ -11,7 +11,7 @@ struct SettingsView: View {
     
     var body: some View {
         Form{
-            Section("Settings"){
+            Section("Measure unit"){
                 Toggle(isOn: $settings.metricSystem){
                     Text("Use metric system")
                 }
@@ -20,23 +20,25 @@ struct SettingsView: View {
                     settings.selectedBar = bars.last ?? 0
                 }
                 .tint(settings.getThemeColor())
-                
+            }
+            Section("Advanced"){
                 Toggle(isOn: $settings.singlePage){
                     Text("Single page mode")
                 }.tint(settings.getThemeColor())
                 
-                Toggle(isOn: $settings.powerLifting){
-                    Text("Weigth Percentage calculator")
-                }.tint(settings.getThemeColor())
+                
                 
             }
+            Section("Experimental Features"){
+                Toggle(isOn: $settings.powerLifting){
+                    Text("Weight Percentage calculator")
+                }.tint(settings.getThemeColor())
+            }
             Section("Themes"){
-                ScrollView(.horizontal, showsIndicators: false){
-                    HStack{
-                        ForEach(Array(Theme.themes.map(\.key)), id: \.self) { key in
-                            ThemeButton(key, selected: settings.theme == key){
-                                settings.theme = key
-                            }
+                FlowLayout{
+                    ForEach(Array(Theme.themes.map(\.key)), id: \.self) { key in
+                        ThemeButton(key, selected: settings.theme == key){
+                            settings.theme = key
                         }
                     }
                 }
@@ -60,7 +62,7 @@ struct ThemeButton: View {
     init(_ key: String, selected: Bool = false, action: @escaping () -> Void) {
         self.key = key
         self.color = Theme.themes.first(where: { $0.key == key })?.color ?? .primaryDefault
-
+        
         self.action = action
         self.selected = selected
     }
