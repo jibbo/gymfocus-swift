@@ -52,20 +52,6 @@ struct WeightCounter: View {
         }
     }
     
-    //    private func barbellSelector() -> some View{
-    //        VStack{
-    //            Text("Select barbell weight")
-    //            let bars = settings.metricSystem ? barsKg : barsLbs
-    //            ForEach(bars, id: \.self){ bar in
-    //                Button(String(bar)){
-    //                    if(settings.metricSystem){
-    //
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    
     private func header() -> some View{
         HStack{
             Text("Barbell")
@@ -75,20 +61,23 @@ struct WeightCounter: View {
             SecondaryButton("Edit"){_ in
                 showBarbellSelector = true
             }
-        }.popover(isPresented: $showBarbellSelector) {
-            Picker("Edit", selection: $settings.selectedBar) {
-                let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
-                ForEach(bars, id: \.self){ bar in
-                    Text(String(bar)).tag(bar)
+        }.sheet(isPresented: $showBarbellSelector) {
+            VStack{
+                Text("Select the weight of the barbell").font(.body2)
+                Picker("Edit", selection: $settings.selectedBar) {
+                    let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
+                    ForEach(bars, id: \.self){ bar in
+                        Text(String(bar)).tag(bar)
+                    }
                 }
-            }
-            .pickerStyle(.wheel)
-            .tint(settings.getThemeColor())
-            .onChange(of: settings.selectedBar){ oldVal, newVal in
-                self.maxKg = String(newVal)
-                self.plates = []
-                computeSum()
-                showBarbellSelector = false
+                .pickerStyle(.wheel)
+                .tint(settings.getThemeColor())
+                .onChange(of: settings.selectedBar){ oldVal, newVal in
+                    self.maxKg = String(newVal)
+                    self.plates = []
+                    computeSum()
+                    showBarbellSelector = false
+                }
             }
         }
     }
@@ -154,7 +143,7 @@ struct WeightCounter: View {
         plates.removeAll()
         
         // Impossible if target is less than bar weight or not divisible by 2
-        if weightPerSide < barWeight {
+        if weightPerSide < 0.25 {
             // TODO show error alert
             return
         }
