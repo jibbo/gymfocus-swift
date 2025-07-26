@@ -8,6 +8,7 @@
 "pinned_timers" = "Pinned Timers";
 
 /* Actions */
+"start" = "start";
 "stop" = "STOP";
 "delete" = "Delete";
 "cancel" = "Cancel";

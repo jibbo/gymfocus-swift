@@ -8,6 +8,7 @@
 "pinned_timers" = "Timer Salvati";
 
 /* Actions */
+"start" = "inizia";
 "stop" = "stop";
 "delete" = "cancella";
 "cancel" = "annulla";
