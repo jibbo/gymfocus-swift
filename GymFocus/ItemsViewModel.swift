@@ -7,6 +7,7 @@
 import SwiftUI
 import AudioToolbox
 import ActivityKit
+import BackgroundTasks
 
 extension Color {
     func toRGB() -> (red: Double, green: Double, blue: Double) {
@@ -50,19 +51,28 @@ final class ItemsViewModel: ObservableObject {
         originalTimerDuration = time
         timerProgress = 0
         
+        // Set the end time for accurate calculations
+        timerDate = Date().addingTimeInterval(time)
+        
         // Start Live Activity
         startLiveActivity(duration: time, themeColor: themeColor)
         
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            if self.timeRemaining > 0 {
-                self.timeRemaining -= 1
-                self.timerProgress = (time-self.timeRemaining)/time
+            // Calculate time remaining based on end date for accuracy
+            let now = Date()
+            let calculatedTimeRemaining = max(0, self.timerDate.timeIntervalSince(now))
+            
+            if calculatedTimeRemaining > 0 {
+                self.timeRemaining = calculatedTimeRemaining
+                self.timerProgress = (time - calculatedTimeRemaining) / time
                 
-                // Update Live Activity
+                // Update Live Activity every second for smooth display
                 self.updateLiveActivity()
             } else {
                 self.timer?.invalidate()
                 self.timerRunning = false
+                self.timeRemaining = 0
+                self.timerProgress = 1.0
                 self.alarmPlayer.playSound(named: "digital_watch_alarm_long")
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
                 self.startBlinking()
@@ -72,7 +82,6 @@ final class ItemsViewModel: ObservableObject {
             }
         }
         
-        self.timerDate = Date().addingTimeInterval(time)
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             if(settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional) {
                 self.scheduleTimerNotification(at: self.timerDate)
@@ -183,7 +192,7 @@ final class ItemsViewModel: ObservableObject {
             return 
         }
         
-        // Calculate remaining time based on current date to ensure accuracy in background
+        // Use the same date-based calculation for consistency
         let now = Date()
         let calculatedTimeRemaining = max(0, timerDate.timeIntervalSince(now))
         
