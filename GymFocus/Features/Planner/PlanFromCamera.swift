@@ -95,7 +95,7 @@ struct PlanFromCamera: View {
             let response = try await APIService.shared.generateContent(
                 text: prompt,
                 images: scannedImages,
-                useInlineImages: true,
+                useInlineImages: false,
                 apiKey: "AIzaSyDrZuu6XVThbkcb5ImS8vfoxg-DsAPRd30"
             )
             self.workoutViewModel.workoutPlanItem =  WorkoutPlanItem(workoutPlan: WorkoutPlan.fromJSON(response) ?? WorkoutPlan())

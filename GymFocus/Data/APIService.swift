@@ -9,7 +9,7 @@ actor APIService {
     private init() {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 30
-        configuration.timeoutIntervalForResource = 3*60
+        configuration.timeoutIntervalForResource = 60
         self.session = URLSession(configuration: configuration)
     }
 }
@@ -233,7 +233,7 @@ extension APIService {
             throw APIError.missingAPIKey
         }
         
-        guard let url = URL(string: "https://generativelanguage.googleapis.com/v1beta/models/gemini-live-2.5-flash-preview:generateContent") else {
+        guard let url = URL(string: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent") else {
             throw APIError.invalidURL
         }
         
