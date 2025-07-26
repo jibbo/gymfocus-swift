@@ -17,23 +17,24 @@ struct MultiPageVertical: View {
     
     var body: some View {
         TabView{
+            PlannerView().tabItem{
+                Label("plan".localized(), systemImage: "ecg.text.page")
+            }.tag(0)
             SetsView(viewModel).tabItem {
                 Label("sets".localized("Sets tab"), systemImage: "figure.strengthtraining.traditional")
-            }
+            }.tag(1)
             ScrollView(showsIndicators: false){
                 TimerView(viewModel)
                 SavedTimers(viewModel)
             }.tabItem {
                 Label("timer".localized("Timer tab"), systemImage: "clock")
-            }.tag(0)
-            WeightCounter()
-                .tabItem{
-                    Label("plates_counter".localized("Plates Counter tab"), systemImage: "dumbbell")
-                }.tag(1)
-            SettingsView()
-                .tabItem {
-                    Label("settings".localized("Settings tab"), systemImage: "gearshape")
-                }.tag(2)
+            }.tag(2)
+            WeightCounter().tabItem{
+                Label("plates_counter".localized("Plates Counter tab"), systemImage: "dumbbell")
+            }.tag(3)
+            SettingsView().tabItem {
+                Label("settings".localized("Settings tab"), systemImage: "gearshape")
+            }.tag(4)
         }.accentColor(settings.getThemeColor())
     }
 }

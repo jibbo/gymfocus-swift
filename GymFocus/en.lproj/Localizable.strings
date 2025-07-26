@@ -1,5 +1,6 @@
 /* App Name */
 "app_name" = "Gym Focus";
+"not_available" = "This feature is not available yet";
 
 /* Timer related */
 "rest_timer" = "Rest Timer";
@@ -12,6 +13,8 @@
 "stop" = "STOP";
 "delete" = "Delete";
 "cancel" = "Cancel";
+"ok" = "Ok";
+"next" = "Next";
 
 /* Alerts */
 "delete_timer" = "Delete Timer";
@@ -55,8 +58,17 @@
 "plates" = "Plates";
 "done" = "Done";
 
+/* Planner */
+"choose_new_plan_title" = "How do you want to add it?";
+"choose_new_plan_from_pdf" = "From PDF 📑";
+"choose_new_plan_from_camera" = "From Camera 📷";
+"choose_new_plan_automatic" = "Create one for me ✨";
+"choose_new_plan_manual" = "Manually 👆";
+"choose_new_plan_ocr_explanation" = "Our on device AI scans your wourkout plan and automatically imports it to the app";
+
 /* Tab Labels */
 "execution" = "Execution";
 "timer" = "Timer";
 "plates_counter" = "Plates Calculator";
 "settings" = "Settings";
+"plan" = "Plan";

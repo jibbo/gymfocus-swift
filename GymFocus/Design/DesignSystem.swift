@@ -69,6 +69,20 @@ enum Theme {
     ]
 }
 
+struct SectionTitle: View {
+    private var title: String
+    init(_ title: String) {
+        self.title = title
+    }
+    
+    var body: some View {
+        Text(title)
+            .font(.body1)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+    }
+}
+
 struct PrimaryButton: View {
     @EnvironmentObject private var settings: Settings
     
@@ -181,6 +195,26 @@ struct RoundButton : View{
     }
 }
 
+struct Card<Content: View>: View {
+    @EnvironmentObject private var settings: Settings
+    private let content: Content
+    
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+    
+    var body: some View {
+        ZStack(alignment:.leading) {
+            content.padding().frame(maxWidth: .infinity)
+        }.overlay{
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(.primary, lineWidth: 1)
+                .frame(maxWidth: .infinity)
+        }
+        .frame(maxWidth: .infinity)
+    }
+}
+
 struct DarkenOnTapButtonStyle: ButtonStyle {
     private var color: Color
     init(_ color: Color? = .primaryDefault) {
@@ -231,7 +265,7 @@ extension Color {
             VStack{
                 Text("Primary").font(.primaryTitle)
                 Text("Caption").font(.caption)
-                Text("body1").font(.body1)
+                Text("body1: Section title").font(.body1)
                 Text("body2").font(.body1)
             }
             .padding()
@@ -255,6 +289,11 @@ extension Color {
                     
                 }
             }.padding()
+            
+            Card{
+                Text("Card").foregroundStyle(.primary).background(.blue)
+            }
+            
         }.padding()
     }.environmentObject(settings)
 }
