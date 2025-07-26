@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PlannerView: View {
+    @Environment(\.modelContext) private var modelContext
     @ObservedObject var workoutViewModel: WorkoutViewModel = WorkoutViewModel()
     @State var showAddWorkoutPlanSheet: Bool = false
     
@@ -20,17 +21,23 @@ struct PlannerView: View {
                 }
             }
             Spacer()
-            Image(systemName: "ecg.text.page").font(.system(size: 300)).foregroundStyle(.primary.opacity(0.8))
-            if(workoutViewModel.workoutPlanItem != nil){
+            if(workoutViewModel.workoutPlanItem.workoutPlanJson.isEmpty){
+                Image(systemName: "ecg.text.page").font(.system(size: 300)).foregroundStyle(.primary.opacity(0.8))
                 PrimaryButton("add".localized("adds a workout plan")){
                     showAddWorkoutPlanSheet = true
                 }.padding()
             }else {
-                Text(workoutViewModel.workOutAsString())
+                ScrollView{
+                    Text(workoutViewModel.workoutPlanItem.workoutPlanJson)
+                }.padding()
             }
             Spacer()
         }.sheet(isPresented: $showAddWorkoutPlanSheet){
-            PlanFromCamera(workoutViewModel)
+            CreateManualPlanView(workoutViewModel)
+//            PlanFromCamera(workoutViewModel)
+        }
+        .onAppear{
+            workoutViewModel.loadWorkoutPlan(from: modelContext)
         }
     }
 }

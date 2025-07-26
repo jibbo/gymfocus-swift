@@ -9,7 +9,7 @@ actor APIService {
     private init() {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 30
-        configuration.timeoutIntervalForResource = 60
+        configuration.timeoutIntervalForResource = 10*60
         self.session = URLSession(configuration: configuration)
     }
 }

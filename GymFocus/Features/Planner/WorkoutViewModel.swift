@@ -6,11 +6,22 @@
 //
 
 import SwiftUI
+import SwiftData
 
 final class WorkoutViewModel: ObservableObject{
-    @Published var workoutPlanItem: WorkoutPlanItem? = nil
+    @Published var workoutPlanItem: WorkoutPlanItem = WorkoutPlanItem(from: "")
     
-    func workOutAsString() -> String {
-        (try? JSONEncoder().encode(workoutPlanItem?.plan)).flatMap { String(data: $0, encoding: .utf8) } ?? ""
+    func saveWorkoutPlan(to modelContext: ModelContext) {
+        modelContext.insert(workoutPlanItem)
+        try? modelContext.save()
+    }
+    
+    func loadWorkoutPlan(from modelContext: ModelContext) {
+        let descriptor = FetchDescriptor<WorkoutPlanItem>(
+            sortBy: [SortDescriptor(\.workoutPlanJson, order: .reverse)]
+        )
+        if let savedPlan = try? modelContext.fetch(descriptor).first {
+            workoutPlanItem = savedPlan
+        }
     }
 }
