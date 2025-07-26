@@ -38,16 +38,31 @@ final class ItemsViewModel: ObservableObject {
     @Published var timerTextVisible = true
     @Published var isBlinking = false
     
+    @Published var lastTimerSelected: Double {
+        didSet { UserDefaults.standard.set(lastTimerSelected, forKey: "lastTimerSelected") }
+    }
+    
     public let blinkDuration = 0.2
     private var currentActivity: Activity<TimerActivityAttributes>?
     private var originalTimerDuration: Double = 0
     
     private let alarmPlayer = AlarmPlayer()
     
-    func startTimer(time: Double, themeColor: Color = .green) {
+    init() {
+        if UserDefaults.standard.object(forKey: "lastTimerSelected") != nil {
+            self.lastTimerSelected = UserDefaults.standard.double(forKey: "lastTimerSelected")
+        } else{
+            self.lastTimerSelected = 60
+        }
+        self.timeRemaining = lastTimerSelected
+    }
+    
+    func startTimer(time: Double? = nil, themeColor: Color) {
+        let time = time ?? lastTimerSelected
         timerRunning = true
         timer?.invalidate() // Invalidate any existing timer
         timeRemaining = time
+        lastTimerSelected = time
         originalTimerDuration = time
         timerProgress = 0
         
@@ -100,7 +115,7 @@ final class ItemsViewModel: ObservableObject {
     
     func resetTimer() {
         timer?.invalidate()
-        timeRemaining = 0
+        timeRemaining = lastTimerSelected
         timerRunning = false
         timerProgress = 0
         alarmPlayer.stop()
@@ -140,6 +155,8 @@ final class ItemsViewModel: ObservableObject {
         let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
         
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request)
     }

@@ -15,6 +15,7 @@
 import SwiftUI
 
 struct TimerView: View {
+    @EnvironmentObject private var settings: Settings
     @ObservedObject private var viewModel: ItemsViewModel
     
     init(_ viewModel: ItemsViewModel){
@@ -35,9 +36,15 @@ struct TimerView: View {
                     .animation(.easeInOut(duration: viewModel.blinkDuration), value: viewModel.timerTextVisible)
             }.frame(minWidth:200, maxWidth: 300)
             Spacer()
-            PrimaryButton("stop".localized("Stop button")){
-                viewModel.resetTimer();
-            }.padding()
+            if(viewModel.timerRunning){
+                PrimaryButton("stop".localized("Stop button")){
+                    viewModel.resetTimer();
+                }.padding()
+            } else {
+                PrimaryButton("start".localized("Start button")){
+                    viewModel.startTimer(themeColor: settings.getThemeColor())
+                }.padding()
+            }
         }
         .fullScreenCover(isPresented: $viewModel.showNewTimer){
             AddTimerView(viewModel)
