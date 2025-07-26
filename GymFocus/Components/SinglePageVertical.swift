@@ -11,31 +11,29 @@ struct SinglePageVertical: View {
     
     @ObservedObject private var viewModel: ItemsViewModel
     
-    @SceneStorage("selectedTab") private var selectedTab: Int = 0
-    
     init(_ viewModel: ItemsViewModel) {
         self.viewModel = viewModel
     }
     
     var body: some View {
-        TabView(selection: $selectedTab) {
+        TabView {
             ScrollView(showsIndicators:false){
                 SetsView(viewModel)
                 TimerView(viewModel)
                 SavedTimers(viewModel)
             }
             .tabItem{
-                Label("Execution", systemImage: "figure.strengthtraining.traditional")
+                Label("sets".localized("sets tab"), systemImage: "figure.strengthtraining.traditional")
             }
             .tag(0)
             WeightCounter()
                 .tabItem{
-                    Label("Plate counter", systemImage: "dumbbell")
+                    Label("plates_counter".localized("Plate counter tab"), systemImage: "dumbbell")
                 }
                 .tag(1)
             SettingsView()
                 .tabItem {
-                    Label("Settings", systemImage: "gearshape")
+                    Label("settings".localized("Settings tab"), systemImage: "gearshape")
                 }
                 .tag(2)
         }

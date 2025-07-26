@@ -18,14 +18,14 @@ struct SavedTimers: View {
     var body: some View{
         VStack{
             HStack(alignment: .bottom){
-                Text("Pinned Timers")
+                Text("pinned_timers".localized("Pinned timers section title"))
                     .font(.body1)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
                 Spacer()
-                SecondaryButton(viewModel.isEditing ? "Done": "Edit"){ it in
+                SecondaryButton(viewModel.getEditModeButtonText()){ it in
                     viewModel.isEditing.toggle()
-                    it.title = viewModel.isEditing ? "Done": "Edit"
+                    it.title = viewModel.getEditModeButtonText()
                 }.padding(.vertical, 20)
             }
             ScrollView{

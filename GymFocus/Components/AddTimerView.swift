@@ -30,11 +30,11 @@ struct AddTimerView : View {
                         dismiss()
                     }
                 Spacer()
-                Text("Time in seconds").font(.body1).padding()
+                Text("time_in_seconds".localized("Time in seconds label")).font(.body1).padding()
                 Spacer()
             }
             Spacer()
-            TextField("seconds", text: $text)
+            TextField("seconds".localized("Seconds placeholder"), text: $text)
                 .font(.primaryTitle)
                 .focused($isFocused)
                 .onAppear {
@@ -47,7 +47,7 @@ struct AddTimerView : View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             Spacer()
-            PrimaryButton("Add"){
+            PrimaryButton("add".localized("Add button")){
                 viewModel.item.timers.append(Double(text) ?? 0)
                 viewModel.item.timers.sort()
                 dismiss()

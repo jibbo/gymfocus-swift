@@ -11,9 +11,9 @@ struct SettingsView: View {
     
     var body: some View {
         Form{
-            Section("Unit of Measure"){
+            Section("unit_of_measure".localized("Unit of Measure section")){
                 Toggle(isOn: $settings.metricSystem){
-                    Text("Use metric system")
+                    Text("use_metric_system".localized("Use metric system toggle"))
                 }
                 .onChange(of: settings.metricSystem) { oldValue, newValue in
                     let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
@@ -21,17 +21,17 @@ struct SettingsView: View {
                 }
                 .tint(settings.getThemeColor())
             }
-            Section("Advanced"){
+            Section("advanced".localized("Advanced section")){
                 Toggle(isOn: $settings.singlePage){
-                    Text("Single page mode")
+                    Text("single_page_mode".localized("Single page mode toggle"))
                 }.tint(settings.getThemeColor())
             }
-            Section("Experimental Features"){
+            Section("experimental_features".localized("Experimental Features section")){
                 Toggle(isOn: $settings.powerLifting){
-                    Text("Weight Percentage calculator")
+                    Text("weight_percentage_calculator".localized("Weight Percentage calculator toggle"))
                 }.tint(settings.getThemeColor())
             }
-            Section("Themes"){
+            Section("themes".localized("Themes section")){
                 ScrollView(showsIndicators: false){
                     FlowLayout{
                         ForEach(Array(Theme.themes.map(\.key)), id: \.self) { key in
@@ -72,7 +72,7 @@ struct ThemeButton: View {
         }
         .overlay{
             if(selected){
-                Circle().stroke(.white, lineWidth: 4)
+                Circle().stroke(.secondary, lineWidth: 4)
             }
         }
     }

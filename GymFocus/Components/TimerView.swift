@@ -23,7 +23,7 @@ struct TimerView: View {
     
     var body: some View {
         VStack{
-            Text("Active Timer")
+            Text("active_timer".localized("Active timer label"))
                 .font(.body1)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
@@ -35,7 +35,7 @@ struct TimerView: View {
                     .animation(.easeInOut(duration: viewModel.blinkDuration), value: viewModel.timerTextVisible)
             }.frame(minWidth:200, maxWidth: 300)
             Spacer()
-            PrimaryButton("STOP"){
+            PrimaryButton("stop".localized("Stop button")){
                 viewModel.resetTimer();
             }.padding()
         }
@@ -43,9 +43,14 @@ struct TimerView: View {
             AddTimerView(viewModel)
         }
         .alert(isPresented: $viewModel.showDeleteAlert) {
-            Alert(title: Text("Delete Timer"), message: Text("Are you sure you want to delete this timer?"), primaryButton: .destructive(Text("Delete")) {
-                viewModel.item.timers.remove(at: viewModel.item.timers.firstIndex(of: viewModel.selectedTimer)!)
-            }, secondaryButton: .cancel())
+            Alert(
+                title: Text("delete_timer".localized("Delete timer alert title")), 
+                message: Text("delete_timer_message".localized("Delete timer alert message")), 
+                primaryButton: .destructive(Text("delete".localized("Delete button"))) {
+                    viewModel.item.timers.remove(at: viewModel.item.timers.firstIndex(of: viewModel.selectedTimer)!)
+                }, 
+                secondaryButton: .cancel(Text("cancel".localized("Cancel button")))
+            )
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)){ _ in
             if(viewModel.timerRunning){

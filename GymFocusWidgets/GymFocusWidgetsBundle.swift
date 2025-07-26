@@ -38,21 +38,27 @@ struct TimerLiveActivity: Widget {
                 green: context.attributes.themeColorGreen,
                 blue: context.attributes.themeColorBlue
             )
+            
+            // Calculate remaining time based on current date for accurate background updates
+            let now = Date()
+            let timeRemaining = max(0, context.state.endTime.timeIntervalSince(now))
+            let progress = 1.0 - (timeRemaining / context.state.totalDuration)
+            
             VStack(spacing: 8) {
                 HStack {
                     Image(systemName: "timer")
                         .foregroundColor(themeColor)
-                    Text("Rest Time")
+                    Text(NSLocalizedString("rest_time", comment: "Rest time label"))
                         .font(.headline)
                         .foregroundColor(.white)
                     Spacer()
-                    Text(formatTime(Int(context.state.timeRemaining)))
+                    Text(formatTime(Int(timeRemaining)))
                         .font(.title2)
                         .foregroundColor(.white)
                         .monospacedDigit()
                 }
                 
-                ProgressView(value: context.state.timeRemaining / context.state.totalDuration)
+                ProgressView(value: progress)
                     .progressViewStyle(LinearProgressViewStyle(tint: themeColor))
                     .frame(height: 4)
             }
@@ -65,29 +71,35 @@ struct TimerLiveActivity: Widget {
                 green: context.attributes.themeColorGreen,
                 blue: context.attributes.themeColorBlue
             )
+            
+            // Calculate remaining time based on current date for accurate background updates
+            let now = Date()
+            let timeRemaining = max(0, context.state.endTime.timeIntervalSince(now))
+            let progress = 1.0 - (timeRemaining / context.state.totalDuration)
+            
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
                     HStack {
                         Image(systemName: "timer")
                             .foregroundColor(themeColor)
-                        Text("Rest Time")
+                        Text(NSLocalizedString("rest_time", comment: "Rest time label"))
                             .font(.caption)
                             .foregroundColor(.white)
                     }
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text(formatTime(Int(context.state.timeRemaining)))
+                    Text(formatTime(Int(timeRemaining)))
                         .font(.title2)
                         .foregroundColor(.white)
                         .monospacedDigit()
                 }
                 DynamicIslandExpandedRegion(.center) {
-                    ProgressView(value: context.state.timeRemaining / context.state.totalDuration)
+                    ProgressView(value: progress)
                         .progressViewStyle(LinearProgressViewStyle(tint: themeColor))
                         .frame(height: 4)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Text("Rest Timer")
+                    Text(NSLocalizedString("rest_timer", comment: "Rest timer label"))
                         .font(.caption2)
                         .foregroundColor(.secondary)
                 }
@@ -95,7 +107,7 @@ struct TimerLiveActivity: Widget {
                 Image(systemName: "timer")
                     .foregroundColor(themeColor)
             } compactTrailing: {
-                Text(formatTime(Int(context.state.timeRemaining)))
+                Text(formatTime(Int(timeRemaining)))
                     .font(.caption2)
                     .foregroundColor(themeColor)
                     .monospacedDigit()
@@ -116,6 +128,6 @@ struct TimerLiveActivity: Widget {
 @main
 struct GymFocusWidgetsBundle: WidgetBundle {
     var body: some Widget {
-        TimerLiveActivity()
+//        TimerLiveActivity()
     }
 }

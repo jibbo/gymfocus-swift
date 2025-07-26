@@ -11,30 +11,28 @@ struct MultiPageVertical: View {
     
     @ObservedObject private var viewModel: ItemsViewModel
     
-    @SceneStorage("selectedTab") private var selectedTab: Int = 0
-    
     init(_ viewModel: ItemsViewModel) {
         self.viewModel = viewModel
     }
     
     var body: some View {
-        TabView(selection: $selectedTab){
+        TabView{
             SetsView(viewModel).tabItem {
-                Label("Sets", systemImage: "figure.strengthtraining.traditional")
+                Label("sets".localized("Sets tab"), systemImage: "figure.strengthtraining.traditional")
             }
             ScrollView(showsIndicators: false){
                 TimerView(viewModel)
                 SavedTimers(viewModel)
             }.tabItem {
-                Label("Timer", systemImage: "clock")
+                Label("timer".localized("Timer tab"), systemImage: "clock")
             }.tag(0)
             WeightCounter()
                 .tabItem{
-                    Label("Plates Counter", systemImage: "dumbbell")
+                    Label("plates_counter".localized("Plates Counter tab"), systemImage: "dumbbell")
                 }.tag(1)
             SettingsView()
                 .tabItem {
-                    Label("Settings", systemImage: "gearshape")
+                    Label("settings".localized("Settings tab"), systemImage: "gearshape")
                 }.tag(2)
         }.accentColor(settings.getThemeColor())
     }

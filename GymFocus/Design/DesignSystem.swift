@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+extension String{
+    func localized(_ comment: String? = nil) -> String {
+        NSLocalizedString(self, comment: comment ?? "")
+    }
+}
 
 extension Font {
     static let primaryTitle: Font = .custom(Theme.fontName, size: 42)
@@ -145,7 +150,7 @@ struct RoundButton : View{
         self.dashed = dashed
         self.isEditMode = isEditMode
         self.fillColor = fillColor
-        self.textColor = textColor ?? fillColor?.textColor() ?? .white
+        self.textColor = textColor ?? fillColor?.textColor() ?? .primary
         self.color = color
         self.size = size
     }

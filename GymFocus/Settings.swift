@@ -29,17 +29,14 @@ final class Settings: ObservableObject {
         didSet { UserDefaults.standard.set(selectedBar, forKey: "selectedBar") }
     }
     
-    init() {
-        // Get country code
-        let countryCode = Locale.current.region?.identifier ?? "US"
-        
+    init() {        
         // Try to load from UserDefaults or set sensible defaults
         self.theme = UserDefaults.standard.string(forKey: "theme") ?? "S"
         
         if UserDefaults.standard.object(forKey: "metricSystem") != nil {
             self.metricSystem = UserDefaults.standard.bool(forKey: "metricSystem")
         } else {
-            self.metricSystem = (countryCode != "US")
+            self.metricSystem = Locale.current.measurementSystem.identifier == "metric"
         }
         
         self.singlePage = UserDefaults.standard.bool(forKey: "singlePage")
@@ -48,7 +45,7 @@ final class Settings: ObservableObject {
         if UserDefaults.standard.object(forKey: "selectedBar") != nil {
             self.selectedBar = UserDefaults.standard.integer(forKey: "selectedBar")
         } else {
-            if countryCode == "US" {
+            if Locale.current.measurementSystem.identifier != "metric" {
                 self.selectedBar = barsLbs.last! // 45 lbs
             } else {
                 self.selectedBar = barsKg.last! // 20 kg

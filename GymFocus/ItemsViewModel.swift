@@ -116,10 +116,14 @@ final class ItemsViewModel: ObservableObject {
         timerTextVisible = true
     }
     
+    func getEditModeButtonText() -> String {
+        return isEditing ? "done".localized("Done button text in edit mode") : "edit".localized("Edit button text")
+    }
+    
     private func scheduleTimerNotification(at date: Date) {
         let content = UNMutableNotificationContent()
-        content.title = "Time's up!"
-        content.body = "Yeah buddy! Light weight!"
+        content.title = NSLocalizedString("times_up", comment: "Timer completion notification title")
+        content.body = NSLocalizedString("times_up_message", comment: "Timer completion notification body")
         content.sound = .default
         
         let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
@@ -149,7 +153,7 @@ final class ItemsViewModel: ObservableObject {
             
             let rgb = themeColor.toRGB()
             let attributes = TimerActivityAttributes(
-                timerName: "Rest Timer",
+                timerName: NSLocalizedString("rest_timer", comment: "Rest timer name"),
                 themeColorRed: rgb.red,
                 themeColorGreen: rgb.green,
                 themeColorBlue: rgb.blue
@@ -179,10 +183,14 @@ final class ItemsViewModel: ObservableObject {
             return 
         }
         
+        // Calculate remaining time based on current date to ensure accuracy in background
+        let now = Date()
+        let calculatedTimeRemaining = max(0, timerDate.timeIntervalSince(now))
+        
         let updatedContentState = TimerActivityAttributes.ContentState(
-            timeRemaining: timeRemaining,
+            timeRemaining: calculatedTimeRemaining,
             totalDuration: originalTimerDuration,
-            isRunning: timerRunning,
+            isRunning: timerRunning && calculatedTimeRemaining > 0,
             endTime: timerDate
         )
         
