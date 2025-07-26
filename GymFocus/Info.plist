@@ -7,7 +7,9 @@
 		<string>BebasNeue.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
-	<array/>
+	<array>
+		<string>background-processing</string>
+	</array>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
 </dict>

@@ -47,6 +47,7 @@
 		4A45281B2E33C91F00E64685 /* Exceptions for "GymFocusWidgets" folder in "GymFocusWidgetsExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				BebasNeue.ttf,
 				Info.plist,
 			);
 			target = 4A4528002E33C91D00E64685 /* GymFocusWidgetsExtension */;
@@ -58,12 +59,20 @@
 			);
 			target = 4A57139A2E2527DF006DCB74 /* GymFocus */;
 		};
+		4AFEE2322E34EF5600670A0C /* Exceptions for "GymFocusWidgets" folder in "GymFocus" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				BebasNeue.ttf,
+			);
+			target = 4A57139A2E2527DF006DCB74 /* GymFocus */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4A4528072E33C91E00E64685 /* GymFocusWidgets */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				4AFEE2322E34EF5600670A0C /* Exceptions for "GymFocusWidgets" folder in "GymFocus" target */,
 				4A45281B2E33C91F00E64685 /* Exceptions for "GymFocusWidgets" folder in "GymFocusWidgetsExtension" target */,
 			);
 			path = GymFocusWidgets;

@@ -41,8 +41,6 @@ struct TimerLiveActivity: Widget {
             
             // Calculate remaining time based on current date for accurate background updates
             let now = Date()
-            let timeRemaining = max(0, context.state.endTime.timeIntervalSince(now))
-            let progress = 1.0 - (timeRemaining / context.state.totalDuration)
             
             VStack(spacing: 8) {
                 HStack {
@@ -52,15 +50,15 @@ struct TimerLiveActivity: Widget {
                         .font(.headline)
                         .foregroundColor(.white)
                     Spacer()
-                    Text(formatTime(Int(timeRemaining)))
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .monospacedDigit()
+                    ProgressView(timerInterval: now...context.state.endTime)
+                        .progressViewStyle(.circular)
+                        .tint(themeColor)
+                        .foregroundStyle(.white)
+                        .frame(height: 30)
+                        .padding()
                 }
                 
-                ProgressView(value: progress)
-                    .progressViewStyle(LinearProgressViewStyle(tint: themeColor))
-                    .frame(height: 4)
+                
             }
             .padding()
             .background(Color.black)
@@ -74,8 +72,6 @@ struct TimerLiveActivity: Widget {
             
             // Calculate remaining time based on current date for accurate background updates
             let now = Date()
-            let timeRemaining = max(0, context.state.endTime.timeIntervalSince(now))
-            let progress = 1.0 - (timeRemaining / context.state.totalDuration)
             
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
@@ -88,16 +84,12 @@ struct TimerLiveActivity: Widget {
                     }
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text(formatTime(Int(timeRemaining)))
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .monospacedDigit()
+                    Image(systemName: "clock")
+                        .foregroundColor(themeColor)
                 }
                 DynamicIslandExpandedRegion(.center) {
-                    ProgressView(value: progress)
-                        .progressViewStyle(LinearProgressViewStyle(tint: themeColor))
-                        .frame(height: 4)
-                }
+                    ProgressView(timerInterval: now...context.state.endTime)
+                    .progressViewStyle(.circular).tint(themeColor)                }
                 DynamicIslandExpandedRegion(.bottom) {
                     Text(NSLocalizedString("rest_timer", comment: "Rest timer label"))
                         .font(.caption2)
@@ -107,10 +99,8 @@ struct TimerLiveActivity: Widget {
                 Image(systemName: "timer")
                     .foregroundColor(themeColor)
             } compactTrailing: {
-                Text(formatTime(Int(timeRemaining)))
-                    .font(.caption2)
-                    .foregroundColor(themeColor)
-                    .monospacedDigit()
+                ProgressView(timerInterval: now...context.state.endTime)
+                    .progressViewStyle(.circular).tint(themeColor)
             } minimal: {
                 Image(systemName: "timer")
                     .foregroundColor(themeColor)
@@ -128,6 +118,6 @@ struct TimerLiveActivity: Widget {
 @main
 struct GymFocusWidgetsBundle: WidgetBundle {
     var body: some Widget {
-//        TimerLiveActivity()
+        TimerLiveActivity()
     }
 }
