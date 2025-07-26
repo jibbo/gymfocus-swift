@@ -1,3 +1,6 @@
+/* App Name */
+"app_name" = "Gym Focus";
+
 /* Live Activity */
-"rest_time" = "Riposo";
+"rest_time" = "Riposa ancora";
 "rest_timer" = "Tempo di riposo";
