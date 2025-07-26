@@ -66,8 +66,10 @@ final class ItemsViewModel: ObservableObject {
                 self.timeRemaining = calculatedTimeRemaining
                 self.timerProgress = (time - calculatedTimeRemaining) / time
                 
-                // Update Live Activity every second for smooth display
-                self.updateLiveActivity()
+                // Only update Live Activity occasionally to avoid background issues
+                if Int(calculatedTimeRemaining) % 30 == 0 || calculatedTimeRemaining == time {
+                    self.updateLiveActivity()
+                }
             } else {
                 self.timer?.invalidate()
                 self.timerRunning = false
