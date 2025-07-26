@@ -27,15 +27,15 @@ struct ContentHorizontal: View {
                     .frame(width: proxy.size.width * 0.5)
                 SavedTimers(viewModel).frame(width: proxy.size.width * 0.2)
             }.tabItem{
-                Label(NSLocalizedString("sets", comment: "sets tab"), systemImage: "figure.strengthtraining.traditional")
+                Label("sets".localized("sets tab"), systemImage: "figure.strengthtraining.traditional")
             }.tag(0)
             WeightCounter()
                 .tabItem{
-                    Label(NSLocalizedString("plates_counter", comment: "Plates counter tab"), systemImage: "dumbbell")
+                    Label("plates_counter".localized("Plates counter tab"), systemImage: "dumbbell")
                 }.tag(1)
             SettingsView()
                 .tabItem {
-                    Label(NSLocalizedString("settings", comment: "Settings tab"), systemImage: "gearshape")
+                    Label("settings".localized("Settings tab"), systemImage: "gearshape")
                 }.tag(2)
         }
         .accentColor(settings.getThemeColor())

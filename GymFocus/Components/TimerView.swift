@@ -23,7 +23,7 @@ struct TimerView: View {
     
     var body: some View {
         VStack{
-            Text(NSLocalizedString("active_timer", comment: "Active timer label"))
+            Text("active_timer".localized("Active timer label"))
                 .font(.body1)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
@@ -35,7 +35,7 @@ struct TimerView: View {
                     .animation(.easeInOut(duration: viewModel.blinkDuration), value: viewModel.timerTextVisible)
             }.frame(minWidth:200, maxWidth: 300)
             Spacer()
-            PrimaryButton(NSLocalizedString("stop", comment: "Stop button")){
+            PrimaryButton("stop".localized("Stop button")){
                 viewModel.resetTimer();
             }.padding()
         }
@@ -44,12 +44,12 @@ struct TimerView: View {
         }
         .alert(isPresented: $viewModel.showDeleteAlert) {
             Alert(
-                title: Text(NSLocalizedString("delete_timer", comment: "Delete timer alert title")), 
-                message: Text(NSLocalizedString("delete_timer_message", comment: "Delete timer alert message")), 
-                primaryButton: .destructive(Text(NSLocalizedString("delete", comment: "Delete button"))) {
+                title: Text("delete_timer".localized("Delete timer alert title")), 
+                message: Text("delete_timer_message".localized("Delete timer alert message")), 
+                primaryButton: .destructive(Text("delete".localized("Delete button"))) {
                     viewModel.item.timers.remove(at: viewModel.item.timers.firstIndex(of: viewModel.selectedTimer)!)
                 }, 
-                secondaryButton: .cancel(Text(NSLocalizedString("cancel", comment: "Cancel button")))
+                secondaryButton: .cancel(Text("cancel".localized("Cancel button")))
             )
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)){ _ in

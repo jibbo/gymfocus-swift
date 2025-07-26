@@ -128,6 +128,6 @@ struct TimerLiveActivity: Widget {
 @main
 struct GymFocusWidgetsBundle: WidgetBundle {
     var body: some Widget {
-        TimerLiveActivity()
+//        TimerLiveActivity()
     }
 }

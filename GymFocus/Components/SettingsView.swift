@@ -11,9 +11,9 @@ struct SettingsView: View {
     
     var body: some View {
         Form{
-            Section(NSLocalizedString("unit_of_measure", comment: "Unit of Measure section")){
+            Section("unit_of_measure".localized("Unit of Measure section")){
                 Toggle(isOn: $settings.metricSystem){
-                    Text(NSLocalizedString("use_metric_system", comment: "Use metric system toggle"))
+                    Text("use_metric_system".localized("Use metric system toggle"))
                 }
                 .onChange(of: settings.metricSystem) { oldValue, newValue in
                     let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
@@ -21,17 +21,17 @@ struct SettingsView: View {
                 }
                 .tint(settings.getThemeColor())
             }
-            Section(NSLocalizedString("advanced", comment: "Advanced section")){
+            Section("advanced".localized("Advanced section")){
                 Toggle(isOn: $settings.singlePage){
-                    Text(NSLocalizedString("single_page_mode", comment: "Single page mode toggle"))
+                    Text("single_page_mode".localized("Single page mode toggle"))
                 }.tint(settings.getThemeColor())
             }
-            Section(NSLocalizedString("experimental_features", comment: "Experimental Features section")){
+            Section("experimental_features".localized("Experimental Features section")){
                 Toggle(isOn: $settings.powerLifting){
-                    Text(NSLocalizedString("weight_percentage_calculator", comment: "Weight Percentage calculator toggle"))
+                    Text("weight_percentage_calculator".localized("Weight Percentage calculator toggle"))
                 }.tint(settings.getThemeColor())
             }
-            Section(NSLocalizedString("themes", comment: "Themes section")){
+            Section("themes".localized("Themes section")){
                 ScrollView(showsIndicators: false){
                     FlowLayout{
                         ForEach(Array(Theme.themes.map(\.key)), id: \.self) { key in
@@ -72,7 +72,7 @@ struct ThemeButton: View {
         }
         .overlay{
             if(selected){
-                Circle().stroke(.white, lineWidth: 4)
+                Circle().stroke(.secondary, lineWidth: 4)
             }
         }
     }
