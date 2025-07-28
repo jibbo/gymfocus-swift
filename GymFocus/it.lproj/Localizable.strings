@@ -1,17 +1,21 @@
 /* App Name */
 "app_name" = "Gym Focus";
+"not_available" = "Questa funzionalità non è ancora disponibile";
 
 /* Timer related */
 "rest_timer" = "Rest Timer";
 "rest_time" = "Riposo";
-"active_timer" = "Timer Attivo";
+"active_timer" = "Timer";
 "pinned_timers" = "Timer Salvati";
 
 /* Actions */
-"start" = "inizia";
-"stop" = "stop";
-"delete" = "cancella";
-"cancel" = "annulla";
+"start" = "Start";
+"stop" = "Stop";
+"delete" = "Cancella";
+"cancel" = "Annulla";
+"next" = "Prossimo";
+"edit" = "Modifica";
+"done" = "Fatto";
 
 /* Alerts */
 "delete_timer" = "Cancella timer";
@@ -47,15 +51,25 @@
 /* Weight Counter */
 "barbell" = "Bilanciere";
 "select_barbell_weight" = "Scegli il peso del bilanciere";
-"edit" = "Modifica";
+
 "percentage_calculator" = "Calcolo Percentuale";
 "one_rep_max" = "1RM Max";
 "kg" = "Kg";
 "lbs" = "Lbs";
 "plates" = "Dischi";
-"done" = "Fatto";
+
+/* Planner */
+"choose_new_plan_title" = "Come vorresti aggiungerlo?";
+"choose_new_plan_from_pdf" = "Da PDF 📑";
+"choose_new_plan_from_camera" = "Da foto 📷";
+"choose_new_plan_automatic" = "Creane uno per me ✨";
+"choose_new_plan_manual" = "Manualmente 👆";
+"choose_new_plan_ocr_explanation" = "La nostra AI locale scansionerà la tua scheda e la importerà automaticamente dentro l'app";
+"delete_plan" = "Cancella pagina";
+"delete_plan_message" = "Sei sicuro di voler cancellare questa pagina?";
 
 /* Tab Labels */
 "timer" = "Timer";
 "plates_counter" = "Conteggio Dischi";
 "settings" = "Impostazioni";
+"plan" = "Scheda";

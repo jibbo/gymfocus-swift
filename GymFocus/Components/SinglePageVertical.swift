@@ -17,25 +17,25 @@ struct SinglePageVertical: View {
     
     var body: some View {
         TabView {
+            ImageGridView().tabItem{
+                Label("plan".localized(), systemImage: "ecg.text.page")
+            }.tag(0)
             ScrollView(showsIndicators:false){
                 SetsView(viewModel)
                 TimerView(viewModel)
                 SavedTimers(viewModel)
-            }
-            .tabItem{
+            }.tabItem{
                 Label("sets".localized("sets tab"), systemImage: "figure.strengthtraining.traditional")
             }
-            .tag(0)
-            WeightCounter()
-                .tabItem{
-                    Label("plates_counter".localized("Plate counter tab"), systemImage: "dumbbell")
-                }
-                .tag(1)
-            SettingsView()
-                .tabItem {
-                    Label("settings".localized("Settings tab"), systemImage: "gearshape")
-                }
-                .tag(2)
+            .tag(1)
+            WeightCounter().tabItem{
+                Label("plates_counter".localized("Plate counter tab"), systemImage: "dumbbell")
+            }
+            .tag(2)
+            SettingsView().tabItem {
+                Label("settings".localized("Settings tab"), systemImage: "gearshape")
+            }
+            .tag(3)
         }
         .accentColor(settings.getThemeColor())
     }
