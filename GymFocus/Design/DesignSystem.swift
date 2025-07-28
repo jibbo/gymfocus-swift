@@ -117,9 +117,9 @@ struct SecondaryButton: View {
     @State var title: String
     
     var color: Color?
-    var action: (SecondaryButton) -> Void
+    var action: () -> Void
     
-    init(_ title: String, color: Color? = nil, action: @escaping (SecondaryButton) -> Void) {
+    init(_ title: String, color: Color? = nil, action: @escaping () -> Void) {
         self.title = title
         self.action = action
         self.color = color
@@ -127,7 +127,7 @@ struct SecondaryButton: View {
     
     var body: some View {
         let themeColor = color ?? settings.getThemeColor()
-        Button(action: {action(self)}) {
+        Button(action: {action()}) {
             Text(title)
                 .font(.body2)
                 .foregroundColor(themeColor)
@@ -191,6 +191,36 @@ struct RoundButton : View{
                     Circle().stroke(innerColor, lineWidth: 2).animation(.easeInOut(duration: 0.4), value: innerColor)
                 }
             }
+        }
+    }
+}
+
+struct CustomEditButton: View {
+    @EnvironmentObject private var settings: Settings
+    @Binding var isEditing: Bool
+    
+    var editText: String
+    var doneText: String
+    var color: Color?
+    
+    init(isEditing: Binding<Bool>,
+         editText: String = "edit".localized("Edit button text"),
+         doneText: String = "done".localized("Done button text"),
+         color: Color? = nil) {
+        self._isEditing = isEditing
+        self.editText = editText
+        self.doneText = doneText
+        self.color = color
+    }
+    
+    var body: some View {
+        let themeColor = color ?? settings.getThemeColor()
+        Button(action: {
+            isEditing.toggle()
+        }) {
+            Text(isEditing ? doneText : editText)
+                .font(.body2)
+                .foregroundColor(themeColor)
         }
     }
 }
@@ -276,7 +306,7 @@ extension Color {
                 PrimaryButton("Primary"){
                     settings.theme = "purple"
                 }
-                SecondaryButton("Secondary"){_ in
+                SecondaryButton("Secondary"){
                     settings.theme = "green"
                 }
                 RoundButton("fill", fillColor: .red){

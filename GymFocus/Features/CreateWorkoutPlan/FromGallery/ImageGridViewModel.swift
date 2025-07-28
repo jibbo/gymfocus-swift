@@ -51,10 +51,6 @@ class ImageGridViewModel: ObservableObject {
         return UIImage(contentsOfFile: url.path)
     }
     
-    func getEditModeButtonText() -> String {
-        return isEditing ? "done".localized("Done button text in edit mode") : "edit".localized("Edit button text")
-    }
-    
     static func getDocumentsDirectory() -> URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }

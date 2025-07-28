@@ -142,10 +142,6 @@ final class ItemsViewModel: ObservableObject {
         timerTextVisible = true
     }
     
-    func getEditModeButtonText() -> String {
-        return isEditing ? "done".localized("Done button text in edit mode") : "edit".localized("Edit button text")
-    }
-    
     private func scheduleTimerNotification(at date: Date) {
         let content = UNMutableNotificationContent()
         content.title = NSLocalizedString("times_up", comment: "Timer completion notification title")

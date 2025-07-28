@@ -22,10 +22,7 @@ struct ImageGridView: View {
                 SectionTitle("plan".localized("plan section title"))
                 
                 if(!model.images.isEmpty){
-                    SecondaryButton(model.getEditModeButtonText()){ it in
-                        model.isEditing.toggle()
-                        it.title = model.getEditModeButtonText()
-                    }
+                    CustomEditButton(isEditing: $model.isEditing)
                 }
             }
             if(model.images.isEmpty){

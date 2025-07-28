@@ -21,7 +21,7 @@ struct SetsView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
                 Spacer()
-                SecondaryButton("reset".localized("Reset button")){_ in
+                SecondaryButton("reset".localized("Reset button")){
                     viewModel.item.steps = 0
                 }
             }
