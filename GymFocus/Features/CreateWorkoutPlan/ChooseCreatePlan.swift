@@ -19,12 +19,11 @@ struct ChooseCreatePlan: View{
     var body: some View{
         VStack(alignment:.leading){
             HStack{
-                Image(systemName: "xmark")
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(.white)
-                    .onTapGesture {
-                        dismiss()
-                    }
+                Button(action: { dismiss() }) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(.white)
+                }
                 Text("Create a workout plan".localized("Time in seconds label")).font(.body1).padding()
 
             }

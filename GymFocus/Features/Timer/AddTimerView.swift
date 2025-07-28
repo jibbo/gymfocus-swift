@@ -23,13 +23,11 @@ struct AddTimerView : View {
     var body: some View {
         VStack{
             HStack{
-                Image(systemName: "xmark")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(.white)
-                    .onTapGesture {
-                        dismiss()
-                    }
-                Spacer()
+                Button(action: { dismiss() }) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(.white)
+                }
                 Text("time_in_seconds".localized("Time in seconds label")).font(.body1).padding()
                 Spacer()
             }
