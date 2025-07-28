@@ -74,7 +74,7 @@
 //                    text: prompt,
 //                    images: scannedImages,
 //                    useInlineImages: false,
-//                    apiKey: "AIzaSyDrZuu6XVThbkcb5ImS8vfoxg-DsAPRd30"
+//                    apiKey: ""
 //                )
 //                self.workoutViewModel.workoutPlanItem = WorkoutPlanItem(workoutPlan: WorkoutPlan.fromJSON(response) ?? WorkoutPlan())
 //                DispatchQueue.main.async {
