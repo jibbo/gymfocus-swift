@@ -5,7 +5,7 @@
 /* Timer related */
 "rest_timer" = "Rest Timer";
 "rest_time" = "Rest Time";
-"active_timer" = "Active Timer";
+"active_timer" = "Timer";
 "pinned_timers" = "Pinned Timers";
 
 /* Actions */
@@ -15,6 +15,8 @@
 "cancel" = "Cancel";
 "ok" = "Ok";
 "next" = "Next";
+"edit" = "Edit";
+"done" = "Done";
 
 /* Alerts */
 "delete_timer" = "Delete Timer";
@@ -50,13 +52,11 @@
 /* Weight Counter */
 "barbell" = "Barbell";
 "select_barbell_weight" = "Select the weight of the barbell";
-"edit" = "Edit";
 "percentage_calculator" = "Percentage calculator";
 "one_rep_max" = "1RM Max";
 "kg" = "Kg";
 "lbs" = "Lbs";
 "plates" = "Plates";
-"done" = "Done";
 
 /* Planner */
 "choose_new_plan_title" = "How do you want to add it?";

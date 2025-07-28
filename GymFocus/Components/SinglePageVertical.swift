@@ -17,7 +17,7 @@ struct SinglePageVertical: View {
     
     var body: some View {
         TabView {
-            PlannerView().tabItem{
+            ImageGridView().tabItem{
                 Label("plan".localized(), systemImage: "ecg.text.page")
             }.tag(0)
             ScrollView(showsIndicators:false){

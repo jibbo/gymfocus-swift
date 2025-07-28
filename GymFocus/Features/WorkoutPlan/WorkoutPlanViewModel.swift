@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-final class WorkoutViewModel: ObservableObject{
+final class WorkoutPlanViewModel: ObservableObject{
     @Published var workoutPlanItem: WorkoutPlanItem = WorkoutPlanItem(from: "")
     
     func saveWorkoutPlan(to modelContext: ModelContext) {

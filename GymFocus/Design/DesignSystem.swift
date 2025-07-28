@@ -186,9 +186,9 @@ struct RoundButton : View{
             let innerColor: Color = isEditMode ? .red : themeColor
             if(fillColor == nil){
                 if(dashed){
-                    Circle().stroke(innerColor, style: StrokeStyle(lineWidth: 2, dash: [8, 4])) .animation(.easeInOut(duration: 0.4), value: innerColor)
+                    Circle().stroke(innerColor, style: StrokeStyle(lineWidth: 2, dash: [8, 4])).animation(.easeInOut(duration: 0.4), value: innerColor)
                 }else{
-                    Circle().stroke(innerColor, lineWidth: 2) .animation(.easeInOut(duration: 0.4), value: innerColor)
+                    Circle().stroke(innerColor, lineWidth: 2).animation(.easeInOut(duration: 0.4), value: innerColor)
                 }
             }
         }

@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct PlannerView: View {
+struct WorkoutPlanView: View {
     @Environment(\.modelContext) private var modelContext
-    @ObservedObject var workoutViewModel: WorkoutViewModel = WorkoutViewModel()
+    @ObservedObject var workoutViewModel: WorkoutPlanViewModel = WorkoutPlanViewModel()
     @State var showAddWorkoutPlanSheet: Bool = false
     
     var body: some View {
@@ -43,5 +43,5 @@ struct PlannerView: View {
 }
 
 #Preview {
-    PlannerView().environmentObject(Settings())
+    WorkoutPlanView().environmentObject(Settings())
 }

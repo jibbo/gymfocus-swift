@@ -31,7 +31,7 @@ struct ContentView: View {
                     MultiPageVertical(viewModel)
                 }
             }
-            .navigationTitle(NSLocalizedString("gym_focus", comment: "App name in navigation"))
+            .navigationTitle("app_name".localized("App name in navigation"))
             .onAppear(){
                 if items.isEmpty {
                     let newItem = Item(steps: 0, timers: [30, 60, 120, 180])

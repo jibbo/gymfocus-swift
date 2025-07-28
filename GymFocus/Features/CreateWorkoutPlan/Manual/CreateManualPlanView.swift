@@ -11,9 +11,9 @@ struct CreateManualPlanView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
     
-    @ObservedObject var workoutViewModel: WorkoutViewModel
+    @ObservedObject var workoutViewModel: WorkoutPlanViewModel
     
-    init(_ workoutViewModel: WorkoutViewModel) {
+    init(_ workoutViewModel: WorkoutPlanViewModel) {
         self.workoutViewModel = workoutViewModel
     }
     
@@ -34,7 +34,7 @@ struct CreateManualPlanView: View {
 }
 
 #Preview {
-    let viewModel = WorkoutViewModel()
+    let viewModel = WorkoutPlanViewModel()
     CreateManualPlanView(viewModel)
         .environmentObject(Settings())
 }
