@@ -10,7 +10,6 @@ import SwiftUI
 class ImageGridViewModel: ObservableObject {
     @Published var images: [SavedImage] = []
     @Published var isEditing = false
-    @Published var showDeleteAlert = false
     
     init() {
         loadImages()

@@ -34,7 +34,7 @@ struct TimerView: View {
                     .font(.primaryTitle)
                     .opacity(viewModel.timerTextVisible ? 1 : 0)
                     .animation(.easeInOut(duration: viewModel.blinkDuration), value: viewModel.timerTextVisible)
-            }.frame(height:200)
+            }.frame(minWidth:200, maxWidth: 300)
             Spacer()
             if(viewModel.timerRunning){
                 PrimaryButton("stop".localized("Stop button")){

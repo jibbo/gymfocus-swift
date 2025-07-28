@@ -13,6 +13,8 @@ struct ImageGridView: View {
     @State private var showPicker = false
     @State private var selectedItems: [PhotosPickerItem] = []
     @State private var fullscreenImage: UIImage? = nil
+    @State private var selectedImage: SavedImage? = nil
+    @State private var showDeleteAlert = false
     
     var body: some View {
         VStack {
@@ -27,21 +29,24 @@ struct ImageGridView: View {
                 }
             }
             if(model.images.isEmpty){
-                Image(systemName: "ecg.text.page").font(.system(size: 300)).foregroundStyle(.primary.opacity(0.8))
+                Spacer()
+                Image(systemName: "ecg.text.page").font(.system(size: 100)).foregroundStyle(.primary.opacity(0.8))
             } else{
                 ScrollView(showsIndicators:false){
                     LazyVStack{
                         showImages()
-                    }.padding()
+                    }
+                    .padding()
                 }
-//                ScrollView {
-//                    LazyVGrid(columns: [GridItem(.adaptive(minimum:100))], spacing: 16) {
-//                        showImages()
-//                    }
-//                    .padding()
-//                }
+                //                ScrollView {
+                //                    LazyVGrid(columns: [GridItem(.adaptive(minimum:100))], spacing: 16) {
+                //                        showImages()
+                //                    }
+                //                    .padding()
+                //                }
             }
             if(model.isEditing || model.images.isEmpty){
+                Spacer()
                 withAnimation{
                     PrimaryButton("add".localized("adds a workout plan")){
                         showPicker = true
@@ -58,6 +63,21 @@ struct ImageGridView: View {
                 FullscreenImageView(image: img)
             }
         }
+        .alert(isPresented: $showDeleteAlert) {
+            Alert(
+                title: Text("delete_plan".localized("Delete workout alert title")),
+                message: Text("delete_plan_message".localized("Delete workout alert message")),
+                primaryButton: .destructive(Text("delete".localized("Delete button"))) {
+                    if let image = selectedImage{
+                        model.delete(image)
+                    }
+                    selectedImage = nil
+                },
+                secondaryButton: .cancel(Text("cancel".localized("Cancel button"))) {
+                    selectedImage = nil
+                }
+            )
+        }
         .onChange(of: selectedItems) { oldItems, newItems in
             for item in newItems {
                 item.loadTransferable(type: Data.self) { result in
@@ -67,6 +87,11 @@ struct ImageGridView: View {
                         }
                     }
                 }
+            }
+        }
+        .onChange(of: showPicker) { oldValue, newValue in
+            if !newValue {
+                model.isEditing = false
             }
         }
     }
@@ -82,7 +107,8 @@ struct ImageGridView: View {
                         .cornerRadius(8)
                         .onTapGesture {
                             if(model.isEditing){
-                                model.delete(saved)
+                                selectedImage = saved
+                                showDeleteAlert = true
                             }else{
                                 fullscreenImage = uiImage
                             }
