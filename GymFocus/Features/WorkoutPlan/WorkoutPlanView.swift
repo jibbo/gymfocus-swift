@@ -16,7 +16,7 @@ struct WorkoutPlanView: View {
         VStack{
             HStack{
                 SectionTitle("plan".localized("plan section title"))
-                SecondaryButton("add".localized("adds a workout plan")){ _ in
+                SecondaryButton("add".localized("adds a workout plan")){
                     showAddWorkoutPlanSheet = true
                 }
             }
