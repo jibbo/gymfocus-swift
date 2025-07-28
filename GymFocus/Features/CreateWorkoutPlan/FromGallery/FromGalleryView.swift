@@ -8,8 +8,8 @@
 import SwiftUI
 import PhotosUI
 
-struct ImageGridView: View {
-    @StateObject private var model = ImageGridViewModel()
+struct FromGalleryView: View {
+    @StateObject private var model = FromGalleryViewModel()
     @State private var showPicker = false
     @State private var selectedItems: [PhotosPickerItem] = []
     @State private var fullscreenImage: UIImage? = nil
@@ -121,5 +121,5 @@ struct ImageGridView: View {
 }
 
 #Preview {
-    ImageGridView().environmentObject(Settings())
+    FromGalleryView().environmentObject(Settings())
 }

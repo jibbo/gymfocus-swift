@@ -235,7 +235,7 @@ struct Card<Content: View>: View {
     
     var body: some View {
         ZStack(alignment:.leading) {
-            content.padding().frame(maxWidth: .infinity)
+            content.padding().frame(maxWidth: .infinity, alignment: .leading)
         }.overlay{
             RoundedRectangle(cornerRadius: 8)
                 .stroke(.primary, lineWidth: 1)
@@ -321,7 +321,7 @@ extension Color {
             }.padding()
             
             Card{
-                Text("Card").foregroundStyle(.primary).background(.blue)
+                Text("Card").foregroundStyle(.primary)
             }
             
         }.padding()
