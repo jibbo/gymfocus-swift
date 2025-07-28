@@ -8,7 +8,7 @@
 import SwiftUI
 import VisionKit
 
-struct VNDocumentCameraViewControllerRepresentable: UIViewControllerRepresentable {
+struct DocumentScanner: UIViewControllerRepresentable {
     @Binding var scanResult: [UIImage]
     
     func makeUIViewController(context: Context) -> VNDocumentCameraViewController {
