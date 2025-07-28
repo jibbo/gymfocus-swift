@@ -22,6 +22,9 @@ struct ManualPlanView: View {
                 SecondaryButton("add".localized("adds a workout plan")){
                     showAddWorkoutPlanSheet = true
                 }
+//                CustomEditButton(isEditing: $textViewModel.isEditing){
+//                    showAddWorkoutPlanSheet = true
+//                }
             }
             Spacer()
             if(textViewModel.workoutPlanItem.workoutPlanJson.isEmpty){

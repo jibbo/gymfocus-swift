@@ -199,24 +199,29 @@ struct CustomEditButton: View {
     @EnvironmentObject private var settings: Settings
     @Binding var isEditing: Bool
     
-    var editText: String
-    var doneText: String
-    var color: Color?
+    private var editText: String
+    private var doneText: String
+    private var color: Color?
+    private var action: () -> Void
     
     init(isEditing: Binding<Bool>,
          editText: String = "edit".localized("Edit button text"),
          doneText: String = "done".localized("Done button text"),
-         color: Color? = nil) {
+         color: Color? = nil,
+         action: @escaping () -> Void
+    ) {
         self._isEditing = isEditing
         self.editText = editText
         self.doneText = doneText
         self.color = color
+        self.action = action
     }
     
     var body: some View {
         let themeColor = color ?? settings.getThemeColor()
         Button(action: {
             isEditing.toggle()
+            action()
         }) {
             Text(isEditing ? doneText : editText)
                 .font(.body2)
@@ -238,7 +243,7 @@ struct Card<Content: View>: View {
             content.padding().frame(maxWidth: .infinity, alignment: .leading)
         }.overlay{
             RoundedRectangle(cornerRadius: 8)
-                .stroke(.primary, lineWidth: 1)
+                .stroke(settings.getThemeColor(), lineWidth: 1)
                 .frame(maxWidth: .infinity)
         }
         .frame(maxWidth: .infinity)

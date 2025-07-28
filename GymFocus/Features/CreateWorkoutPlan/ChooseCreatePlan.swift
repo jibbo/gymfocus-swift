@@ -24,14 +24,14 @@ struct ChooseCreatePlan: View{
                         .font(.system(size: 20, weight: .bold))
                         .foregroundColor(.white)
                 }
-                Text("Create a workout plan".localized("Time in seconds label")).font(.body1).padding()
+                Text("choose_new_plan_title".localized("Time in seconds label")).font(.body1).padding()
 
             }
             Spacer()
             Card{
                 HStack{
                     VStack(alignment: .leading, spacing: 10){
-                        Text("From Gallery").font(.body2)
+                        Text("choose_new_plan_from_gallery".localized()).font(.body2)
                         Text("Lets you select picture from your photo roll")
                     }
                     Spacer()
@@ -53,7 +53,7 @@ struct ChooseCreatePlan: View{
             Card{
                 HStack{
                     VStack(alignment: .leading, spacing: 10){
-                        Text("Manually").font(.body2)
+                        Text("choose_new_plan_manual".localized()).font(.body2)
                         Text("Lets you type your workout plan")
                     }
                     Spacer()

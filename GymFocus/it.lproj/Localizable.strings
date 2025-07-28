@@ -59,12 +59,13 @@
 "plates" = "Dischi";
 
 /* Planner */
-"choose_new_plan_title" = "Come vorresti aggiungerlo?";
-"choose_new_plan_from_pdf" = "Da PDF 📑";
-"choose_new_plan_from_camera" = "Da foto 📷";
-"choose_new_plan_automatic" = "Creane uno per me ✨";
-"choose_new_plan_manual" = "Manualmente 👆";
-"choose_new_plan_ocr_explanation" = "La nostra AI locale scansionerà la tua scheda e la importerà automaticamente dentro l'app";
+"choose_new_plan_title" = "Come vorresti crearlo?";
+"choose_new_plan_from_gallery" = "Dalla Galleria";
+"choose_new_plan_from_gallery_desc" = "Seleziona le immagini dalla tua galleria";
+"choose_new_plan_from_camera" = "Dalla Fotocamera";
+"choose_new_plan_from_camera_desc" = "Scansiona dalla tua fotocamera";
+"choose_new_plan_manual" = "Manualmente";
+"choose_new_plan_manual_desc" = "Scrivi la tua scheda manualmente";
 "delete_plan" = "Cancella pagina";
 "delete_plan_message" = "Sei sicuro di voler cancellare questa pagina?";
 

@@ -22,7 +22,7 @@ struct FromGalleryView: View {
                 SectionTitle("plan".localized("plan section title"))
                 
                 if(!model.images.isEmpty){
-                    CustomEditButton(isEditing: $model.isEditing)
+                    CustomEditButton(isEditing: $model.isEditing){}
                 }
             }
             if(model.images.isEmpty){
