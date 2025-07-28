@@ -28,7 +28,7 @@ struct PlanFromCameraView: View {
                 }
             }
             .sheet(isPresented: $isShowingVNDocumentCameraView) {
-                VNDocumentCameraViewControllerRepresentable(scanResult: $scannedImages)
+                DocumentScanner(scanResult: $scannedImages)
             }
             .toolbar {
                 ToolbarItem {
