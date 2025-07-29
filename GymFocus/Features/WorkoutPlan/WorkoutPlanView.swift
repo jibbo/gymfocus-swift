@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WorkoutPlanView: View {
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var trackingManager: TrackingManager
     @ObservedObject var textViewModel: WorkoutPlanViewModel = WorkoutPlanViewModel()
     @ObservedObject var galleryViewModel: FromGalleryViewModel = FromGalleryViewModel()
 

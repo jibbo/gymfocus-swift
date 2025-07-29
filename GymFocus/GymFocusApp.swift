@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import Firebase
 import FirebaseCore
 
 
@@ -22,9 +23,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct GymFocusApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject private var settings = Settings()
+    @StateObject private var trackingManager = TrackingManager()
+    @StateObject private var settings: Settings
     
     init() {
+            let trackingManager = TrackingManager()
+            self._trackingManager = StateObject(wrappedValue: trackingManager)
+            self._settings = StateObject(wrappedValue: Settings(trackingManager: trackingManager))
+            
             // Large title
             UINavigationBar.appearance().largeTitleTextAttributes = [
                 .font: UIFont(name: Theme.fontName, size: 36)!
@@ -63,6 +69,7 @@ struct GymFocusApp: App {
         }
         .modelContainer(sharedModelContainer)
         .environmentObject(settings)
+        .environmentObject(trackingManager)
     }
 }
 

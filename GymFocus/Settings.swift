@@ -9,27 +9,41 @@ import Foundation
 import SwiftUI
 
 final class Settings: ObservableObject {
+    private var trackingManager: TrackingManager
+    
     @Published var theme: String {
-        didSet { UserDefaults.standard.set(theme, forKey: "theme") }
+        didSet {
+            UserDefaults.standard.set(theme, forKey: "theme")
+            trackingManager.logSelectedTheme(theme: theme)
+        }
     }
-    @Published var metricSystem: Bool {
-        didSet { UserDefaults.standard.set(metricSystem, forKey: "metricSystem") }
-    }
+    
+    @Published var metricSystem: Bool {didSet {UserDefaults.standard.set(metricSystem, forKey: "metricSystem")}}
+    
     @Published var singlePage: Bool {
-        didSet { UserDefaults.standard.set(singlePage, forKey: "singlePage") }
+        didSet {
+            UserDefaults.standard.set(singlePage, forKey: "singlePage")
+            trackingManager.logSinglePageMode(isOn: singlePage)
+        }
     }
     @Published var powerLifting: Bool {
-        didSet { UserDefaults.standard.set(powerLifting, forKey: "powerLifting") }
+        didSet {
+            UserDefaults.standard.set(powerLifting, forKey: "powerLifting")
+            trackingManager.logPowerliftingMode(isOn: powerLifting)
+        }
     }
     
     let barsKg: [Int] = [7, 10, 15, 20]
     let barsLbs: [Int] = [15, 35, 45]
     
     @Published var selectedBar: Int {
-        didSet { UserDefaults.standard.set(selectedBar, forKey: "selectedBar") }
+        didSet {
+            UserDefaults.standard.set(selectedBar, forKey: "selectedBar")
+        }
     }
     
-    init() {        
+    init(trackingManager: TrackingManager = TrackingManager()) {
+        self.trackingManager = trackingManager
         // Try to load from UserDefaults or set sensible defaults
         self.theme = UserDefaults.standard.string(forKey: "theme") ?? "S"
         
