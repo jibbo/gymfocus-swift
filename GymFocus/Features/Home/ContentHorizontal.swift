@@ -20,6 +20,9 @@ struct ContentHorizontal: View {
     
     var body: some View {
         TabView{
+            WorkoutPlanView().tabItem {
+                Label("plan".localized(), systemImage: "ecg.text.page")
+            }.tag(0)
             HStack{
                 SetsView(viewModel)
                     .frame(width: proxy.size.width * 0.3)
@@ -28,13 +31,11 @@ struct ContentHorizontal: View {
                 SavedTimers(viewModel).frame(width: proxy.size.width * 0.2)
             }.tabItem{
                 Label("sets".localized("sets tab"), systemImage: "figure.strengthtraining.traditional")
-            }.tag(0)
-            WeightCounter()
-                .tabItem{
+            }.tag(1)
+            WeightCounter().tabItem{
                     Label("plates_counter".localized("Plates counter tab"), systemImage: "dumbbell")
                 }.tag(1)
-            SettingsView()
-                .tabItem {
+            SettingsView().tabItem {
                     Label("settings".localized("Settings tab"), systemImage: "gearshape")
                 }.tag(2)
         }

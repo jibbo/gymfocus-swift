@@ -59,12 +59,13 @@
 "plates" = "Plates";
 
 /* Planner */
-"choose_new_plan_title" = "How do you want to add it?";
-"choose_new_plan_from_pdf" = "From PDF 📑";
-"choose_new_plan_from_camera" = "From Camera 📷";
-"choose_new_plan_automatic" = "Create one for me ✨";
+"choose_new_plan_title" = "How do you want to create it?";
+"choose_new_plan_from_gallery" = "From Gallery";
+"choose_new_plan_from_gallery_desc" = "Select pictures from your photo roll";
+"choose_new_plan_from_camera" = "From Camera";
+"choose_new_plan_from_camera_desc" = "Scan documents from your camera";
 "choose_new_plan_manual" = "Manually 👆";
-"choose_new_plan_ocr_explanation" = "Our on device AI scans your wourkout plan and automatically imports it to the app";
+"choose_new_plan_manual_desc" = "Type your workout plan manually";
 "delete_plan" = "Delete page";
 "delete_plan_message" = "Are you sure you want to delete this page?";
 

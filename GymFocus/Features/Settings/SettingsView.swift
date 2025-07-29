@@ -30,6 +30,9 @@ struct SettingsView: View {
                 Toggle(isOn: $settings.powerLifting){
                     Text("weight_percentage_calculator".localized("Weight Percentage calculator toggle"))
                 }.tint(settings.getThemeColor())
+                Button("Crash"){
+                    fatalError("Crashlytics initial setup")
+                }
             }
             Section("themes".localized("Themes section")){
                 ScrollView(showsIndicators: false){

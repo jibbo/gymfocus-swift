@@ -23,7 +23,7 @@ struct SavedTimers: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
                 Spacer()
-                CustomEditButton(isEditing: $viewModel.isEditing).padding(.vertical, 20)
+                CustomEditButton(isEditing: $viewModel.isEditing){}.padding(.vertical, 20)
             }
             ScrollView{
                 FlowLayout{

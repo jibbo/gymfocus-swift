@@ -10,6 +10,7 @@ import SwiftData
 
 final class WorkoutPlanViewModel: ObservableObject{
     @Published var workoutPlanItem: WorkoutPlanItem = WorkoutPlanItem(from: "")
+    @Published var isEditing:Bool = false
     
     func saveWorkoutPlan(to modelContext: ModelContext) {
         modelContext.insert(workoutPlanItem)

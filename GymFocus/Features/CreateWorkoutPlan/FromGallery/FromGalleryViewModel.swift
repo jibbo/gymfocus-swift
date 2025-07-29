@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class ImageGridViewModel: ObservableObject {
+class FromGalleryViewModel: ObservableObject {
     @Published var images: [SavedImage] = []
     @Published var isEditing = false
     
