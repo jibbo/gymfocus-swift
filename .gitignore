@@ -4,6 +4,10 @@ CLAUDE.md
 #Macos
 .DS_Store
 
+#vim
+*.swp
+*.*~
+
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
