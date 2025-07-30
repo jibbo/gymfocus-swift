@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-
+    
     @StateObject private var timerManager = WatchTimerManager()
     
     var body: some View {
@@ -37,31 +37,27 @@ struct SetsView: View {
     
     var body: some View {
         VStack(spacing: 10) {
-            Text("Sets")
-                .font(.system(size: 22, weight: .bold))
-                .fontWeight(.semibold)
-                .foregroundColor(.primary)
+            HStack{
+                Text("Sets")
+                    .font(.system(size: 22, weight: .bold))
+                    .fontWeight(.semibold)
+                    .foregroundColor(.primary)
+                Spacer()
+                Button("Reset"){
+                    timerManager.resetSets()
+                }.buttonStyle(.borderless).foregroundStyle(connectivityManager.themeColor)
+            }
             
             Text("\(timerManager.currentSets)")
-                .font(.system(size: 60, weight: .bold, design: .rounded))
+                .font(.system(size: 56, weight: .bold, design: .rounded))
                 .foregroundColor(connectivityManager.themeColor)
             
-            HStack(spacing: 20) {
-                Button("-") {
-                    timerManager.decrementSets()
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.red)
-                .frame(width: 50, height: 50)
-                
-                Button("+") {
-                    timerManager.incrementSets()
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(connectivityManager.themeColor)
-                .foregroundStyle(connectivityManager.themeColor.textColor())
-                .frame(width: 50, height: 50)
+            Button("+1") {
+                timerManager.incrementSets()
             }
+            .buttonStyle(.borderedProminent)
+            .tint(connectivityManager.themeColor)
+            .foregroundStyle(connectivityManager.themeColor.textColor())
             
             Text("Swipe for timer →")
                 .font(.caption2)
@@ -76,51 +72,57 @@ struct TimerView: View {
     @ObservedObject private var connectivityManager = WatchConnectivityManager.shared
     
     var body: some View {
-        ScrollView{
-            VStack(spacing: 16) {
-                Text("Rest Timer")
-                    .font(.title3)
+        //        ScrollView{
+        VStack(spacing: 10) {
+            HStack{
+                Text("Rest")
+                    .font(.system(size: 22, weight: .bold))
                     .fontWeight(.semibold)
                     .foregroundColor(.primary)
-                
-                Text(timerManager.formattedTime)
-                    .font(.system(size: 40, weight: .bold, design: .monospaced))
-                    .foregroundColor(timerManager.isRunning ? connectivityManager.themeColor : .primary)
-                
-                VStack(spacing: 12) {
-                    let color = timerManager.isRunning ? .red : connectivityManager.themeColor
-                    Button(timerManager.isRunning ? "Stop" : "Start") {
-                        if timerManager.isRunning {
-                            timerManager.stopTimer()
-                        } else {
-                            timerManager.startTimer()
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(color)
-                    .foregroundStyle(color.textColor())
-                    .frame(maxWidth: .infinity)
-                    
-                    Button("Reset") {
-                        timerManager.resetTimer()
-                    }
-                    .buttonStyle(.bordered)
-                    .frame(maxWidth: .infinity)
-                }
-                
-                HStack {
-                    Text("← Sets")
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
-                    Spacer()
-                    Text("Timer Settings →")
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
-                }
+                Spacer()
+                Button("Reset"){
+                    timerManager.resetSets()
+                }.buttonStyle(.borderless).foregroundStyle(connectivityManager.themeColor)
             }
-            .padding()
+            
+            Text(timerManager.formattedTime)
+                .font(.system(size: 40, weight: .bold, design: .monospaced))
+                .foregroundColor(timerManager.isRunning ? connectivityManager.themeColor : .primary)
+            
+            VStack(spacing: 12) {
+                let color = timerManager.isRunning ? .red : connectivityManager.themeColor
+                Button(timerManager.isRunning ? "Stop" : "Start") {
+                    if timerManager.isRunning {
+                        timerManager.stopTimer()
+                    } else {
+                        timerManager.startTimer()
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(color)
+                .foregroundStyle(color.textColor())
+                .frame(maxWidth: .infinity)
+                
+                //                    Button("Reset") {
+                //                        timerManager.resetTimer()
+                //                    }
+                //                    .buttonStyle(.bordered)
+                //                    .frame(maxWidth: .infinity)
+            }
+            
+            HStack {
+                Text("← Sets")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+                Spacer()
+                Text("Settings →")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
         }
+        .padding()
     }
+    //    }
 }
 
 struct TimerSelectionView: View {
@@ -144,16 +146,10 @@ struct TimerSelectionView: View {
                         Button(timerManager.formatTimerOption(duration)) {
                             timerManager.setTimerDuration(duration)
                         }
-                        .buttonStyle(.bordered)
+                        .buttonStyle(.borderedProminent)
                         .frame(maxWidth: .infinity)
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(timerManager.selectedTimerDuration == duration ? connectivityManager.themeColor.opacity(0.3) : Color.clear)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(timerManager.selectedTimerDuration == duration ? connectivityManager.themeColor : Color.clear, lineWidth: 2)
-                        )
+                        .tint(timerManager.selectedTimerDuration == duration ? connectivityManager.themeColor : .gray.opacity(0.3))
+                        .foregroundStyle(timerManager.selectedTimerDuration == duration ? connectivityManager.themeColor.textColor() : .white)
                     }
                 }
                 

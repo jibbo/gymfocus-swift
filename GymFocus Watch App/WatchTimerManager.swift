@@ -44,6 +44,10 @@ class WatchTimerManager: ObservableObject {
         }
     }
     
+    func resetSets() {
+        currentSets = 0
+    }
+    
     func startTimer() {
         guard !isRunning else { return }
         
