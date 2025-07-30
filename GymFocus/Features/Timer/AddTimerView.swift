@@ -48,6 +48,10 @@ struct AddTimerView : View {
             PrimaryButton("add".localized("Add button")){
                 viewModel.item.timers.append(Double(text) ?? 0)
                 viewModel.item.timers.sort()
+                
+                // Notify watch of timer changes
+                PhoneConnectivityManager.shared.sendTimersToWatch()
+                
                 dismiss()
             }
         }
