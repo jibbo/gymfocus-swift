@@ -36,7 +36,7 @@ struct SetsView: View {
     @ObservedObject private var connectivityManager = WatchConnectivityManager.shared
     
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 8) {
             HStack{
                 Text("Sets")
                     .font(.system(size: 22, weight: .bold))
@@ -122,6 +122,7 @@ struct TimerSelectionView: View {
     @ObservedObject private var connectivityManager = WatchConnectivityManager.shared
     
     var body: some View {
+        ScrollView{
             VStack(spacing: 10) {
                 Text("Timer Duration")
                     .font(.title3)
@@ -150,6 +151,7 @@ struct TimerSelectionView: View {
                     .padding(.top, 8)
             }
             .padding()
+        }
     }
 }
 
