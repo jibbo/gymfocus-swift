@@ -1,11 +1,142 @@
- <!DOCTYPE html>
-<html>
-	<head>
-		<title>Gym Focus</title>
-	</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GymFocus - Your Ultimate Gym Companion</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-color: #0f0f0f;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+    header {
+      background: #1f1f1f;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2em;
+    }
+    nav {
+      margin-top: 10px;
+    }
+    nav a {
+      #color: #00ff99;
+      color: #CFFF04;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      padding: 20px;
+    }
+    .feature {
+      margin-bottom: 30px;
+    }
+    .feature h2 {
+      #color: #00ff99;
+      color: #CFFF04;
+      margin-bottom: 10px;
+    }
+    .cta {
+      #background: #00ff99;
+      background: #CFFF04;
+      color: #000;
+      padding: 15px;
+      text-align: center;
+      margin: 40px 0;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    .screenshots {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .screenshots img {
+      max-width: 300px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 255, 153, 0.3);
+    }
+    footer {
+      background: #1f1f1f;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+    @media (max-width: 600px) {
+      .screenshots {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
 <body>
+  <header>
+    <h1>GymFocus</h1>
+    <p>Your Ultimate Gym Companion for iPhone, iPad & Apple Watch</p>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#screenshots">Screenshots</a>
+      <a href="#download">Download</a>
+    </nav>
+  </header>
 
-<p>Site under construction.</p>
+  <div class="container">
+    <section id="features" class="feature">
+      <h2>Track Your Sets</h2>
+      <p>Keep count of your sets without losing focus. Easy taps let you stay in the zone.</p>
+    </section>
 
+    <section class="feature">
+      <h2>Start Rest Timers</h2>
+      <p>Use customizable rest timers to recover optimally between sets. Stay efficient.</p>
+    </section>
+
+    <section class="feature">
+      <h2>Barbell Plate Calculator</h2>
+      <p>Quickly calculate the plates needed for your lifts. Focus on the lift, not the math.</p>
+    </section>
+
+    <section class="feature">
+      <h2>Apple Watch Support</h2>
+      <p>Use your Apple Watch to track sets and control timers hands-free during workouts.</p>
+    </section>
+
+    <div id="download" class="cta">
+      Download now on the App Store
+    </div>
+
+    <section id="screenshots" class="screenshots">
+      <img src="screenshot1.png" alt="App Screenshot 1" />
+      <img src="screenshot2.png" alt="App Screenshot 2" />
+      <img src="screenshot3.png" alt="App Screenshot 3" />
+    </section>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 GymFocus. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Example JavaScript for future interactive features
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
 </body>
-</html> 
+</html>
+
