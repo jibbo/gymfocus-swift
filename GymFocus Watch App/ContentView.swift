@@ -49,7 +49,7 @@ struct SetsView: View {
             }
             
             Text("\(timerManager.currentSets)")
-                .font(.system(size: 56, weight: .bold, design: .rounded))
+                .font(.system(size: 40, weight: .bold, design: .rounded))
                 .foregroundColor(connectivityManager.themeColor)
             
             Button("+1") {
@@ -72,7 +72,6 @@ struct TimerView: View {
     @ObservedObject private var connectivityManager = WatchConnectivityManager.shared
     
     var body: some View {
-        //        ScrollView{
         VStack(spacing: 10) {
             HStack{
                 Text("Rest")
@@ -102,12 +101,6 @@ struct TimerView: View {
                 .tint(color)
                 .foregroundStyle(color.textColor())
                 .frame(maxWidth: .infinity)
-                
-                //                    Button("Reset") {
-                //                        timerManager.resetTimer()
-                //                    }
-                //                    .buttonStyle(.bordered)
-                //                    .frame(maxWidth: .infinity)
             }
             
             HStack {
@@ -122,7 +115,6 @@ struct TimerView: View {
         }
         .padding()
     }
-    //    }
 }
 
 struct TimerSelectionView: View {
@@ -130,8 +122,7 @@ struct TimerSelectionView: View {
     @ObservedObject private var connectivityManager = WatchConnectivityManager.shared
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 12) {
+            VStack(spacing: 10) {
                 Text("Timer Duration")
                     .font(.title3)
                     .fontWeight(.semibold)
@@ -159,7 +150,6 @@ struct TimerSelectionView: View {
                     .padding(.top, 8)
             }
             .padding()
-        }
     }
 }
 
