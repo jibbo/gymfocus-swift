@@ -17,9 +17,6 @@ struct MultiPageVertical: View {
     
     var body: some View {
         TabView{
-            WorkoutPlanView().tabItem{
-                Label("plan".localized(), systemImage: "ecg.text.page")
-            }.tag(0)
             SetsView(viewModel).tabItem {
                 Label("sets".localized("Sets tab"), systemImage: "figure.strengthtraining.traditional")
             }.tag(1)

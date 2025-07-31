@@ -20,9 +20,6 @@ struct ContentHorizontal: View {
     
     var body: some View {
         TabView{
-            WorkoutPlanView().tabItem {
-                Label("plan".localized(), systemImage: "ecg.text.page")
-            }.tag(0)
             HStack{
                 SetsView(viewModel)
                     .frame(width: proxy.size.width * 0.3)

@@ -55,7 +55,12 @@ final class Settings: ObservableObject {
             self.metricSystem = Locale.current.measurementSystem.identifier == "metric"
         }
         
-        self.singlePage = UserDefaults.standard.bool(forKey: "singlePage")
+        if UserDefaults.standard.object(forKey: "singlePage") != nil {
+            self.singlePage = UserDefaults.standard.bool(forKey: "singlePage")
+        } else {
+            self.singlePage = true
+        }
+        
         self.powerLifting = UserDefaults.standard.bool(forKey: "powerLifting")
         
         if UserDefaults.standard.object(forKey: "selectedBar") != nil {

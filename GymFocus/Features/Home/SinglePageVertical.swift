@@ -17,9 +17,6 @@ struct SinglePageVertical: View {
     
     var body: some View {
         TabView {
-            WorkoutPlanView().tabItem{
-                Label("plan".localized(), systemImage: "ecg.text.page")
-            }.tag(0)
             ScrollView(showsIndicators:false){
                 SetsView(viewModel)
                 TimerView(viewModel)

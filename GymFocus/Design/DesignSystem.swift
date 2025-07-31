@@ -28,7 +28,8 @@ extension Color {
     static let primaryE: Color = Color(red: 0, green: 0.404, blue: 0.31)
     static let primaryF: Color = Color(red: 0.043, green: 0.4, blue: 0.137)
     static let primaryG: Color = Color(red: 1, green: 0.455, blue: 0)
-    static let primaryB: Color = Color(red: 0.161, green: 0.502, blue: 0.725)
+//    static let primaryB: Color = Color(red: 0.161, green: 0.502, blue: 0.725)
+    static let primaryB: Color = Color(red: 0, green: 1, blue: 0.6) // #00ff99
     static let primaryR: Color = Color(red: 0.906, green: 0.298, blue: 0.235)
     static let lightGray: Color = Color(red: 0.63, green: 0.63, blue: 0.63)
     static let darkGray: Color = Color(red: 0.21, green: 0.21, blue: 0.21)

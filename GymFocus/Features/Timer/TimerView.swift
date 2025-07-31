@@ -34,10 +34,10 @@ struct TimerView: View {
                     .font(.primaryTitle)
                     .opacity(viewModel.timerTextVisible ? 1 : 0)
                     .animation(.easeInOut(duration: viewModel.blinkDuration), value: viewModel.timerTextVisible)
-            }.frame(minWidth:200, maxWidth: 300)
+            }.frame(maxHeight: 200)
             Spacer()
             if(viewModel.timerRunning){
-                PrimaryButton("stop".localized("Stop button")){
+                PrimaryButton("stop".localized("Stop button"), color: .red){
                     viewModel.resetTimer();
                 }.padding()
             } else {

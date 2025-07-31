@@ -28,26 +28,28 @@ struct WeightCounter: View {
     }
     
     var body: some View {
-        ViewThatFits(in: .horizontal){
-            GeometryReader { proxy in
-                horizontal()
+        ScrollView(showsIndicators: false){
+            ViewThatFits(in: .horizontal){
+                GeometryReader { proxy in
+                    horizontal()
+                }
+                .frame(minWidth: 500)
+                vertical()
             }
-            .frame(minWidth: 500)
-            vertical()
-        }
-        .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("done".localized("Done button")) {
-                    isWeightActive = false
-                    isPercentActive = false
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("done".localized("Done button")) {
+                        isWeightActive = false
+                        isPercentActive = false
+                    }
                 }
             }
         }
     }
     
     private func vertical() -> some View{
-        ScrollView(showsIndicators: false){
+//        ScrollView(showsIndicators: false){
             VStack {
                 if(settings.powerLifting){
                     percentageCalculator()
@@ -70,7 +72,7 @@ struct WeightCounter: View {
                 computeSum()
                 maxKg = String(settings.selectedBar)
             }
-        }
+//        }
     }
     
     private func horizontal() -> some View{
