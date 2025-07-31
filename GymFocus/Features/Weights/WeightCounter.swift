@@ -31,10 +31,10 @@ struct WeightCounter: View {
         ScrollView(showsIndicators: false){
             ViewThatFits(in: .horizontal){
                 GeometryReader { proxy in
-                    horizontal()
+                    vertical()
                 }
-                .frame(minWidth: 500)
-                vertical()
+                .frame(minHeight: 500)
+                horizontal()
             }
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
@@ -45,11 +45,29 @@ struct WeightCounter: View {
                     }
                 }
             }
+            .sheet(isPresented: $showBarbellSelector) {
+                VStack{
+                    Text("select_barbell_weight".localized("Select barbell weight text")).font(.body2)
+                    Picker("edit".localized("Edit picker"), selection: $settings.selectedBar) {
+                        let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
+                        ForEach(bars, id: \.self){ bar in
+                            Text(String(bar)).tag(bar)
+                        }
+                    }
+                    .pickerStyle(.wheel)
+                    .tint(settings.getThemeColor())
+                    .onChange(of: settings.selectedBar){ oldVal, newVal in
+                        self.maxKg = String(newVal)
+                        self.plates = []
+                        computeSum()
+                        showBarbellSelector = false
+                    }
+                }
+            }
         }
     }
     
     private func vertical() -> some View{
-//        ScrollView(showsIndicators: false){
             VStack {
                 if(settings.powerLifting){
                     percentageCalculator()
@@ -72,7 +90,6 @@ struct WeightCounter: View {
                 computeSum()
                 maxKg = String(settings.selectedBar)
             }
-//        }
     }
     
     private func horizontal() -> some View{
@@ -105,25 +122,6 @@ struct WeightCounter: View {
             .font(.body1)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
-            .sheet(isPresented: $showBarbellSelector) {
-                VStack{
-                    Text("select_barbell_weight".localized("Select barbell weight text")).font(.body2)
-                    Picker("edit".localized("Edit picker"), selection: $settings.selectedBar) {
-                        let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
-                        ForEach(bars, id: \.self){ bar in
-                            Text(String(bar)).tag(bar)
-                        }
-                    }
-                    .pickerStyle(.wheel)
-                    .tint(settings.getThemeColor())
-                    .onChange(of: settings.selectedBar){ oldVal, newVal in
-                        self.maxKg = String(newVal)
-                        self.plates = []
-                        computeSum()
-                        showBarbellSelector = false
-                    }
-                }
-            }
     }
     
     private func percentageCalculator() -> some View{

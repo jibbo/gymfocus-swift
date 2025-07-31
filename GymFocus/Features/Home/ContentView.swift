@@ -21,7 +21,7 @@ struct ContentView: View {
         NavigationStack{
             ViewThatFits(in: .horizontal){
                 GeometryReader { proxy in
-                   ContentHorizontal(viewModel, geometryProxy: proxy)
+                   ContentHorizontal(viewModel)
                 }
                 .frame(minWidth: 500)
                 

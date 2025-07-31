@@ -11,21 +11,16 @@ struct ContentHorizontal: View {
     
     @ObservedObject private var viewModel: ItemsViewModel
     
-    private var proxy: GeometryProxy
-    
-    init(_ viewModel: ItemsViewModel, geometryProxy: GeometryProxy) {
+    init(_ viewModel: ItemsViewModel) {
         self.viewModel = viewModel
-        self.proxy = geometryProxy
     }
     
     var body: some View {
         TabView{
-            HStack{
+            HStack(spacing: 5){
                 SetsView(viewModel)
-                    .frame(width: proxy.size.width * 0.3)
                 TimerView(viewModel)
-                    .frame(width: proxy.size.width * 0.5)
-                SavedTimers(viewModel).frame(width: proxy.size.width * 0.2)
+                SavedTimers(viewModel)
             }.tabItem{
                 Label("sets".localized("sets tab"), systemImage: "figure.strengthtraining.traditional")
             }.tag(1)
@@ -36,15 +31,14 @@ struct ContentHorizontal: View {
                     Label("settings".localized("Settings tab"), systemImage: "gearshape")
                 }.tag(2)
         }
+        .tabViewStyle(.sidebarAdaptable)
         .accentColor(settings.getThemeColor())
     }
 }
 
 #Preview {
     let viewModel = ItemsViewModel();
-    GeometryReader { proxy in
-        ContentHorizontal(viewModel, geometryProxy: proxy)
-    }
+        ContentHorizontal(viewModel)
     .onAppear{
         viewModel.item.timers=[30,60,90,120,180]
     }
