@@ -26,7 +26,7 @@ struct MultiPageVertical: View {
             }.tabItem {
                 Label("timer".localized("Timer tab"), systemImage: "clock")
             }.tag(2)
-            WeightCounter().tabItem{
+            WeightCounterView().tabItem{
                 Label("plates_counter".localized("Plates Counter tab"), systemImage: "dumbbell")
             }.tag(3)
             SettingsView().tabItem {

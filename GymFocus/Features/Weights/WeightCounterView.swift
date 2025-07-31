@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WeightCounter: View {
+struct WeightCounterView: View {
     @EnvironmentObject private var settings: Settings
     
     @State private var plates: [Double]
@@ -29,12 +29,15 @@ struct WeightCounter: View {
     
     var body: some View {
         ScrollView(showsIndicators: false){
-            ViewThatFits(in: .horizontal){
-                GeometryReader { proxy in
+            GeometryReader { geometry in
+                let isIPhoneLandscape = UIDevice.current.userInterfaceIdiom == .phone && 
+                                       geometry.size.width > geometry.size.height
+                
+                if isIPhoneLandscape {
+                    horizontal()
+                } else {
                     vertical()
                 }
-                .frame(minHeight: 500)
-                horizontal()
             }
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
@@ -74,7 +77,6 @@ struct WeightCounter: View {
                 }
                 Group{
                     header()
-                    Spacer()
                     ScrollView(.horizontal, showsIndicators: false){
                         barbellView()
                     }
@@ -82,8 +84,8 @@ struct WeightCounter: View {
                         countView(proxy: proxy)
                             .frame(width: proxy.size.width, height: proxy.size.height)
                     }.frame(maxHeight:50).padding()
-                    platesPickerView()
                     Spacer()
+                    platesPickerView()
                 }.frame(minHeight: 50)
             }
             .onAppear {
@@ -293,7 +295,7 @@ struct WeightCounter: View {
 
 #Preview{
     let settings = Settings()
-    WeightCounter().environmentObject(settings).onAppear {
+    WeightCounterView().environmentObject(settings).onAppear {
         settings.metricSystem = false
         settings.powerLifting = true
     }

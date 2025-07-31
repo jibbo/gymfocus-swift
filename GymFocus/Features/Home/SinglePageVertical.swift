@@ -25,7 +25,7 @@ struct SinglePageVertical: View {
                 Label("sets".localized("sets tab"), systemImage: "figure.strengthtraining.traditional")
             }
             .tag(1)
-            WeightCounter().tabItem{
+            WeightCounterView().tabItem{
                 Label("plates_counter".localized("Plate counter tab"), systemImage: "dumbbell")
             }
             .tag(2)
