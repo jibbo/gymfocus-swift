@@ -28,9 +28,9 @@ struct WeightCounterView: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false){
-            GeometryReader { geometry in
-                let isIPhoneLandscape = UIDevice.current.userInterfaceIdiom == .phone && 
+        GeometryReader { geometry in
+            ScrollView(showsIndicators: false){
+                let isIPhoneLandscape = UIDevice.current.userInterfaceIdiom == .phone &&
                                        geometry.size.width > geometry.size.height
                 
                 if isIPhoneLandscape {
@@ -39,84 +39,84 @@ struct WeightCounterView: View {
                     vertical()
                 }
             }
-            .toolbar {
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
-                    Button("done".localized("Done button")) {
-                        isWeightActive = false
-                        isPercentActive = false
-                    }
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("done".localized("Done button")) {
+                    isWeightActive = false
+                    isPercentActive = false
                 }
             }
-            .sheet(isPresented: $showBarbellSelector) {
-                VStack{
-                    Text("select_barbell_weight".localized("Select barbell weight text")).font(.body2)
-                    Picker("edit".localized("Edit picker"), selection: $settings.selectedBar) {
-                        let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
-                        ForEach(bars, id: \.self){ bar in
-                            Text(String(bar)).tag(bar)
-                        }
+        }
+        .sheet(isPresented: $showBarbellSelector) {
+            VStack{
+                Text("select_barbell_weight".localized("Select barbell weight text")).font(.body2)
+                Picker("edit".localized("Edit picker"), selection: $settings.selectedBar) {
+                    let bars = settings.metricSystem ? settings.barsKg : settings.barsLbs
+                    ForEach(bars, id: \.self){ bar in
+                        Text(String(bar)).tag(bar)
                     }
-                    .pickerStyle(.wheel)
-                    .tint(settings.getThemeColor())
-                    .onChange(of: settings.selectedBar){ oldVal, newVal in
-                        self.maxKg = String(newVal)
-                        self.plates = []
-                        computeSum()
-                        showBarbellSelector = false
-                    }
+                }
+                .pickerStyle(.wheel)
+                .tint(settings.getThemeColor())
+                .onChange(of: settings.selectedBar){ oldVal, newVal in
+                    self.maxKg = String(newVal)
+                    self.plates = []
+                    computeSum()
+                    showBarbellSelector = false
                 }
             }
         }
     }
     
     private func vertical() -> some View{
-            VStack {
-                if(settings.powerLifting){
-                    percentageCalculator()
+        VStack {
+            if(settings.powerLifting){
+                percentageCalculator()
+            }
+            Group{
+                header()
+                ScrollView(.horizontal, showsIndicators: false){
+                    barbellView()
                 }
-                Group{
-                    header()
-                    ScrollView(.horizontal, showsIndicators: false){
-                        barbellView()
-                    }
-                    GeometryReader{ proxy in
-                        countView(proxy: proxy)
-                            .frame(width: proxy.size.width, height: proxy.size.height)
-                    }.frame(maxHeight:50).padding()
-                    Spacer()
-                    platesPickerView()
-                }.frame(minHeight: 50)
-            }
-            .onAppear {
-                computeSum()
-                maxKg = String(settings.selectedBar)
-            }
+                GeometryReader{ proxy in
+                    countView(proxy: proxy)
+                        .frame(width: proxy.size.width, height: proxy.size.height)
+                }.frame(maxHeight:50).padding()
+                Spacer()
+                platesPickerView()
+            }.frame(minHeight: 50)
+        }
+        .onAppear {
+            computeSum()
+            maxKg = String(settings.selectedBar)
+        }
     }
     
     private func horizontal() -> some View{
-            HStack {
-                VStack{
-                    header()
-                    ScrollView(.horizontal, showsIndicators: false){
-                        barbellView()
-                    }
-                    GeometryReader{ proxy in
-                        countView(proxy: proxy)
-                            .frame(width: proxy.size.width, height: proxy.size.height)
-                    }.frame(maxHeight:100)
+        HStack {
+            VStack(spacing:1){
+                header()
+                ScrollView(.horizontal, showsIndicators: false){
+                    barbellView()
                 }
-                VStack{
-                    if(settings.powerLifting){
-                        percentageCalculator()
-                    }
-                    platesPickerView()
+                GeometryReader{ proxy in
+                    countView(proxy: proxy)
+                        .frame(width: proxy.size.width, height: proxy.size.height)
+                }.frame(maxHeight:100)
+            }
+            VStack{
+                if(settings.powerLifting){
+                    percentageCalculator()
                 }
+                platesPickerView()
             }
-            .onAppear {
-                computeSum()
-                maxKg = String(settings.selectedBar)
-            }
+        }
+        .onAppear {
+            computeSum()
+            maxKg = String(settings.selectedBar)
+        }
     }
     
     private func header() -> some View{
