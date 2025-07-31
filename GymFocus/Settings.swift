@@ -15,6 +15,8 @@ final class Settings: ObservableObject {
         didSet {
             UserDefaults.standard.set(theme, forKey: "theme")
             trackingManager.logSelectedTheme(theme: theme)
+            // Notify watch of theme change
+            PhoneConnectivityManager.shared.sendDataToWatch()
         }
     }
     

@@ -66,6 +66,9 @@ struct GymFocusApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear {
+                    PhoneConnectivityManager.shared.setModelContext(sharedModelContainer.mainContext)
+                }
         }
         .modelContainer(sharedModelContainer)
         .environmentObject(settings)
